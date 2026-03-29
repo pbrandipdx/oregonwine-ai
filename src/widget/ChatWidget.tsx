@@ -53,6 +53,61 @@ const QUICK_REPLIES = [
   "Food pairings",
 ];
 
+type QuickPalette = { border: string; surface: string; text: string; borderHover: string };
+
+function QuickReplyChips({
+  palette: p,
+  onPick,
+  marginTop,
+}: {
+  palette: QuickPalette;
+  onPick: (text: string) => void;
+  marginTop: number;
+}) {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop }}>
+      {QUICK_REPLIES.map((q) => (
+        <button
+          key={q}
+          type="button"
+          onClick={() => onPick(q)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            padding: "9px 16px",
+            borderRadius: 12,
+            border: `1px solid ${p.border}`,
+            background: p.surface,
+            color: "#a09496",
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: "pointer",
+            fontFamily: "inherit",
+            transition: "background 0.15s, border-color 0.15s, color 0.15s",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget;
+            el.style.background = p.border;
+            el.style.borderColor = p.borderHover;
+            el.style.color = p.text;
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget;
+            el.style.background = p.surface;
+            el.style.borderColor = p.border;
+            el.style.color = "#a09496";
+          }}
+        >
+          {QUICK_REPLY_ICONS[q]}
+          {q}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 /** Strip markdown-style formatting so responses read as clean prose */
 function cleanMarkdown(raw: string): string {
   let s = raw;
@@ -281,12 +336,12 @@ export function ChatWidget({
           color: c.text,
           display: "flex",
           flexDirection: "column",
-          ...(showLanding ? { justifyContent: "flex-end", alignItems: "center", paddingBottom: 24 } : {}),
+          ...(showLanding ? { justifyContent: "center", alignItems: "center" } : {}),
         }}
       >
         {/* Landing state */}
         {showLanding && (
-          <div style={{ textAlign: "center", paddingBottom: 16 }}>
+          <div style={{ textAlign: "center", maxWidth: "100%" }}>
             <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
               {wineryLabel} Wine Concierge
             </div>
@@ -303,6 +358,13 @@ export function ChatWidget({
             >
               What can I help you discover today?
             </h2>
+            {embedded && showQuickReplies && !loading && (
+              <QuickReplyChips
+                palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
+                onPick={sendMessage}
+                marginTop={20}
+              />
+            )}
           </div>
         )}
 
@@ -530,48 +592,13 @@ export function ChatWidget({
           </div>
         </div>
 
-        {/* Quick replies */}
-        {showQuickReplies && showLanding && !loading && (
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 14 }}>
-            {QUICK_REPLIES.map((q) => (
-              <button
-                key={q}
-                type="button"
-                onClick={() => sendMessage(q)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 7,
-                  padding: "9px 16px",
-                  borderRadius: 12,
-                  border: `1px solid ${c.border}`,
-                  background: c.surface,
-                  color: "#a09496",
-                  fontSize: 13,
-                  fontWeight: 500,
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  transition: "background 0.15s, border-color 0.15s, color 0.15s",
-                  whiteSpace: "nowrap",
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget;
-                  el.style.background = c.border;
-                  el.style.borderColor = c.borderHover;
-                  el.style.color = c.text;
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget;
-                  el.style.background = c.surface;
-                  el.style.borderColor = c.border;
-                  el.style.color = "#a09496";
-                }}
-              >
-                {QUICK_REPLY_ICONS[q]}
-                {q}
-              </button>
-            ))}
-          </div>
+        {/* Quick replies (floating widget only; embedded page renders them with the landing hero) */}
+        {showQuickReplies && showLanding && !loading && !embedded && (
+          <QuickReplyChips
+            palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
+            onPick={sendMessage}
+            marginTop={14}
+          />
         )}
 
         {/* Footer */}
