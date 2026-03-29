@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Widget test — OregonWine.ai</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body style="font-family: system-ui; padding: 2rem; max-width: 720px">
+    <h1>Widget embed test</h1>
+    <p>
+      Use <code>data-key</code> from seed (<code>wk_beta_rexhill_001</code>).
+      <code>data-api-base</code> below targets your hosted project; for local Supabase use
+      <code>http://127.0.0.1:54321/functions/v1</code>.
+    </p>
+    <p
+      style="
+        padding: 12px 16px;
+        background: #fff8e6;
+        border: 1px solid #e6d08c;
+        border-radius: 8px;
+        font-size: 15px;
+      "
+    >
+      <strong>Look bottom-right</strong> for the round chat button (💬). The rest of this page stays
+      mostly empty on purpose.
+    </p>
+    <script
+      type="module"
+      src="/src/widget/widget-main.tsx"
+      data-key="wk_beta_rexhill_001"
+      data-color="#722F37"
+      data-api-base="https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+name: CI & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Install and build
+        env:
+          VITE_BASE_PATH: /oregonwine-ai/
+          VITE_SUPABASE_URL: https://sdobipmpvcuxnjqwpggp.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkb2JpcG1wdmN1eG5qcXdwZ2dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NDE2OTQsImV4cCI6MjA5MDMxNzY5NH0.VLzJ8bzHmVFoOlN-Mpmwj_NX9dtzJHyAonErXSqu09I
+          VITE_SUPABASE_FUNCTIONS_URL: https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1
+        run: |
+          npm ci
+          npm run build
+          npm run build:widget
+          cp dist/index.html dist/404.html
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

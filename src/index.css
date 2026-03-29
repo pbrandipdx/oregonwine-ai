@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  background: #faf6f2;
+  color: #2d1f2e;
+  line-height: 1.5;
+}
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid rgba(114, 47, 55, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand {
+  font-weight: 700;
+  color: #722f37;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+}
+.nav-links a {
+  color: #4a3d4c;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+.nav-links a:hover {
+  color: #722f37;
+}
+.main {
+  flex: 1;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #722f37;
+  margin: 0 0 0.5rem;
+}
+.hero h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: #722f37;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+.lede {
+  font-size: 1.125rem;
+  max-width: 36rem;
+  margin: 0;
+  color: #4a3d4c;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.page-head h1 {
+  font-size: 1.75rem;
+  color: #722f37;
+  margin: 0 0 0.35rem;
+}
+.muted {
+  color: #6b5c6b;
+  margin: 0;
+}
+.small {
+  font-size: 0.875rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.65rem 1.1rem;
+  background: #722f37;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+}
+.btn-ghost {
+  background: transparent;
+  color: #722f37;
+  border: 1px solid rgba(114, 47, 55, 0.35);
+}
+.panel {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(114, 47, 55, 0.1);
+  margin-bottom: 1rem;
+}
+.panel h2 {
+  font-size: 1rem;
+  margin: 0 0 0.75rem;
+  color: #722f37;
+}
+.panel-warn {
+  border-color: rgba(176, 0, 32, 0.25);
+  background: #fff8f8;
+}
+.card-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+.card {
+  display: block;
+  height: 100%;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(114, 47, 55, 0.12);
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card:hover {
+  border-color: rgba(114, 47, 55, 0.35);
+  box-shadow: 0 8px 28px rgba(45, 31, 46, 0.08);
+}
+.card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.35rem;
+  color: #2d1f2e;
+}
+.card-desc {
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+  color: #4a3d4c;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card .fee {
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0;
+  color: #722f37;
+}
+.winery-detail .back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #722f37;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.detail-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 1rem;
+}
+.facts {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.facts li {
+  margin-bottom: 0.35rem;
+}
+.fact-json {
+  font-size: 0.8rem;
+  word-break: break-word;
+}
+.panel a {
+  color: #722f37;
+}
