@@ -5,6 +5,8 @@ type Props = {
   themeColor: string;
   apiBase: string;
   wineryLabel: string;
+  /** When true, renders as a centered inline chat instead of a floating bubble */
+  embedded?: boolean;
 };
 
 type Message = {
@@ -14,14 +16,40 @@ type Message = {
   feedback?: 1 | -1;
 };
 
-export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) {
+/** Strip markdown-style formatting characters so responses read as clean prose */
+function cleanMarkdown(raw: string): string {
+  let s = raw;
+  // Remove headers: ## Heading → Heading
+  s = s.replace(/^#{1,4}\s+/gm, "");
+  // Remove bold: **text** or __text__
+  s = s.replace(/\*\*(.+?)\*\*/g, "$1");
+  s = s.replace(/__(.+?)__/g, "$1");
+  // Remove italic: *text* or _text_ (but not inside words)
+  s = s.replace(/(?<!\w)\*([^*]+?)\*(?!\w)/g, "$1");
+  s = s.replace(/(?<!\w)_([^_]+?)_(?!\w)/g, "$1");
+  // Remove bullet markers: - item or * item → item
+  s = s.replace(/^[\s]*[-*]\s+/gm, "");
+  // Remove numbered list markers: 1. item → item
+  s = s.replace(/^[\s]*\d+\.\s+/gm, "");
+  // Remove inline code backticks
+  s = s.replace(/`([^`]+?)`/g, "$1");
+  // Remove link markdown: [text](url) → text (url)
+  s = s.replace(/\[([^\]]+?)\]\(([^)]+?)\)/g, "$1 ($2)");
+  // Remove horizontal rules
+  s = s.replace(/^---+$/gm, "");
+  // Collapse triple+ newlines to double
+  s = s.replace(/\n{3,}/g, "\n\n");
+  return s.trim();
+}
+
+export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel, embedded }: Props) {
   const sessionId = useId().replace(/:/g, "");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(embedded ? true : false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>(() => [
     {
       role: "assistant",
-      text: `Hi! Ask me anything about ${wineryLabel} or Oregon wine.`,
+      text: `Welcome to ${wineryLabel}. Ask me anything about our wines, tastings, or the winery.`,
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -45,7 +73,7 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
           body: JSON.stringify({ log_id: logId, rating }),
         });
       } catch {
-        // silent fail — feedback is best-effort
+        // silent fail
       }
     },
     [apiBase, apiKey]
@@ -55,7 +83,7 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
     const text = input.trim();
     if (!text || loading) return;
     if (!apiBase) {
-      setError("Missing data-api-base or VITE_SUPABASE_FUNCTIONS_URL.");
+      setError("Missing API configuration.");
       return;
     }
     setInput("");
@@ -63,7 +91,6 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
     setMessages((m) => [...m, { role: "user", text }]);
     setLoading(true);
 
-    // Build history from previous messages (skip the initial greeting)
     const history = messages
       .slice(1)
       .map((m) => ({ role: m.role, text: m.text }));
@@ -94,25 +121,24 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
         const { done, value } = await reader.read();
         if (done) break;
         full += dec.decode(value, { stream: true });
-        // Strip the trailing log_id metadata from display
-        const display = full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, "");
+        const display = cleanMarkdown(
+          full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, "")
+        );
         setMessages((m) => {
           const copy = [...m];
           copy[copy.length - 1] = { role: "assistant", text: display };
           return copy;
         });
       }
-      // Extract log_id from the end of the stream
       const logMatch = full.match(/<!-- log_id:([a-f0-9-]+) -->/);
       const logId = logMatch?.[1];
+      const finalText = cleanMarkdown(
+        full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, "")
+      );
       if (logId) {
         setMessages((m) => {
           const copy = [...m];
-          copy[copy.length - 1] = {
-            ...copy[copy.length - 1],
-            logId,
-            text: full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, ""),
-          };
+          copy[copy.length - 1] = { ...copy[copy.length - 1], logId, text: finalText };
           return copy;
         });
       }
@@ -124,6 +150,237 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
     }
   }, [apiBase, apiKey, input, loading, messages, sessionId]);
 
+  // --- Color palette ---
+  const colors = {
+    primary: themeColor,
+    primaryLight: "#e8ede6",
+    userBubble: "#eae4d9",
+    assistantBubble: "#f2f0ec",
+    bg: "#ffffff",
+    border: "#ddd8cf",
+    textDark: "#3b3228",
+    textMuted: "#7a6e5d",
+    error: "#9e4a3a",
+  };
+
+  const chatPanel = (
+    <div
+      style={{
+        width: embedded ? "100%" : "min(420px, calc(100vw - 48px))",
+        height: embedded ? 520 : 500,
+        background: colors.bg,
+        borderRadius: 16,
+        boxShadow: embedded
+          ? "0 2px 20px rgba(59,50,40,0.08)"
+          : "0 16px 48px rgba(59,50,40,0.14)",
+        display: "flex",
+        flexDirection: "column",
+        border: `1px solid ${colors.border}`,
+        fontFamily: "'DM Sans', system-ui, sans-serif",
+        overflow: "hidden",
+        ...(embedded
+          ? {}
+          : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
+      }}
+    >
+      {/* Header */}
+      <div
+        style={{
+          padding: "14px 20px",
+          background: colors.primary,
+          color: "#fff",
+          borderRadius: "16px 16px 0 0",
+          fontWeight: 600,
+          fontSize: 15,
+          letterSpacing: "0.01em",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+        }}
+      >
+        <span style={{ fontSize: 18, lineHeight: 1 }}>{"\ud83c\udf3f"}</span>
+        {wineryLabel}
+      </div>
+
+      {/* Messages */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: "auto",
+          padding: 16,
+          fontSize: 14,
+          lineHeight: 1.55,
+          color: colors.textDark,
+        }}
+      >
+        {messages.map((m, i) => (
+          <div
+            key={i}
+            style={{
+              marginBottom: 12,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: m.role === "user" ? "flex-end" : "flex-start",
+            }}
+          >
+            {m.role === "assistant" && i > 0 && (
+              <span
+                style={{
+                  fontSize: 11,
+                  color: colors.textMuted,
+                  marginBottom: 3,
+                  marginLeft: 2,
+                  fontWeight: 500,
+                }}
+              >
+                {wineryLabel}
+              </span>
+            )}
+            <div
+              style={{
+                maxWidth: "85%",
+                padding: "10px 14px",
+                borderRadius: m.role === "user" ? "14px 14px 4px 14px" : "14px 14px 14px 4px",
+                background: m.role === "user" ? colors.userBubble : colors.assistantBubble,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              {m.text}
+            </div>
+            {/* Feedback */}
+            {m.role === "assistant" && m.logId && (
+              <div style={{ marginTop: 4, marginLeft: 2, display: "flex", gap: 2 }}>
+                <button
+                  type="button"
+                  onClick={() => sendFeedback(m.logId!, 1, i)}
+                  title="Helpful"
+                  style={{
+                    background: m.feedback === 1 ? colors.primaryLight : "transparent",
+                    border: "1px solid transparent",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    opacity: m.feedback === 1 ? 1 : 0.35,
+                    fontSize: 13,
+                    padding: "2px 6px",
+                    transition: "opacity 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
+                  }}
+                >
+                  {"\ud83d\udc4d"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => sendFeedback(m.logId!, -1, i)}
+                  title="Not helpful"
+                  style={{
+                    background: m.feedback === -1 ? "#f3e8e6" : "transparent",
+                    border: "1px solid transparent",
+                    borderRadius: 6,
+                    cursor: "pointer",
+                    opacity: m.feedback === -1 ? 1 : 0.35,
+                    fontSize: 13,
+                    padding: "2px 6px",
+                    transition: "opacity 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
+                  }}
+                >
+                  {"\ud83d\udc4e"}
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        {loading && (
+          <div style={{ display: "flex", alignItems: "flex-start", marginBottom: 12 }}>
+            <div
+              style={{
+                padding: "10px 14px",
+                borderRadius: "14px 14px 14px 4px",
+                background: colors.assistantBubble,
+                color: colors.textMuted,
+                fontSize: 13,
+              }}
+            >
+              Thinking...
+            </div>
+          </div>
+        )}
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div style={{ padding: "0 16px 4px", color: colors.error, fontSize: 12 }}>{error}</div>
+      )}
+
+      {/* Input */}
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          padding: "12px 16px",
+          borderTop: `1px solid ${colors.border}`,
+          background: "#faf9f7",
+        }}
+      >
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && send()}
+          placeholder="Ask a question..."
+          disabled={loading}
+          style={{
+            flex: 1,
+            padding: "10px 14px",
+            borderRadius: 10,
+            border: `1px solid ${colors.border}`,
+            background: "#fff",
+            fontSize: 14,
+            fontFamily: "inherit",
+            color: colors.textDark,
+            outline: "none",
+          }}
+        />
+        <button
+          type="button"
+          onClick={send}
+          disabled={loading}
+          style={{
+            padding: "10px 18px",
+            borderRadius: 10,
+            border: "none",
+            background: loading ? colors.textMuted : colors.primary,
+            color: "#fff",
+            cursor: loading ? "default" : "pointer",
+            fontFamily: "inherit",
+            fontWeight: 500,
+            fontSize: 14,
+            transition: "background 0.15s",
+          }}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+
+  // Embedded mode: render inline, no floating bubble
+  if (embedded) {
+    return chatPanel;
+  }
+
+  // Floating mode: bubble + panel
   return (
     <>
       <button
@@ -142,138 +399,15 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
           color: "#fff",
           fontSize: 22,
           cursor: "pointer",
-          boxShadow: "0 8px 24px rgba(45,31,46,0.25)",
+          boxShadow: "0 8px 24px rgba(59,50,40,0.2)",
           zIndex: 99998,
+          fontFamily: "inherit",
+          transition: "transform 0.15s",
         }}
       >
-        {open ? "\u00d7" : "\ud83d\udcac"}
+        {open ? "\u00d7" : "\ud83c\udf3f"}
       </button>
-      {open && (
-        <div
-          style={{
-            position: "fixed",
-            bottom: 96,
-            right: 24,
-            width: "min(400px, calc(100vw - 48px))",
-            height: 480,
-            background: "#fff",
-            borderRadius: 16,
-            boxShadow: "0 16px 48px rgba(45,31,46,0.18)",
-            display: "flex",
-            flexDirection: "column",
-            zIndex: 99999,
-            border: "1px solid rgba(114,47,55,0.12)",
-          }}
-        >
-          <div
-            style={{
-              padding: "12px 16px",
-              background: themeColor,
-              color: "#fff",
-              borderRadius: "16px 16px 0 0",
-              fontWeight: 600,
-            }}
-          >
-            OregonWine.ai
-          </div>
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: 12,
-              fontSize: 14,
-              lineHeight: 1.45,
-            }}
-          >
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                style={{
-                  marginBottom: 10,
-                  textAlign: m.role === "user" ? "right" : "left",
-                }}
-              >
-                <span
-                  style={{
-                    display: "inline-block",
-                    maxWidth: "90%",
-                    padding: "8px 12px",
-                    borderRadius: 12,
-                    background: m.role === "user" ? "#f0e4ef" : "#f5f0eb",
-                    whiteSpace: "pre-wrap",
-                  }}
-                >
-                  {m.text}
-                </span>
-                {/* Thumbs up/down for assistant messages with a logId */}
-                {m.role === "assistant" && m.logId && (
-                  <div style={{ marginTop: 4, fontSize: 16 }}>
-                    <button
-                      type="button"
-                      onClick={() => sendFeedback(m.logId!, 1, i)}
-                      title="Helpful"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        opacity: m.feedback === 1 ? 1 : 0.4,
-                        fontSize: 16,
-                        padding: "2px 6px",
-                      }}
-                    >
-                      {"\ud83d\udc4d"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => sendFeedback(m.logId!, -1, i)}
-                      title="Not helpful"
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                        opacity: m.feedback === -1 ? 1 : 0.4,
-                        fontSize: 16,
-                        padding: "2px 6px",
-                      }}
-                    >
-                      {"\ud83d\udc4e"}
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))}
-            <div ref={bottomRef} />
-          </div>
-          {error && (
-            <div style={{ padding: "0 12px", color: "#b00020", fontSize: 12 }}>{error}</div>
-          )}
-          <div style={{ display: "flex", gap: 8, padding: 12, borderTop: "1px solid #eee" }}>
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Ask a question\u2026"
-              disabled={loading}
-              style={{ flex: 1, padding: "10px 12px", borderRadius: 10, border: "1px solid #ddd" }}
-            />
-            <button
-              type="button"
-              onClick={send}
-              disabled={loading}
-              style={{
-                padding: "10px 16px",
-                borderRadius: 10,
-                border: "none",
-                background: themeColor,
-                color: "#fff",
-                cursor: loading ? "wait" : "pointer",
-              }}
-            >
-              Send
-            </button>
-          </div>
-        </div>
-      )}
+      {open && chatPanel}
     </>
   );
 }

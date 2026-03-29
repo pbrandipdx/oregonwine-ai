@@ -9,7 +9,8 @@ createRoot(document.getElementById("widget-root")!).render(
   <ChatWidget
     apiKey={apiKey}
     apiBase={apiBase}
-    themeColor="#722F37"
+    themeColor="#4a6741"
     wineryLabel="REX HILL"
+    embedded
   />
 );
