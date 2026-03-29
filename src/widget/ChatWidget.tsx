@@ -307,8 +307,79 @@ export function ChatWidget({
     ].some((p) => lower.includes(p));
   };
 
-  /** Embedded landing: stack hero + chips + composer at the top (no huge gap above input). */
-  const landingEmbeddedTop = embedded && showLanding;
+  /** Embedded full-page landing: GPT-style vertical center, composer then prompts with a wide gap. */
+  const landingEmbedded = embedded && showLanding;
+
+  const inputCardEl = (
+    <div
+      style={{
+        background: c.surface,
+        border: `1px solid ${c.border}`,
+        borderRadius: 20,
+        padding: "14px 18px",
+        transition: "border-color 0.2s",
+      }}
+      onFocus={() => {}}
+    >
+      <div style={{ display: "flex", alignItems: "flex-end" }}>
+        <textarea
+          ref={textareaRef}
+          rows={1}
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+            resizeTextarea();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              send();
+            }
+          }}
+          placeholder="Ask about wines, tastings, hours..."
+          disabled={loading}
+          style={{
+            flex: 1,
+            background: "none",
+            border: "none",
+            outline: "none",
+            color: c.text,
+            fontFamily: "'DM Sans', system-ui, sans-serif",
+            fontSize: 15,
+            lineHeight: 1.5,
+            resize: "none",
+            minHeight: 24,
+            maxHeight: 120,
+          }}
+        />
+        <button
+          type="button"
+          onClick={send}
+          disabled={loading || !input.trim()}
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            border: "none",
+            background: input.trim() ? c.sendBtn : "transparent",
+            color: input.trim() ? "#fff" : c.textDim,
+            cursor: loading || !input.trim() ? "default" : "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            transition: "background 0.15s",
+            marginLeft: 8,
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5" />
+            <polyline points="5 12 12 5 19 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
 
   const chatPanel = (
     <div
@@ -328,54 +399,109 @@ export function ChatWidget({
         ...(embedded ? {} : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
       }}
     >
-      {/* Messages / Landing area */}
-      <div
-        style={{
-          flex: landingEmbeddedTop ? "0 0 auto" : 1,
-          minHeight: landingEmbeddedTop ? undefined : 0,
-          overflowY: landingEmbeddedTop ? "visible" : "auto",
-          padding: landingEmbeddedTop ? "12px 20px 4px" : "24px 20px 12px",
-          fontSize: 14,
-          lineHeight: 1.6,
-          color: c.text,
-          display: "flex",
-          flexDirection: "column",
-          ...(showLanding
-            ? {
-                justifyContent: landingEmbeddedTop ? "flex-start" : "center",
-                alignItems: "center",
-              }
-            : {}),
-        }}
-      >
-        {/* Landing state */}
-        {showLanding && (
-          <div style={{ textAlign: "center", maxWidth: "100%" }}>
-            <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
-              {wineryLabel} Wine Concierge
+      {landingEmbedded ? (
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: "clamp(12px, 3vh, 28px) 0 clamp(32px, 9vh, 100px)",
+            overflowY: "auto",
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "100%",
+              flex: "0 0 auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ textAlign: "center", padding: "0 24px", width: "100%", boxSizing: "border-box" }}>
+              <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
+                {wineryLabel} Wine Concierge
+              </div>
+              <h2
+                style={{
+                  fontFamily: "'Playfair Display', Georgia, serif",
+                  fontSize: "clamp(1.75rem, 4.5vw, 2.6rem)",
+                  fontWeight: 500,
+                  color: c.text,
+                  lineHeight: 1.2,
+                  margin: 0,
+                  whiteSpace: "normal",
+                }}
+              >
+                What can I help you discover today?
+              </h2>
             </div>
-            <h2
-              style={{
-                fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: "2.6rem",
-                fontWeight: 500,
-                color: c.text,
-                lineHeight: 1.15,
-                margin: 0,
-                whiteSpace: "nowrap",
-              }}
-            >
-              What can I help you discover today?
-            </h2>
-            {embedded && showQuickReplies && !loading && (
+            <div style={{ width: "100%", padding: "0 16px", marginTop: 22, boxSizing: "border-box" }}>{inputCardEl}</div>
+            {showQuickReplies && !loading && (
               <QuickReplyChips
                 palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
                 onPick={sendMessage}
-                marginTop={20}
+                marginTop={48}
               />
             )}
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: 14,
+                fontSize: 11,
+                color: c.textDim,
+                padding: "0 16px",
+                width: "100%",
+                boxSizing: "border-box",
+              }}
+            >
+              Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
+            </div>
           </div>
-        )}
+        </div>
+      ) : (
+        <>
+          {/* Messages / Landing area */}
+          <div
+            style={{
+              flex: 1,
+              minHeight: 0,
+              overflowY: "auto",
+              padding: "24px 20px 12px",
+              fontSize: 14,
+              lineHeight: 1.6,
+              color: c.text,
+              display: "flex",
+              flexDirection: "column",
+              ...(showLanding && !embedded ? { justifyContent: "center", alignItems: "center" } : {}),
+            }}
+          >
+            {/* Landing state (floating widget) */}
+            {showLanding && (
+              <div style={{ textAlign: "center", maxWidth: "100%" }}>
+                <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
+                  {wineryLabel} Wine Concierge
+                </div>
+                <h2
+                  style={{
+                    fontFamily: "'Playfair Display', Georgia, serif",
+                    fontSize: "2.6rem",
+                    fontWeight: 500,
+                    color: c.text,
+                    lineHeight: 1.15,
+                    margin: 0,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  What can I help you discover today?
+                </h2>
+              </div>
+            )}
 
         {/* Conversation messages */}
         {!showLanding && messages.map((m, i) => (
@@ -531,77 +657,10 @@ export function ChatWidget({
       </div>
 
       {/* Input area */}
-      <div style={{ padding: landingEmbeddedTop ? "4px 16px 16px" : "0 16px 16px", flex: "0 0 auto" }}>
-        <div
-          style={{
-            background: c.surface,
-            border: `1px solid ${c.border}`,
-            borderRadius: 20,
-            padding: "14px 18px",
-            transition: "border-color 0.2s",
-          }}
-          onFocus={() => {}}
-        >
-          <div style={{ display: "flex", alignItems: "flex-end" }}>
-            <textarea
-              ref={textareaRef}
-              rows={1}
-              value={input}
-              onChange={(e) => {
-                setInput(e.target.value);
-                resizeTextarea();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  send();
-                }
-              }}
-              placeholder="Ask about wines, tastings, hours..."
-              disabled={loading}
-              style={{
-                flex: 1,
-                background: "none",
-                border: "none",
-                outline: "none",
-                color: c.text,
-                fontFamily: "'DM Sans', system-ui, sans-serif",
-                fontSize: 15,
-                lineHeight: 1.5,
-                resize: "none",
-                minHeight: 24,
-                maxHeight: 120,
-              }}
-            />
-            <button
-              type="button"
-              onClick={send}
-              disabled={loading || !input.trim()}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: "50%",
-                border: "none",
-                background: input.trim() ? c.sendBtn : "transparent",
-                color: input.trim() ? "#fff" : c.textDim,
-                cursor: loading || !input.trim() ? "default" : "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                transition: "background 0.15s",
-                marginLeft: 8,
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="19" x2="12" y2="5" />
-                <polyline points="5 12 12 5 19 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
+      <div style={{ padding: "0 16px 16px", flex: "0 0 auto" }}>
+        {inputCardEl}
 
-        {/* Quick replies (floating widget only; embedded page renders them with the landing hero) */}
+        {/* Quick replies (floating widget landing) */}
         {showQuickReplies && showLanding && !loading && !embedded && (
           <QuickReplyChips
             palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
@@ -611,25 +670,16 @@ export function ChatWidget({
         )}
 
         {/* Footer */}
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: landingEmbeddedTop ? 8 : 10,
-            fontSize: 11,
-            color: c.textDim,
-          }}
-        >
+        <div style={{ textAlign: "center", marginTop: 10, fontSize: 11, color: c.textDim }}>
           Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
         </div>
       </div>
+        </>
+      )}
 
-      {/* Error (before bottom spacer so it sits under the composer on landing) */}
       {error && (
         <div style={{ padding: "0 20px 12px", color: c.error, fontSize: 12, flex: "0 0 auto" }}>{error}</div>
       )}
-
-      {/* Fill remaining height so landing stack stays under the copy instead of floating mid-panel */}
-      {landingEmbeddedTop && <div style={{ flex: 1, minHeight: 0 }} aria-hidden />}
     </div>
   );
 
