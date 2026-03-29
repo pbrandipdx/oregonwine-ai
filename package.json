@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:widget": "vite build --config vite.widget.config.ts",
     "preview": "vite preview",
-    "embed": "tsx scripts/embed.ts"
+    "embed": "tsx scripts/embed.ts",
+    "crawl": "tsx scripts/crawl.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",

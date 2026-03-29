@@ -1,0 +1,157 @@
+{
+  "slug": "rex-hill",
+  "winery_id": "8aa6c77b-5873-433c-baa7-c1c5f35edf04",
+  "name": "REX HILL",
+  "sources": [
+    {
+      "url": "https://rexhill.com",
+      "chunk_type": "overview",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill is a premier Pinot Noir and Chardonnay producer located in the heart of Oregon's Willamette Valley, in the town of Newberg. The winery was originally founded in 1982 and is situated at 30835 N Hwy 99W, Newberg, OR 97132. Phone: (503) 538-0666. In 2007, A to Z Wineworks founders Cheryl Francis, Deb Hatcher, Sam Tannahill, and Bill Hatcher took over stewardship of Rex Hill, bringing a commitment to sustainable and biodynamic farming.",
+        "Rex Hill became a Certified B Corporation in 2014, making it the world's first B Corporation winery at the time. The winery has earned \"Best for the World\" designation from B Lab every year since certification. Rex Hill has also received the Robert Parker Wine Advocate Extraordinary Winery Award, recognizing consistent excellence across its portfolio."
+      ]
+    },
+    {
+      "url": "https://www.oregonwine.org/wineries/rex-hill/",
+      "chunk_type": "overview",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill is located in the Chehalem Mountains AVA, a sub-appellation of the Willamette Valley. The winery produces Chardonnay, Pinot Noir, Rosé, and Sparkling wines. Rex Hill holds multiple sustainability certifications: Certified B Corporation, LIVE certified (Low Input Viticulture and Enology), and practices biodynamic farming on its estate vineyards. The winery participates in Oregon's Wine Flies Free initiative and is part of the Wheel the World accessibility recognition program."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/experiences/",
+      "chunk_type": "hours",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill tasting room hours: Open Monday through Sunday, 10:00 AM to 5:00 PM. Located at 30835 N Hwy 99W, Newberg, OR 97132. Reservations are recommended for all tasting experiences. The tasting room features both indoor and outdoor seating areas. Outdoor tables are first-come, first-served and cannot be reserved."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/experiences/",
+      "chunk_type": "policies",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill visitor policies: Dogs are welcome on the outdoor patio but are not allowed inside the tasting room, with the exception of service animals. Outside food is not permitted on the premises. Minors are welcome but must be accompanied by a parent or guardian at all times. For groups of 7 or more, please contact the winery directly to arrange a reservation, as large groups require advance coordination."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/experiences/",
+      "chunk_type": "experience",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill tasting experience: Classic Flight — $45 per person (complimentary for wine club members). This is the signature tasting experience featuring a curated selection of current-release wines. It provides an excellent introduction to Rex Hill's portfolio of Willamette Valley Pinot Noir and Chardonnay.",
+        "Rex Hill tasting experience: Library Flight — $70 per person. This experience features aged wines from the Rex Hill cellar library, showcasing how the wines develop and evolve over time. A rare opportunity to taste older vintages not typically available for purchase.",
+        "Rex Hill tasting experience: Legacy Tour — $90 per person ($72 for club members). This guided tour takes guests through the estate vineyards and winemaking facilities, followed by a seated tasting. Learn about Rex Hill's biodynamic farming practices and winemaking philosophy firsthand.",
+        "Rex Hill tasting experience: Somm's Table — $125 per person. This is Rex Hill's most exclusive and in-depth tasting, led by a sommelier. Guests enjoy a curated selection of rare and limited-production wines paired with artisanal accompaniments. An elevated experience for serious wine enthusiasts.",
+        "Rex Hill tasting experience: Sensory Experience — $80 per person. An interactive exploration of wine through the senses, designed to deepen your understanding of how you perceive and enjoy wine. A unique educational experience that goes beyond traditional tasting.",
+        "Rex Hill tasting experience: Bottles & Boards — $80 per person. A relaxed, social tasting experience that pairs Rex Hill wines with a curated charcuterie and cheese board. Perfect for a casual visit with friends or a special occasion."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/vineyards/",
+      "chunk_type": "vineyard",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill Estate Vineyard: 38 acres located in the northern Willamette Valley, originally planted in 1982. The vineyard grows over 17 clones of Pinot Noir and is farmed using biodynamic practices. The estate vineyard is the heart of Rex Hill's winemaking program and produces some of the winery's most celebrated single-vineyard wines. The terroir features Willakenzie series soils with excellent drainage and moderate elevation.",
+        "Jacob-Hart Estate Vineyard: Purchased by Rex Hill in 1987, this vineyard is notable for having 13 distinct soil types, including both volcanic and sedimentary soils. This remarkable soil diversity within a single vineyard creates wines of exceptional complexity and depth. The vineyard is also farmed biodynamically and contributes to Rex Hill's estate-grown Pinot Noir program."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/winemaking/",
+      "chunk_type": "winemaking",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill winemaking philosophy: \"Less is More.\" All grapes are hand-picked and transferred by gravity to minimize handling. For Pinot Noir: the fruit undergoes a 7 to 14 day cold soak before fermentation to gently extract color and flavor. Fermentation uses an average of 25 to 30 percent whole cluster inclusion, which adds spice, structure, and complexity. The wine is then aged for 12 to 18 months in French oak barrels, with approximately 25 to 30 percent new oak.",
+        "Rex Hill Chardonnay winemaking: The grapes are whole-cluster pressed to preserve delicate fruit character and avoid harsh phenolics. The wine is fermented and aged in French oak barrels with 25 to 30 percent new oak. It spends approximately 15 months aging on its lees (spent yeast cells), which adds richness, texture, and complexity to the finished wine. This method produces Chardonnays that balance fruit purity with creamy, layered mouthfeel."
+      ]
+    },
+    {
+      "url": "https://americanwineryguide.com/winery-reviews/rex-hill-vineyards-review/",
+      "chunk_type": "winemaking",
+      "confidence": 0.85,
+      "chunks": [
+        "Rex Hill winemaker Michael Davies oversees the winemaking program. Since A to Z Wineworks acquired Rex Hill, Davies has elevated quality across the top-tier lineup while directing higher-volume production to the A to Z label. The winemaking team focuses on minimal intervention, allowing the terroir and fruit to express themselves. The Alloro Vineyard designation has been singled out by critics as a standout offering."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/clubs/",
+      "chunk_type": "club",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill Wine Club — Collector's Tier: 12 bottles shipped 5 times per year. Price ranges from $432 to $900 per shipment depending on the wines selected. This is the most comprehensive club tier, offering access to the full range of Rex Hill wines including limited-production and library selections. Members receive a 20% discount on all wine purchases and complimentary tastings for the member and up to 3 guests.",
+        "Rex Hill Wine Club — Crown Tier: 12 bottles shipped 2 times per year. A curated selection of Rex Hill's premium wines delivered twice annually. Members receive a 20% discount on all wine purchases and complimentary tastings for the member and guests. This tier is ideal for enthusiasts who want a generous selection without the frequency of the Collector's tier.",
+        "Rex Hill Wine Club — Cellar Tier: 6 bottles shipped 2 times per year. Price ranges from $216 to $408 per shipment. This is the entry-level club tier, perfect for those new to Rex Hill or who prefer a smaller selection. Members still receive a 20% discount on all wine purchases and complimentary tastings. All club tiers allow cancellation at any time after receiving the first shipment."
+      ]
+    },
+    {
+      "url": "https://rexhill.com",
+      "chunk_type": "wine",
+      "confidence": 0.90,
+      "chunks": [
+        "Rex Hill 2022 Willamette Valley Pinot Noir: Retail price $38. Tasting notes describe it as generous and elegantly structured, with flavors of raspberry and guava. This is Rex Hill's flagship appellation-level Pinot Noir, representing a blend of fruit from across the Willamette Valley. It showcases the classic Oregon Pinot Noir character of bright red fruit, earth, and refined tannins.",
+        "Rex Hill 2021 Willamette Valley Pinot Noir: Described as sleek and expressive, with cherry and pomegranate notes. This vintage highlights the cooler character of the 2021 growing season, producing a wine with bright acidity and a more linear, focused profile compared to warmer years.",
+        "Rex Hill 2019 Willamette Valley Pinot Noir: Described as supple and vibrant, with raspberry and pomegranate flavors. The 2019 vintage was widely regarded as one of the best in recent Oregon history, producing wines with excellent concentration and balance.",
+        "Rex Hill 2021 Reserve Pinot Noir: Described as silky and balanced, with earthy blackberry-tea character. The Reserve bottling represents a selection of the best barrels from the vintage, offering greater depth, complexity, and aging potential compared to the standard Willamette Valley bottling.",
+        "Rex Hill produces a range of wines focused primarily on Pinot Noir and Chardonnay from the Willamette Valley. The portfolio includes the Willamette Valley appellation wines (the most accessible tier), single-vineyard designates from estate properties, and the Reserve tier representing the best barrel selections. They also produce limited quantities of other varieties. Wines can be purchased at the tasting room, through the wine club, or on the Rex Hill website."
+      ]
+    },
+    {
+      "url": "https://www.wineenthusiast.com",
+      "chunk_type": "wine",
+      "confidence": 0.90,
+      "chunks": [
+        "Rex Hill wine ratings and scores from major publications: The 2022 Willamette Valley Pinot Noir ($38) received 89 points from Wine Enthusiast and 90 points from Wine Spectator. The 2021 Reserve Pinot Noir received 93 points from Wine Enthusiast. The 2021 Willamette Valley Pinot Noir received 90 points from Wine Enthusiast. The 2021 Seven Soils Chardonnay received 91 points from Wine Enthusiast and 90 points from Wine Spectator. These scores place Rex Hill consistently in the \"very good\" to \"outstanding\" range across its portfolio."
+      ]
+    },
+    {
+      "url": "https://rexhill.com/wine/",
+      "chunk_type": "wine",
+      "confidence": 0.90,
+      "chunks": [
+        "Rex Hill organizes its wines into several collections: Tasting Room Favorites (the core lineup available in the tasting room), Club Exclusives (wines available only to wine club members), Single Vineyard designations (wines from specific vineyard sites like Alloro Vineyard, showcasing terroir expression), and the Estate Collection (wines from Rex Hill's own estate vineyards including the Rex Hill Estate and Jacob-Hart Estate). The winery focuses primarily on Pinot Noir and Chardonnay, with limited production of Rosé and Sparkling wine."
+      ]
+    },
+    {
+      "url": "https://rexhill.com",
+      "chunk_type": "sustainability",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill is deeply committed to sustainability and environmental stewardship. The estate vineyards are farmed biodynamically, going beyond organic practices to treat the vineyard as a self-sustaining ecosystem. As a Certified B Corporation since 2014, Rex Hill meets rigorous standards of social and environmental performance, accountability, and transparency. The winery has earned B Lab's \"Best for the World\" honor every year since certification, placing it in the top tier of B Corps globally."
+      ]
+    },
+    {
+      "url": "https://rexhill.com",
+      "chunk_type": "history",
+      "confidence": 0.90,
+      "chunks": [
+        "Rex Hill history: The winery was founded in 1982, with the Rex Hill Estate vineyard planted the same year. The Jacob-Hart Estate vineyard was acquired in 1987. In 2007, the A to Z Wineworks team — Cheryl Francis, Deb Hatcher, Sam Tannahill, and Bill Hatcher — took over Rex Hill, revitalizing the estate with a focus on biodynamic farming and hands-off winemaking. Under their stewardship, Rex Hill became a Certified B Corporation in 2014 and has continued to earn critical acclaim for its Pinot Noir and Chardonnay."
+      ]
+    },
+    {
+      "url": "https://traveloregon.com/things-to-do/eat-drink/wine-wineries/rex-hill/",
+      "chunk_type": "history",
+      "confidence": 0.90,
+      "chunks": [
+        "After the A to Z Wineworks team acquired Rex Hill in 2007, case production was reduced by almost 80 percent to refine the wines to the highest quality. Higher-volume production was redirected to the A to Z Wineworks label, allowing Rex Hill to focus exclusively on premium, small-lot wines. Following extensive renovations completed in 2020, the tasting room now features a space that combines sustainable modern design elements with the deep history of the original building."
+      ]
+    },
+    {
+      "url": "https://traveloregon.com/things-to-do/eat-drink/wine-wineries/rex-hill/",
+      "chunk_type": "visit",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill contact and amenities: Address is 30835 OR-99W, Newberg, OR 97132. Phone: 503-538-0666. Email: info@REXHILL.com. Website: rexhill.com. The winery is wheelchair accessible and offers bus/RV parking. The facility features both indoor and outdoor seating areas. Food is available for purchase. Picnics are permitted on the grounds. Reservations are recommended — visit rexhill.com/experiences/ to book."
+      ]
+    },
+    {
+      "url": "https://www.yelp.com/biz/rex-hill-vineyards-winery-newberg",
+      "chunk_type": "reviews",
+      "confidence": 0.85,
+      "chunks": [
+        "Rex Hill visitor reviews: The winery has 122 reviews on Yelp with 233 photos, and is well-reviewed on TripAdvisor. Visitors frequently praise the beautiful setting, knowledgeable and friendly staff, excellent wines, and the unique historic property. The outdoor areas and scenery receive particular praise. The American Winery Guide gave Rex Hill 4 out of 5 stars, noting its classic elegance and describing it as an accessible entry point for exploring Oregon Pinot Noir."
+      ]
+    }
+  ]
+}
