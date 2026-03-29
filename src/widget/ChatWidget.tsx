@@ -307,6 +307,9 @@ export function ChatWidget({
     ].some((p) => lower.includes(p));
   };
 
+  /** Embedded landing: stack hero + chips + composer at the top (no huge gap above input). */
+  const landingEmbeddedTop = embedded && showLanding;
+
   const chatPanel = (
     <div
       style={{
@@ -328,15 +331,21 @@ export function ChatWidget({
       {/* Messages / Landing area */}
       <div
         style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "24px 20px 12px",
+          flex: landingEmbeddedTop ? "0 0 auto" : 1,
+          minHeight: landingEmbeddedTop ? undefined : 0,
+          overflowY: landingEmbeddedTop ? "visible" : "auto",
+          padding: landingEmbeddedTop ? "12px 20px 4px" : "24px 20px 12px",
           fontSize: 14,
           lineHeight: 1.6,
           color: c.text,
           display: "flex",
           flexDirection: "column",
-          ...(showLanding ? { justifyContent: "center", alignItems: "center" } : {}),
+          ...(showLanding
+            ? {
+                justifyContent: landingEmbeddedTop ? "flex-start" : "center",
+                alignItems: "center",
+              }
+            : {}),
         }}
       >
         {/* Landing state */}
@@ -522,7 +531,7 @@ export function ChatWidget({
       </div>
 
       {/* Input area */}
-      <div style={{ padding: "0 16px 16px" }}>
+      <div style={{ padding: landingEmbeddedTop ? "4px 16px 16px" : "0 16px 16px", flex: "0 0 auto" }}>
         <div
           style={{
             background: c.surface,
@@ -602,15 +611,25 @@ export function ChatWidget({
         )}
 
         {/* Footer */}
-        <div style={{ textAlign: "center", marginTop: 10, fontSize: 11, color: c.textDim }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: landingEmbeddedTop ? 8 : 10,
+            fontSize: 11,
+            color: c.textDim,
+          }}
+        >
           Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
         </div>
       </div>
 
-      {/* Error */}
+      {/* Error (before bottom spacer so it sits under the composer on landing) */}
       {error && (
-        <div style={{ padding: "0 20px 12px", color: c.error, fontSize: 12 }}>{error}</div>
+        <div style={{ padding: "0 20px 12px", color: c.error, fontSize: 12, flex: "0 0 auto" }}>{error}</div>
       )}
+
+      {/* Fill remaining height so landing stack stays under the copy instead of floating mid-panel */}
+      {landingEmbeddedTop && <div style={{ flex: 1, minHeight: 0 }} aria-hidden />}
     </div>
   );
 
