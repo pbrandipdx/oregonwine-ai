@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rex Hill Wine Concierge — Mockup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      background: #0d0d0d;
+      color: #e8e4e5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Chat Container ── */
+    .chat-container {
+      width: 100%;
+      max-width: 820px;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    /* ── Logo / Brand ── */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.7;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: #a09496;
+    }
+    .brand-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #111;
+    }
+
+    /* ── Heading ── */
+    .heading {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: #ececec;
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    /* ── Input Area ── */
+    .input-wrapper {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 20px;
+      padding: 16px 20px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-wrapper:focus-within {
+      border-color: #4a4a4a;
+      box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.1);
+    }
+
+    .input-top {
+      display: flex;
+      align-items: center;
+    }
+    .input-top textarea {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: #e8e0e2;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      resize: none;
+      line-height: 1.5;
+      min-height: 24px;
+      max-height: 120px;
+    }
+    .input-top textarea::placeholder { color: #666; }
+
+    .input-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+
+    .input-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .input-action-btn {
+      background: none;
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      color: #888;
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .input-action-btn:hover {
+      background: #2e2e2e;
+      color: #a09496;
+    }
+    .input-action-btn svg { width: 16px; height: 16px; }
+
+    .send-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #111;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .send-btn:hover { background: #222; transform: scale(1.05); }
+    .send-btn svg { width: 18px; height: 18px; }
+
+    /* ── Quick Actions ── */
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .quick-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      padding: 10px 18px;
+      color: #a09496;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .quick-btn:hover {
+      background: #2e2e2e;
+      border-color: #3a3a3a;
+      color: #ececec;
+    }
+    .quick-btn svg { width: 16px; height: 16px; opacity: 0.7; }
+
+    /* ── Footer ── */
+    .footer {
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .footer a { color: #777; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── Message Bubbles (for conversation state) ── */
+    .messages {
+      width: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+      display: none; /* hidden in landing state */
+      flex-direction: column;
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .messages.active { display: flex; }
+
+    .msg {
+      max-width: 85%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-size: 0.98rem;
+      line-height: 1.6;
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: #2a1520;
+      color: #ececec;
+      border-bottom-right-radius: 4px;
+    }
+    .msg.assistant {
+      align-self: flex-start;
+      background: #1a1a1a;
+      color: #d5d5d5;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #c47a84;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+    .msg .cta-link:hover { text-decoration: underline; }
+
+    /* ── Typing indicator ── */
+    .typing-dots {
+      display: flex;
+      gap: 5px;
+      padding: 4px 0;
+    }
+    .typing-dots span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #666;
+      animation: dotPulse 1.2s ease-in-out infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.15s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes dotPulse {
+      0%, 60%, 100% { opacity: 0.3; transform: scale(0.85); }
+      30% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ── Conversation Demo Toggle ── */
+    .demo-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 10px;
+      padding: 8px 16px;
+      color: #999;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .demo-toggle:hover { background: #3d2c30; }
+  </style>
+</head>
+<body>
+
+  <button class="demo-toggle" onclick="toggleDemo()">Toggle conversation demo</button>
+
+  <div class="chat-container" id="chatContainer">
+
+    <!-- ── Brand ── -->
+    <div class="brand">
+      <span class="brand-dot"></span>
+      Rex Hill Wine Concierge
+    </div>
+
+    <!-- ── Heading (landing state) ── -->
+    <h1 class="heading" id="landingHeading">What can I help you<br>discover today?</h1>
+
+    <!-- ── Messages (conversation state) ── -->
+    <div class="messages" id="messagesArea">
+      <div class="msg user">What tasting experiences do you offer?</div>
+      <div class="msg assistant">
+        Rex Hill offers three tasting experiences. The Estate Tasting ($30) includes five wines on the covered porch. The Reserve Flight ($50) features limited-production wines with a guided walkthrough. And the Cellar Experience ($75) is a deep dive into our winemaking with barrel samples.
+        <br>
+        <a class="cta-link" href="#">
+          <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path d="M6 4a1 1 0 011-1h6a1 1 0 011 1v1h2a1 1 0 110 2h-1v9a2 2 0 01-2 2H7a2 2 0 01-2-2V7H4a1 1 0 110-2h2V4z"/></svg>
+          Book a tasting →
+        </a>
+      </div>
+      <div class="msg user">Can I bring my dog?</div>
+      <div class="msg assistant">
+        <div class="typing-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+
+    <!-- ── Input ── -->
+    <div class="input-wrapper">
+      <div class="input-top">
+        <textarea rows="1" placeholder="Ask about wines, tastings, hours..."></textarea>
+      </div>
+      <div class="input-bottom">
+        <div class="input-actions">
+          <button class="input-action-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Attach
+          </button>
+        </div>
+        <button class="send-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── Quick Actions (landing state) ── -->
+    <div class="quick-actions" id="quickActions">
+      <button class="quick-btn" onclick="simulateConvo()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10h5l3 3v-3c1.66-1.66 2-3.22 2-5 0-5.52-4.48-10-10-10z"/></svg>
+        Tasting options
+      </button>
+      <button class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Hours &amp; directions
+      </button>
+      <button class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+        Wine club info
+      </button>
+      <button class="quick-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Food pairings
+      </button>
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="footer">
+      Powered by <a href="#">OregonWine.ai</a>
+    </div>
+
+  </div>
+
+  <script>
+    let demoActive = false;
+    function toggleDemo() {
+      demoActive = !demoActive;
+      document.getElementById('landingHeading').style.display = demoActive ? 'none' : '';
+      document.getElementById('quickActions').style.display = demoActive ? 'none' : '';
+      document.getElementById('messagesArea').classList.toggle('active', demoActive);
+    }
+    function simulateConvo() {
+      demoActive = true;
+      document.getElementById('landingHeading').style.display = 'none';
+      document.getElementById('quickActions').style.display = 'none';
+      document.getElementById('messagesArea').classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
