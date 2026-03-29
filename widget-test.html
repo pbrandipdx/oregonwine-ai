@@ -8,9 +8,7 @@
   <body style="font-family: system-ui; padding: 2rem; max-width: 720px">
     <h1>Widget embed test</h1>
     <p>
-      Use <code>data-key</code> from seed (<code>wk_beta_rexhill_001</code>).
-      <code>data-api-base</code> below targets your hosted project; for local Supabase use
-      <code>http://127.0.0.1:54321/functions/v1</code>.
+      Using widget key <code>wk_beta_rexhill_001</code> against the hosted Supabase Edge Function.
     </p>
     <p
       style="
@@ -24,12 +22,7 @@
       <strong>Look bottom-right</strong> for the round chat button (💬). The rest of this page stays
       mostly empty on purpose.
     </p>
-    <script
-      type="module"
-      src="/src/widget/widget-main.tsx"
-      data-key="wk_beta_rexhill_001"
-      data-color="#722F37"
-      data-api-base="https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1"
-    ></script>
+    <div id="widget-root"></div>
+    <script type="module" src="/src/widget-test-entry.tsx"></script>
   </body>
 </html>
