@@ -21,10 +21,10 @@ type Message = {
 };
 
 const QUICK_REPLIES = [
-  { label: "Tasting options", icon: "\ud83c\udf77" },
-  { label: "Hours & directions", icon: "\ud83d\udd52" },
-  { label: "Wine club info", icon: "\u2764\ufe0f" },
-  { label: "Food pairings", icon: "\ud83c\udf7d\ufe0f" },
+  "Tasting options",
+  "Hours & directions",
+  "Wine club info",
+  "Food pairings",
 ];
 
 /** Strip markdown-style formatting so responses read as clean prose */
@@ -364,7 +364,7 @@ export function ChatWidget({
                       border: `1px solid ${c.border}`,
                     }}
                   >
-                    \ud83d\udcde Talk to the team
+                    Talk to the team \u2192
                   </a>
                 )}
 
@@ -390,7 +390,7 @@ export function ChatWidget({
                       if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
                     }}
                   >
-                    {"\ud83d\udc4d"}
+                    {"\u25b2"}
                   </button>
                   <button
                     type="button"
@@ -413,7 +413,7 @@ export function ChatWidget({
                       if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
                     }}
                   >
-                    {"\ud83d\udc4e"}
+                    {"\u25bc"}
                   </button>
                 </div>
               </div>
@@ -508,13 +508,12 @@ export function ChatWidget({
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 14 }}>
             {QUICK_REPLIES.map((q) => (
               <button
-                key={q.label}
+                key={q}
                 type="button"
-                onClick={() => sendMessage(q.label)}
+                onClick={() => sendMessage(q)}
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 6,
                   padding: "9px 16px",
                   borderRadius: 12,
                   border: `1px solid ${c.border}`,
@@ -540,8 +539,7 @@ export function ChatWidget({
                   el.style.color = "#a09496";
                 }}
               >
-                <span style={{ fontSize: 14 }}>{q.icon}</span>
-                {q.label}
+                {q}
               </button>
             ))}
           </div>
@@ -586,7 +584,7 @@ export function ChatWidget({
           transition: "transform 0.15s, background 0.15s",
         }}
       >
-        {open ? "\u00d7" : "\ud83c\udf77"}
+        {open ? "\u00d7" : "\u2026"}
       </button>
       {open && chatPanel}
     </>
