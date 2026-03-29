@@ -21,10 +21,10 @@ type Message = {
 };
 
 const QUICK_REPLIES = [
-  "Tasting options & prices",
-  "Hours & directions",
-  "Wine club info",
-  "Can I bring my dog?",
+  { label: "Tasting options", icon: "\ud83c\udf77" },
+  { label: "Hours & directions", icon: "\ud83d\udd52" },
+  { label: "Wine club info", icon: "\u2764\ufe0f" },
+  { label: "Food pairings", icon: "\ud83c\udf7d\ufe0f" },
 ];
 
 /** Strip markdown-style formatting so responses read as clean prose */
@@ -45,9 +45,9 @@ function cleanMarkdown(raw: string): string {
 }
 
 /** Animated three-dot typing indicator */
-function TypingDots({ color }: { color: string }) {
+function TypingDots() {
   return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center", padding: "10px 14px" }}>
+    <div style={{ display: "flex", gap: 5, alignItems: "center", padding: "12px 16px" }}>
       {[0, 1, 2].map((i) => (
         <span
           key={i}
@@ -55,16 +55,16 @@ function TypingDots({ color }: { color: string }) {
             width: 7,
             height: 7,
             borderRadius: "50%",
-            background: color,
+            background: "#666",
             opacity: 0.5,
-            animation: `owDotPulse 1.2s ease-in-out ${i * 0.2}s infinite`,
+            animation: `owDotPulse 1.2s ease-in-out ${i * 0.15}s infinite`,
           }}
         />
       ))}
       <style>{`
         @keyframes owDotPulse {
-          0%, 60%, 100% { opacity: 0.25; transform: scale(0.85); }
-          30% { opacity: 0.7; transform: scale(1.1); }
+          0%, 60%, 100% { opacity: 0.3; transform: scale(0.85); }
+          30% { opacity: 1; transform: scale(1); }
         }
       `}</style>
     </div>
@@ -73,7 +73,7 @@ function TypingDots({ color }: { color: string }) {
 
 export function ChatWidget({
   apiKey,
-  themeColor,
+  themeColor: _themeColor,
   apiBase,
   wineryLabel,
   embedded,
@@ -84,20 +84,43 @@ export function ChatWidget({
   const [open, setOpen] = useState(embedded ? true : false);
   const [input, setInput] = useState("");
   const [showQuickReplies, setShowQuickReplies] = useState(true);
-  const [messages, setMessages] = useState<Message[]>(() => [
-    {
-      role: "assistant",
-      text: `Welcome to ${wineryLabel}! I can help with tastings, wines, hours, visiting info, and more. What would you like to know?`,
-    },
-  ]);
+  const [showLanding, setShowLanding] = useState(true);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-scroll on new messages
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  // Auto-resize textarea
+  const resizeTextarea = () => {
+    const ta = textareaRef.current;
+    if (ta) {
+      ta.style.height = "auto";
+      ta.style.height = Math.min(ta.scrollHeight, 120) + "px";
+    }
+  };
+
+  // --- Dark color palette ---
+  const c = {
+    bg: "#0d0d0d",
+    surface: "#1a1a1a",
+    border: "#2e2e2e",
+    borderHover: "#3a3a3a",
+    text: "#ececec",
+    textMuted: "#888",
+    textDim: "#555",
+    userBubble: "#2a1520",
+    assistantBubble: "#1a1a1a",
+    accent: "#c47a84",
+    error: "#e05555",
+    sendBtn: "#111",
+    sendBtnHover: "#222",
+  };
 
   const sendFeedback = useCallback(
     async (logId: string, rating: 1 | -1, msgIndex: number) => {
@@ -130,10 +153,17 @@ export function ChatWidget({
       setInput("");
       setError(null);
       setShowQuickReplies(false);
+      setShowLanding(false);
+
+      // Reset textarea height
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+
       setMessages((m) => [...m, { role: "user", text: trimmed }]);
       setLoading(true);
 
-      const history = messages.slice(1).map((m) => ({ role: m.role, text: m.text }));
+      const history = messages.map((m) => ({ role: m.role, text: m.text }));
 
       try {
         const res = await fetch(`${apiBase}/chat`, {
@@ -182,22 +212,6 @@ export function ChatWidget({
 
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
 
-  // --- Colors ---
-  const c = {
-    primary: themeColor,
-    primaryLight: "#e8ede6",
-    userBubble: "#eae4d9",
-    assistantBubble: "#f2f0ec",
-    bg: "#ffffff",
-    border: "#ddd8cf",
-    textDark: "#3b3228",
-    textMuted: "#7a6e5d",
-    error: "#9e4a3a",
-    quickReply: "#f5f2ed",
-    quickReplyHover: "#ebe7e0",
-    escalation: "#e8ede6",
-  };
-
   /** Detect if the response suggests the bot couldn't answer */
   const isDeflected = (text: string) => {
     const lower = text.toLowerCase();
@@ -215,72 +229,62 @@ export function ChatWidget({
   const chatPanel = (
     <div
       style={{
-        width: embedded ? "100%" : "min(420px, calc(100vw - 48px))",
-        height: embedded ? 560 : 520,
+        width: embedded ? "100%" : "min(480px, calc(100vw - 48px))",
+        height: embedded ? "100%" : 600,
         background: c.bg,
-        borderRadius: 16,
+        borderRadius: embedded ? 20 : 16,
         boxShadow: embedded
-          ? "0 2px 20px rgba(59,50,40,0.08)"
-          : "0 16px 48px rgba(59,50,40,0.14)",
+          ? "none"
+          : "0 16px 48px rgba(0,0,0,0.4)",
         display: "flex",
         flexDirection: "column",
-        border: `1px solid ${c.border}`,
+        border: embedded ? "none" : `1px solid ${c.border}`,
         fontFamily: "'DM Sans', system-ui, sans-serif",
         overflow: "hidden",
         ...(embedded ? {} : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
       }}
     >
-      {/* Header */}
-      <div
-        style={{
-          padding: "14px 20px",
-          background: c.primary,
-          color: "#fff",
-          borderRadius: "16px 16px 0 0",
-          fontWeight: 600,
-          fontSize: 15,
-          letterSpacing: "0.01em",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span style={{ fontSize: 18, lineHeight: 1 }}>{"\ud83c\udf3f"}</span>
-          {wineryLabel}
-        </div>
-        <a
-          href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
-          title={`Call ${wineryLabel}`}
-          style={{
-            color: "rgba(255,255,255,0.8)",
-            fontSize: 12,
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: 4,
-          }}
-        >
-          {"\ud83d\udcde"} Call us
-        </a>
-      </div>
-
-      {/* Messages */}
+      {/* Messages / Landing area */}
       <div
         style={{
           flex: 1,
           overflowY: "auto",
-          padding: 16,
+          padding: "24px 20px 12px",
           fontSize: 14,
-          lineHeight: 1.55,
-          color: c.textDark,
+          lineHeight: 1.6,
+          color: c.text,
+          display: "flex",
+          flexDirection: "column",
+          ...(showLanding ? { justifyContent: "center", alignItems: "center" } : {}),
         }}
       >
-        {messages.map((m, i) => (
+        {/* Landing state */}
+        {showLanding && (
+          <div style={{ textAlign: "center", paddingBottom: 16 }}>
+            <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
+              {wineryLabel} Wine Concierge
+            </div>
+            <h2
+              style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: "1.8rem",
+                fontWeight: 500,
+                color: c.text,
+                lineHeight: 1.2,
+                margin: 0,
+              }}
+            >
+              What can I help you<br />discover today?
+            </h2>
+          </div>
+        )}
+
+        {/* Conversation messages */}
+        {!showLanding && messages.map((m, i) => (
           <div
             key={i}
             style={{
-              marginBottom: 12,
+              marginBottom: 14,
               display: "flex",
               flexDirection: "column",
               alignItems: m.role === "user" ? "flex-end" : "flex-start",
@@ -289,9 +293,11 @@ export function ChatWidget({
             <div
               style={{
                 maxWidth: "85%",
-                padding: "10px 14px",
-                borderRadius: m.role === "user" ? "14px 14px 4px 14px" : "14px 14px 14px 4px",
-                background: m.role === "user" ? c.userBubble : c.assistantBubble,
+                padding: "12px 16px",
+                borderRadius: 16,
+                ...(m.role === "user"
+                  ? { borderBottomRightRadius: 4, background: c.userBubble, color: c.text }
+                  : { borderBottomLeftRadius: 4, background: c.assistantBubble, color: "#d5d5d5", border: `1px solid ${c.border}` }),
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
               }}
@@ -299,10 +305,9 @@ export function ChatWidget({
               {m.text}
             </div>
 
-            {/* CTA buttons after assistant messages that mention booking or club */}
+            {/* CTA buttons + feedback after assistant messages */}
             {m.role === "assistant" && m.logId && (
-              <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6 }}>
-                {/* Contextual action links */}
+              <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
                 {/tasting|experience|reserv|book/i.test(m.text) && (
                   <a
                     href={`${wineryUrl}/experiences/`}
@@ -312,15 +317,15 @@ export function ChatWidget({
                       display: "inline-block",
                       padding: "5px 12px",
                       borderRadius: 8,
-                      background: c.primaryLight,
-                      color: c.primary,
+                      background: c.surface,
+                      color: c.accent,
                       fontSize: 12,
                       fontWeight: 600,
                       textDecoration: "none",
-                      border: `1px solid ${c.primary}22`,
+                      border: `1px solid ${c.border}`,
                     }}
                   >
-                    Book a tasting
+                    Book a tasting \u2192
                   </a>
                 )}
                 {/club|member|join|shipment/i.test(m.text) && (
@@ -332,19 +337,18 @@ export function ChatWidget({
                       display: "inline-block",
                       padding: "5px 12px",
                       borderRadius: 8,
-                      background: c.primaryLight,
-                      color: c.primary,
+                      background: c.surface,
+                      color: c.accent,
                       fontSize: 12,
                       fontWeight: 600,
                       textDecoration: "none",
-                      border: `1px solid ${c.primary}22`,
+                      border: `1px solid ${c.border}`,
                     }}
                   >
-                    Explore wine clubs
+                    Explore wine clubs \u2192
                   </a>
                 )}
 
-                {/* Escalation button on deflected responses */}
                 {isDeflected(m.text) && (
                   <a
                     href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
@@ -352,30 +356,29 @@ export function ChatWidget({
                       display: "inline-block",
                       padding: "5px 12px",
                       borderRadius: 8,
-                      background: "#faf5f0",
-                      color: c.textDark,
+                      background: c.surface,
+                      color: c.textMuted,
                       fontSize: 12,
                       fontWeight: 600,
                       textDecoration: "none",
                       border: `1px solid ${c.border}`,
                     }}
                   >
-                    {"\ud83d\udcde"} Talk to the team
+                    \ud83d\udcde Talk to the team
                   </a>
                 )}
 
-                {/* Feedback */}
                 <div style={{ display: "flex", gap: 2, marginLeft: "auto" }}>
                   <button
                     type="button"
                     onClick={() => sendFeedback(m.logId!, 1, i)}
                     title="Helpful"
                     style={{
-                      background: m.feedback === 1 ? c.primaryLight : "transparent",
-                      border: "1px solid transparent",
+                      background: m.feedback === 1 ? c.surface : "transparent",
+                      border: `1px solid ${m.feedback === 1 ? c.border : "transparent"}`,
                       borderRadius: 6,
                       cursor: "pointer",
-                      opacity: m.feedback === 1 ? 1 : 0.3,
+                      opacity: m.feedback === 1 ? 1 : 0.35,
                       fontSize: 13,
                       padding: "2px 6px",
                       transition: "opacity 0.15s",
@@ -384,7 +387,7 @@ export function ChatWidget({
                       if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
                     }}
                     onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.3";
+                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
                     }}
                   >
                     {"\ud83d\udc4d"}
@@ -394,11 +397,11 @@ export function ChatWidget({
                     onClick={() => sendFeedback(m.logId!, -1, i)}
                     title="Not helpful"
                     style={{
-                      background: m.feedback === -1 ? "#f3e8e6" : "transparent",
-                      border: "1px solid transparent",
+                      background: m.feedback === -1 ? c.surface : "transparent",
+                      border: `1px solid ${m.feedback === -1 ? c.border : "transparent"}`,
                       borderRadius: 6,
                       cursor: "pointer",
-                      opacity: m.feedback === -1 ? 1 : 0.3,
+                      opacity: m.feedback === -1 ? 1 : 0.35,
                       fontSize: 13,
                       padding: "2px 6px",
                       transition: "opacity 0.15s",
@@ -407,7 +410,7 @@ export function ChatWidget({
                       if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
                     }}
                     onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.3";
+                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
                     }}
                   >
                     {"\ud83d\udc4e"}
@@ -418,108 +421,142 @@ export function ChatWidget({
           </div>
         ))}
 
-        {/* Quick reply suggestions — shown after the initial greeting */}
-        {showQuickReplies && messages.length === 1 && !loading && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 4 }}>
-            {QUICK_REPLIES.map((q) => (
-              <button
-                key={q}
-                type="button"
-                onClick={() => sendMessage(q)}
-                style={{
-                  padding: "7px 14px",
-                  borderRadius: 20,
-                  border: `1px solid ${c.border}`,
-                  background: c.quickReply,
-                  color: c.textDark,
-                  fontSize: 13,
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  transition: "background 0.12s",
-                  whiteSpace: "nowrap",
-                }}
-                onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.background = c.quickReplyHover;
-                }}
-                onMouseLeave={(e) => {
-                  (e.target as HTMLElement).style.background = c.quickReply;
-                }}
-              >
-                {q}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Animated typing indicator */}
+        {/* Typing indicator */}
         {loading && (
-          <div style={{ display: "flex", alignItems: "flex-start", marginBottom: 12 }}>
-            <div
-              style={{
-                borderRadius: "14px 14px 14px 4px",
-                background: c.assistantBubble,
-              }}
-            >
-              <TypingDots color={c.textMuted} />
+          <div style={{ display: "flex", alignItems: "flex-start", marginBottom: 14 }}>
+            <div style={{ borderRadius: 16, borderBottomLeftRadius: 4, background: c.assistantBubble, border: `1px solid ${c.border}` }}>
+              <TypingDots />
             </div>
           </div>
         )}
         <div ref={bottomRef} />
       </div>
 
+      {/* Input area */}
+      <div style={{ padding: "0 16px 16px" }}>
+        <div
+          style={{
+            background: c.surface,
+            border: `1px solid ${c.border}`,
+            borderRadius: 20,
+            padding: "14px 18px",
+            transition: "border-color 0.2s",
+          }}
+          onFocus={() => {}}
+        >
+          <div style={{ display: "flex", alignItems: "flex-end" }}>
+            <textarea
+              ref={textareaRef}
+              rows={1}
+              value={input}
+              onChange={(e) => {
+                setInput(e.target.value);
+                resizeTextarea();
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  send();
+                }
+              }}
+              placeholder="Ask about wines, tastings, hours..."
+              disabled={loading}
+              style={{
+                flex: 1,
+                background: "none",
+                border: "none",
+                outline: "none",
+                color: c.text,
+                fontFamily: "'DM Sans', system-ui, sans-serif",
+                fontSize: 15,
+                lineHeight: 1.5,
+                resize: "none",
+                minHeight: 24,
+                maxHeight: 120,
+              }}
+            />
+            <button
+              type="button"
+              onClick={send}
+              disabled={loading || !input.trim()}
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                border: "none",
+                background: input.trim() ? c.sendBtn : "transparent",
+                color: input.trim() ? "#fff" : c.textDim,
+                cursor: loading || !input.trim() ? "default" : "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+                transition: "background 0.15s",
+                marginLeft: 8,
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="5 12 12 5 19 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Quick replies */}
+        {showQuickReplies && showLanding && !loading && (
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 14 }}>
+            {QUICK_REPLIES.map((q) => (
+              <button
+                key={q.label}
+                type="button"
+                onClick={() => sendMessage(q.label)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "9px 16px",
+                  borderRadius: 12,
+                  border: `1px solid ${c.border}`,
+                  background: c.surface,
+                  color: "#a09496",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  transition: "background 0.15s, border-color 0.15s, color 0.15s",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget;
+                  el.style.background = c.border;
+                  el.style.borderColor = c.borderHover;
+                  el.style.color = c.text;
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget;
+                  el.style.background = c.surface;
+                  el.style.borderColor = c.border;
+                  el.style.color = "#a09496";
+                }}
+              >
+                <span style={{ fontSize: 14 }}>{q.icon}</span>
+                {q.label}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Footer */}
+        <div style={{ textAlign: "center", marginTop: 10, fontSize: 11, color: c.textDim }}>
+          Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
+        </div>
+      </div>
+
       {/* Error */}
       {error && (
-        <div style={{ padding: "0 16px 4px", color: c.error, fontSize: 12 }}>{error}</div>
+        <div style={{ padding: "0 20px 12px", color: c.error, fontSize: 12 }}>{error}</div>
       )}
-
-      {/* Input */}
-      <div
-        style={{
-          display: "flex",
-          gap: 8,
-          padding: "12px 16px",
-          borderTop: `1px solid ${c.border}`,
-          background: "#faf9f7",
-        }}
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send()}
-          placeholder="Ask a question..."
-          disabled={loading}
-          style={{
-            flex: 1,
-            padding: "10px 14px",
-            borderRadius: 10,
-            border: `1px solid ${c.border}`,
-            background: "#fff",
-            fontSize: 14,
-            fontFamily: "inherit",
-            color: c.textDark,
-            outline: "none",
-          }}
-        />
-        <button
-          type="button"
-          onClick={send}
-          disabled={loading}
-          style={{
-            padding: "10px 18px",
-            borderRadius: 10,
-            border: "none",
-            background: loading ? c.textMuted : c.primary,
-            color: "#fff",
-            cursor: loading ? "default" : "pointer",
-            fontFamily: "inherit",
-            fontWeight: 500,
-            fontSize: 14,
-            transition: "background 0.15s",
-          }}
-        >
-          Send
-        </button>
-      </div>
     </div>
   );
 
@@ -539,17 +576,17 @@ export function ChatWidget({
           height: 56,
           borderRadius: "50%",
           border: "none",
-          background: themeColor,
+          background: "#111",
           color: "#fff",
           fontSize: 22,
           cursor: "pointer",
-          boxShadow: "0 8px 24px rgba(59,50,40,0.2)",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.3)",
           zIndex: 99998,
           fontFamily: "inherit",
-          transition: "transform 0.15s",
+          transition: "transform 0.15s, background 0.15s",
         }}
       >
-        {open ? "\u00d7" : "\ud83c\udf3f"}
+        {open ? "\u00d7" : "\ud83c\udf77"}
       </button>
       {open && chatPanel}
     </>
