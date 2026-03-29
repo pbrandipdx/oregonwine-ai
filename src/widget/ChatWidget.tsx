@@ -20,6 +20,32 @@ type Message = {
   feedback?: 1 | -1;
 };
 
+const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
+  "Tasting options": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+    </svg>
+  ),
+  "Hours & directions": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+  ),
+  "Wine club info": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
+    </svg>
+  ),
+  "Food pairings": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2" />
+      <polyline points="2 17 12 22 22 17" />
+      <polyline points="2 12 12 17 22 12" />
+    </svg>
+  ),
+};
+
 const QUICK_REPLIES = [
   "Tasting options",
   "Hours & directions",
@@ -255,7 +281,7 @@ export function ChatWidget({
           color: c.text,
           display: "flex",
           flexDirection: "column",
-          ...(showLanding ? { justifyContent: "center", alignItems: "center" } : {}),
+          ...(showLanding ? { justifyContent: "flex-end", alignItems: "center", paddingBottom: 24 } : {}),
         }}
       >
         {/* Landing state */}
@@ -267,14 +293,15 @@ export function ChatWidget({
             <h2
               style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: "1.8rem",
+                fontSize: "2.6rem",
                 fontWeight: 500,
                 color: c.text,
-                lineHeight: 1.2,
+                lineHeight: 1.15,
                 margin: 0,
+                whiteSpace: "nowrap",
               }}
             >
-              What can I help you<br />discover today?
+              What can I help you discover today?
             </h2>
           </div>
         )}
@@ -514,6 +541,7 @@ export function ChatWidget({
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  gap: 7,
                   padding: "9px 16px",
                   borderRadius: 12,
                   border: `1px solid ${c.border}`,
@@ -539,6 +567,7 @@ export function ChatWidget({
                   el.style.color = "#a09496";
                 }}
               >
+                {QUICK_REPLY_ICONS[q]}
                 {q}
               </button>
             ))}
