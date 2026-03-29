@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import Anthropic from "https://esm.sh/@anthropic-ai/sdk@0.32.1";
 import OpenAI from "https://esm.sh/openai@4.73.0";
 
-const PROMPT_VERSION = "v0.1.0";
+const PROMPT_VERSION = "v0.2.0";
 
 const SYSTEM_PROMPT = `You are an expert guide to Oregon wine and the Willamette Valley wine region.
 You have access to verified information about specific wineries.
@@ -14,7 +14,8 @@ RULES:
 - If context is conflicting, flag the conflict and cite both sources.
 - Always cite source URL for winery-specific facts.
 - For general Oregon wine knowledge (climate, AVAs, varietals, winemaking styles): you may draw on training knowledge but label it as general knowledge, not verified winery data.
-- Never use training knowledge to fill in hours, fees, or policies for any specific winery.`;
+- Never use training knowledge to fill in hours, fees, or policies for any specific winery.
+- When continuing a conversation, use the chat history to understand context and resolve pronouns (e.g. "it", "that", "there").`;
 
 function parseHostname(origin: string | null): string | null {
   if (!origin) return null;
@@ -25,7 +26,6 @@ function parseHostname(origin: string | null): string | null {
   }
 }
 
-/** No substring tricks: exact host match or valid subdomain of allowlisted registrable host. */
 function originAllowed(origin: string | null, allowlist: string[] | null): boolean {
   const host = parseHostname(origin);
   if (!host) return false;
@@ -107,7 +107,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  let body: { message?: string; session_id?: string };
+  let body: { message?: string; session_id?: string; history?: { role: string; text: string }[] };
   try {
     body = await req.json();
   } catch {
@@ -126,6 +126,8 @@ Deno.serve(async (req) => {
   }
 
   const sessionId = body.session_id ?? "anonymous";
+  // Accept up to 10 previous turns for multi-turn context
+  const history = (body.history ?? []).slice(-10);
 
   const startOfMonth = new Date();
   startOfMonth.setUTCDate(1);
@@ -172,18 +174,22 @@ Deno.serve(async (req) => {
 
   let vectorChunks: ChunkRow[] = [];
   if (openaiKey) {
-    const openai = new OpenAI({ apiKey: openaiKey });
-    const embedRes = await openai.embeddings.create({
-      model: embedModel,
-      input: message,
-    });
-    const queryEmbedding = embedRes.data[0].embedding;
-    const { data: v } = await supabase.rpc("match_chunks", {
-      query_embedding: queryEmbedding,
-      winery_id_filter: account.winery_id,
-      match_count: maxChunks,
-    });
-    vectorChunks = (v ?? []) as ChunkRow[];
+    try {
+      const openai = new OpenAI({ apiKey: openaiKey });
+      const embedRes = await openai.embeddings.create({
+        model: embedModel,
+        input: message,
+      });
+      const queryEmbedding = embedRes.data[0].embedding;
+      const { data: v } = await supabase.rpc("match_chunks", {
+        query_embedding: queryEmbedding,
+        winery_id_filter: account.winery_id,
+        match_count: maxChunks,
+      });
+      vectorChunks = (v ?? []) as ChunkRow[];
+    } catch (e) {
+      console.error("Vector search failed, falling back to keyword-only:", e);
+    }
   }
 
   const { data: k } = await supabase.rpc("search_chunks_keyword", {
@@ -239,6 +245,34 @@ ${context}
 
 USER QUESTION: ${message}`;
 
+  // Build multi-turn messages array
+  const claudeMessages: { role: "user" | "assistant"; content: string }[] = [];
+  for (const h of history) {
+    const role = h.role === "assistant" ? "assistant" : "user";
+    if (h.text?.trim()) {
+      if (claudeMessages.length > 0 && claudeMessages[claudeMessages.length - 1].role === role) {
+        claudeMessages[claudeMessages.length - 1].content += "\n" + h.text.trim();
+      } else {
+        claudeMessages.push({ role, content: h.text.trim() });
+      }
+    }
+  }
+  // Ensure the final message is the user prompt with context
+  if (claudeMessages.length > 0 && claudeMessages[claudeMessages.length - 1].role === "user") {
+    claudeMessages[claudeMessages.length - 1].content = userPrompt;
+  } else {
+    claudeMessages.push({ role: "user", content: userPrompt });
+  }
+
+  // Ensure conversation starts with user message
+  if (claudeMessages.length > 0 && claudeMessages[0].role !== "user") {
+    claudeMessages.shift();
+  }
+
+  if (claudeMessages.length === 0) {
+    claudeMessages.push({ role: "user", content: userPrompt });
+  }
+
   const anthropic = new Anthropic({ apiKey: anthropicKey });
 
   let stream;
@@ -247,7 +281,7 @@ USER QUESTION: ${message}`;
       model: chatModel,
       max_tokens: maxOut,
       system: SYSTEM_PROMPT,
-      messages: [{ role: "user", content: userPrompt }],
+      messages: claudeMessages,
     });
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
@@ -264,6 +298,7 @@ USER QUESTION: ${message}`;
   }
 
   let fullResponse = "";
+  let logId = "";
 
   const readable = new ReadableStream({
     async start(controller) {
@@ -296,7 +331,7 @@ USER QUESTION: ${message}`;
       ].some((p) => lower.includes(p));
 
       const latency = Date.now() - startTime;
-      await supabase.from("chat_logs").insert({
+      const { data: logRow } = await supabase.from("chat_logs").insert({
         session_id: sessionId,
         widget_account_id: account.id,
         winery_id: account.winery_id,
@@ -307,7 +342,9 @@ USER QUESTION: ${message}`;
         was_deflected: deflected,
         prompt_version: PROMPT_VERSION,
         latency_ms: latency,
-      });
+      }).select("id").single();
+
+      logId = logRow?.id ?? "";
 
       const refHost = parseHostname(origin);
       await supabase.rpc("touch_chat_session", {
@@ -318,6 +355,8 @@ USER QUESTION: ${message}`;
         p_prompt_version: PROMPT_VERSION,
       });
 
+      // Send log_id as a trailing metadata line
+      controller.enqueue(enc.encode("\n<!-- log_id:" + logId + " -->"));
       controller.close();
     },
   });

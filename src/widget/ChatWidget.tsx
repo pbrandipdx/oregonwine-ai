@@ -7,21 +7,49 @@ type Props = {
   wineryLabel: string;
 };
 
+type Message = {
+  role: "user" | "assistant";
+  text: string;
+  logId?: string;
+  feedback?: 1 | -1;
+};
+
 export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) {
   const sessionId = useId().replace(/:/g, "");
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<{ role: "user" | "assistant"; text: string }[]>(
-    () => [
-      {
-        role: "assistant",
-        text: `Hi! Ask me anything about ${wineryLabel} or Oregon wine.`,
-      },
-    ]
-  );
+  const [messages, setMessages] = useState<Message[]>(() => [
+    {
+      role: "assistant",
+      text: `Hi! Ask me anything about ${wineryLabel} or Oregon wine.`,
+    },
+  ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  const sendFeedback = useCallback(
+    async (logId: string, rating: 1 | -1, msgIndex: number) => {
+      setMessages((m) => {
+        const copy = [...m];
+        copy[msgIndex] = { ...copy[msgIndex], feedback: rating };
+        return copy;
+      });
+      try {
+        await fetch(`${apiBase}/feedback`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": apiKey,
+          },
+          body: JSON.stringify({ log_id: logId, rating }),
+        });
+      } catch {
+        // silent fail — feedback is best-effort
+      }
+    },
+    [apiBase, apiKey]
+  );
 
   const send = useCallback(async () => {
     const text = input.trim();
@@ -34,6 +62,12 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
     setError(null);
     setMessages((m) => [...m, { role: "user", text }]);
     setLoading(true);
+
+    // Build history from previous messages (skip the initial greeting)
+    const history = messages
+      .slice(1)
+      .map((m) => ({ role: m.role, text: m.text }));
+
     try {
       const res = await fetch(`${apiBase}/chat`, {
         method: "POST",
@@ -41,7 +75,11 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
           "Content-Type": "application/json",
           "x-api-key": apiKey,
         },
-        body: JSON.stringify({ message: text, session_id: sessionId }),
+        body: JSON.stringify({
+          message: text,
+          session_id: sessionId,
+          history,
+        }),
       });
       if (!res.ok) {
         const t = await res.text();
@@ -56,9 +94,25 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
         const { done, value } = await reader.read();
         if (done) break;
         full += dec.decode(value, { stream: true });
+        // Strip the trailing log_id metadata from display
+        const display = full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, "");
         setMessages((m) => {
           const copy = [...m];
-          copy[copy.length - 1] = { role: "assistant", text: full };
+          copy[copy.length - 1] = { role: "assistant", text: display };
+          return copy;
+        });
+      }
+      // Extract log_id from the end of the stream
+      const logMatch = full.match(/<!-- log_id:([a-f0-9-]+) -->/);
+      const logId = logMatch?.[1];
+      if (logId) {
+        setMessages((m) => {
+          const copy = [...m];
+          copy[copy.length - 1] = {
+            ...copy[copy.length - 1],
+            logId,
+            text: full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, ""),
+          };
           return copy;
         });
       }
@@ -68,7 +122,7 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
     } finally {
       setLoading(false);
     }
-  }, [apiBase, apiKey, input, loading, sessionId]);
+  }, [apiBase, apiKey, input, loading, messages, sessionId]);
 
   return (
     <>
@@ -92,7 +146,7 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
           zIndex: 99998,
         }}
       >
-        {open ? "×" : "💬"}
+        {open ? "\u00d7" : "\ud83d\udcac"}
       </button>
       {open && (
         <div
@@ -151,6 +205,41 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
                 >
                   {m.text}
                 </span>
+                {/* Thumbs up/down for assistant messages with a logId */}
+                {m.role === "assistant" && m.logId && (
+                  <div style={{ marginTop: 4, fontSize: 16 }}>
+                    <button
+                      type="button"
+                      onClick={() => sendFeedback(m.logId!, 1, i)}
+                      title="Helpful"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        opacity: m.feedback === 1 ? 1 : 0.4,
+                        fontSize: 16,
+                        padding: "2px 6px",
+                      }}
+                    >
+                      {"\ud83d\udc4d"}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => sendFeedback(m.logId!, -1, i)}
+                      title="Not helpful"
+                      style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        opacity: m.feedback === -1 ? 1 : 0.4,
+                        fontSize: 16,
+                        padding: "2px 6px",
+                      }}
+                    >
+                      {"\ud83d\udc4e"}
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
             <div ref={bottomRef} />
@@ -163,7 +252,7 @@ export function ChatWidget({ apiKey, themeColor, apiBase, wineryLabel }: Props) 
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Ask a question…"
+              placeholder="Ask a question\u2026"
               disabled={loading}
               style={{ flex: 1, padding: "10px 12px", borderRadius: 10, border: "1px solid #ddd" }}
             />
