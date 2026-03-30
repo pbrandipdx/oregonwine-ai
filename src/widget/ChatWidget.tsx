@@ -4,6 +4,7 @@ import {
   messageForChatApi,
   type QuickReplyLabel,
 } from "../lib/quickReplyMessages";
+import { AssistantMarkdown } from "./AssistantMarkdown";
 
 type Props = {
   apiKey: string;
@@ -106,21 +107,20 @@ function QuickReplyChips({
   );
 }
 
-/** Strip markdown-style formatting so responses read as clean prose */
-function cleanMarkdown(raw: string): string {
-  let s = raw;
-  s = s.replace(/^#{1,4}\s+/gm, "");
-  s = s.replace(/\*\*(.+?)\*\*/g, "$1");
-  s = s.replace(/__(.+?)__/g, "$1");
-  s = s.replace(/(?<!\w)\*([^*]+?)\*(?!\w)/g, "$1");
-  s = s.replace(/(?<!\w)_([^_]+?)_(?!\w)/g, "$1");
-  s = s.replace(/^[\s]*[-*]\s+/gm, "");
-  s = s.replace(/^[\s]*\d+\.\s+/gm, "");
-  s = s.replace(/`([^`]+?)`/g, "$1");
-  s = s.replace(/\[([^\]]+?)\]\(([^)]+?)\)/g, "$1 ($2)");
-  s = s.replace(/^---+$/gm, "");
-  s = s.replace(/\n{3,}/g, "\n\n");
-  return s.trim();
+/** Remove trailing log id comment streamed from /chat before display. */
+function stripTrailingLogMeta(raw: string): string {
+  return raw.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/i, "").trimEnd();
+}
+
+/** Flatten markdown for keyword checks (CTA chips, deflection). */
+function plainForTriggers(markdown: string): string {
+  return markdown
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, "$1")
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
 }
 
 /** Animated three-dot typing indicator */
@@ -265,7 +265,7 @@ export function ChatWidget({
           const { done, value } = await reader.read();
           if (done) break;
           full += dec.decode(value, { stream: true });
-          const display = cleanMarkdown(full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, ""));
+          const display = stripTrailingLogMeta(full);
           setMessages((m) => {
             const copy = [...m];
             copy[copy.length - 1] = { role: "assistant", text: display };
@@ -274,7 +274,7 @@ export function ChatWidget({
         }
         const logMatch = full.match(/<!-- log_id:([a-f0-9-]+) -->/);
         const logId = logMatch?.[1];
-        const finalText = cleanMarkdown(full.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/, ""));
+        const finalText = stripTrailingLogMeta(full);
         if (logId) {
           setMessages((m) => {
             const copy = [...m];
@@ -516,23 +516,32 @@ export function ChatWidget({
           >
             <div
               style={{
-                maxWidth: "85%",
+                maxWidth: "90%",
                 padding: "12px 16px",
                 borderRadius: 16,
                 ...(m.role === "user"
                   ? { borderBottomRightRadius: 4, background: c.userBubble, color: c.text }
                   : { borderBottomLeftRadius: 4, background: c.assistantBubble, color: "#d5d5d5", border: `1px solid ${c.border}` }),
-                whiteSpace: "pre-wrap",
+                whiteSpace: m.role === "user" ? "pre-wrap" : "normal",
                 wordBreak: "break-word",
               }}
             >
-              {m.text}
+              {m.role === "user" ? (
+                m.text
+              ) : (
+                <AssistantMarkdown
+                  text={m.text}
+                  accentColor={c.accent}
+                  headingColor={c.text}
+                  textColor="#d5d5d5"
+                />
+              )}
             </div>
 
             {/* CTA buttons + feedback after assistant messages */}
             {m.role === "assistant" && m.logId && (
               <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                {/tasting|experience|reserv|book/i.test(m.text) && (
+                {/tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
                   <a
                     href={`${wineryUrl}/experiences/`}
                     target="_blank"
@@ -552,7 +561,7 @@ export function ChatWidget({
                     Book a tasting \u2192
                   </a>
                 )}
-                {/club|member|join|shipment/i.test(m.text) && (
+                {/club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
                   <a
                     href={`${wineryUrl}/clubs/`}
                     target="_blank"
@@ -573,7 +582,7 @@ export function ChatWidget({
                   </a>
                 )}
 
-                {isDeflected(m.text) && (
+                {isDeflected(plainForTriggers(m.text)) && (
                   <a
                     href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
                     style={{

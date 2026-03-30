@@ -28,11 +28,11 @@ on conflict (api_key) do update set
 -- 2) Pairing chunk for hybrid search (skip if already present)
 insert into public.winery_chunks (winery_id, chunk_text, chunk_type, source_url, fetched_at, confidence)
 select w.id,
-  'Food and pairings: REX HILL pours estate Pinot Noir, Chardonnay, and sparkling wines. Pinot Noir often pairs well with salmon, duck, mushrooms, and local cheeses; Chardonnay with roast chicken or richer seafood. Ask your host during a tasting about seasonal small bites or pairing flights—offerings can change. Call (503) 538-0666 to confirm what is available on the day of your visit.',
+  'Food and pairings at REX HILL center on Willamette Pinot Noir, Chardonnay, and méthode traditionnelle sparkling. Pinot Noir: bright acid and earthy red fruit often complement salmon, roast duck, wild mushrooms, charcuterie, and Oregon cheeses—either echo the wine''s earthiness or contrast with a richer dish. Chardonnay (especially with partial oak): roast chicken, Dungeness crab, scallops, and cream-based sauces. Sparkling: strong aperitif; classic pairings include fried appetizers, oysters, triple-cream cheese, and salty nuts. During your visit, ask the host about seasonal small bites, cheese boards, or curated pairing flights—offerings rotate; online menus may be out of date. Call (503) 538-0666 before you visit to confirm what food service is available that day.',
   'pairing',
   'https://rexhill.com/experiences/',
   now(),
-  0.85
+  0.88
 from public.wineries w
 where w.slug = 'rex-hill'
   and not exists (
