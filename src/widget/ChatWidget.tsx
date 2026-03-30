@@ -193,6 +193,19 @@ export function ChatWidget({
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
+  // Crimson Pro (Rex Hill site / label serif) for embedded header when host page did not load it
+  useEffect(() => {
+    if (!embedded) return;
+    const id = "ow-font-crimson-pro";
+    if (document.getElementById(id)) return;
+    const link = document.createElement("link");
+    link.id = id;
+    link.rel = "stylesheet";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,500;0,600;0,700;1,500&display=swap";
+    document.head.appendChild(link);
+  }, [embedded]);
+
   // Auto-resize textarea
   const resizeTextarea = () => {
     const ta = textareaRef.current;
@@ -400,11 +413,12 @@ export function ChatWidget({
 
   const quickPalette = { border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover };
 
-  /** Muted header typography (avoid stark white on #0d0d0d). */
+  /** Header lockup: winery UI tone + crest bronze (matches Rex Hill emblem on dark bg). */
   const headerTone = {
     winery: "#9a9088",
     sep: "#4a4543",
-    agent: "#a87880",
+    /** Bronze/gold aligned with crest artwork (not stark white). */
+    agent: "#b9a068",
     agentAlt: "#8f7a7c",
   };
 
@@ -444,7 +458,6 @@ export function ChatWidget({
               maxWidth: 152,
               objectFit: "contain",
               flexShrink: 0,
-              filter: "brightness(1.12) contrast(1.05)",
             }}
           />
         ) : null}
@@ -479,11 +492,12 @@ export function ChatWidget({
           )}
           <span
             style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: 15,
+              fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+              fontSize: 16,
               fontWeight: 500,
+              fontStyle: "italic",
               color: headerTone.agent,
-              letterSpacing: "0.03em",
+              letterSpacing: "0.02em",
             }}
           >
             Wine Agent
