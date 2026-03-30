@@ -3,6 +3,7 @@ dist
 dist-widget
 .env
 .env.local
+data/pairing-allowlist.json
 .DS_Store
 supabase/.branches
 supabase/.temp

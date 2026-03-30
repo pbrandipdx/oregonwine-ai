@@ -1,0 +1,14 @@
+{
+  "_readme": "Copy to data/pairing-allowlist.json (gitignored). Only add URLs you may use. Wikipedia via API: CC BY-SA, keep attribution in chunk prefix. Commercial sites: check ToS; no paywall bypass.",
+  "allowedHosts": [
+    "en.wikipedia.org"
+  ],
+  "sources": [
+    {
+      "kind": "wikipedia",
+      "title": "Wine_and_food_pairing",
+      "publisher": "Wikipedia contributors",
+      "licenseNote": "CC BY-SA — keep attribution in chunk prefix; link to article."
+    }
+  ]
+}

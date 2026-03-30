@@ -2,7 +2,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 import Anthropic from "https://esm.sh/@anthropic-ai/sdk@0.32.1";
 import OpenAI from "https://esm.sh/openai@4.73.0";
 
-const PROMPT_VERSION = "v0.3.0";
+const PROMPT_VERSION = "v0.3.1";
 
 const SYSTEM_PROMPT = `You are an expert guide to Oregon wine and the Willamette Valley wine region.
 You have access to verified information about specific wineries.
@@ -21,7 +21,8 @@ FORMATTING (every reply):
 - Use Markdown: ## for short section titles, bullet lists for options or pairings, **bold** for wine names and key terms.
 - Keep paragraphs to 2–4 sentences; prefer scannable structure over one long block.
 - After winery-specific facts, add a final line: *Source: [url from context] · Last verified [date from context]* when the context includes a URL and date.
-- If you add a helpful general Oregon-wine idea not in the context, prefix it with **General wine tip:** on its own line so it is clearly not verified winery data.`;
+- If you add a helpful general Oregon-wine idea not in the context, prefix it with **General wine tip:** on its own line so it is clearly not verified winery data.
+- Chunks whose text begins with "[General pairing education" are third-party reference material: use them for broad pairing ideas only; never present them as that winery's menu, policy, or hours. Still cite their Source URL when you use them.`;
 
 function parseHostname(origin: string | null): string | null {
   if (!origin) return null;
