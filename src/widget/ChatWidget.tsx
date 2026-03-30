@@ -1,4 +1,9 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+  QUICK_REPLY_LABELS,
+  messageForChatApi,
+  type QuickReplyLabel,
+} from "../lib/quickReplyMessages";
 
 type Props = {
   apiKey: string;
@@ -20,7 +25,7 @@ type Message = {
   feedback?: 1 | -1;
 };
 
-const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
+const QUICK_REPLY_ICONS: Record<QuickReplyLabel, JSX.Element> = {
   "Tasting options": (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
@@ -46,28 +51,6 @@ const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
   ),
 };
 
-const QUICK_REPLIES = [
-  "Tasting options",
-  "Hours & directions",
-  "Wine club info",
-  "Food pairings",
-];
-
-/**
- * Short chip label in the UI; expanded text for /chat so hybrid search hits seeded chunks.
- * ("Food pairings" alone matches no FTS terms in DB → empty retrieval before.)
- */
-function messageForChatApi(shortLabel: string, wineryLabel: string): string {
-  switch (shortLabel) {
-    case "Food pairings":
-      return `What foods pair well with ${wineryLabel} Pinot Noir, Chardonnay, and sparkling wines? Is any food served during wine tastings?`;
-    case "Wine club info":
-      return `Tell me about ${wineryLabel} wine club, membership, shipments, and benefits.`;
-    default:
-      return shortLabel;
-  }
-}
-
 type QuickPalette = { border: string; surface: string; text: string; borderHover: string };
 
 function QuickReplyChips({
@@ -81,7 +64,7 @@ function QuickReplyChips({
 }) {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop }}>
-      {QUICK_REPLIES.map((q) => (
+      {QUICK_REPLY_LABELS.map((q) => (
         <button
           key={q}
           type="button"
