@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Composer preview — centered text in bubble</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background: #0d0d0d;
+      color: #ececec;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px 80px;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(1.75rem, 4vw, 2.4rem);
+      text-align: center;
+      line-height: 1.2;
+      margin: 0 0 28px;
+      max-width: 520px;
+    }
+    .card {
+      width: 100%;
+      max-width: 720px;
+      background: #1a1a1a;
+      border: 1px solid #2e2e2e;
+      border-radius: 20px;
+      padding: 14px 18px;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    textarea {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: #ececec;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      resize: none;
+      min-height: 36px;
+      max-height: 120px;
+      margin: 0;
+      padding: 7px 4px 7px 0;
+      overflow-y: auto;
+    }
+    textarea::placeholder {
+      color: #555;
+    }
+    button.send {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #111;
+      color: #fff;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      align-self: center;
+    }
+    .note {
+      margin-top: 28px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+      max-width: 480px;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 48px;
+      max-width: 720px;
+    }
+    .chip {
+      padding: 9px 16px;
+      border-radius: 12px;
+      border: 1px solid #2e2e2e;
+      background: #1a1a1a;
+      color: #a09496;
+      font-size: 13px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1>What can I help you discover today?</h1>
+
+  <div class="card">
+    <div class="row">
+      <textarea rows="1" readonly placeholder="Ask about wines, tastings, hours..."></textarea>
+      <button type="button" class="send" aria-label="Send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5 12 12 5 19 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="chips">
+    <span class="chip">Tasting options</span>
+    <span class="chip">Hours &amp; directions</span>
+    <span class="chip">Wine club info</span>
+    <span class="chip">Food pairings</span>
+    <span class="chip">Recipes</span>
+  </div>
+
+  <p class="note">
+    Mirrors the live <strong>ChatWidget</strong> composer: row uses <code>align-items: center</code>,
+    textarea <code>min-height: 36px</code> with vertical padding. Open this file in a browser
+    or run <code>npm run design:headers</code> from repo root and visit
+    <code>http://127.0.0.1:8765/composer-preview.html</code> (add composer to serve - actually design:headers only serves local/ - file is in local/ so it works with same command).
+  </p>
+</body>
+</html>

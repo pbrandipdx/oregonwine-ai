@@ -357,7 +357,7 @@ export function ChatWidget({
       }}
       onFocus={() => {}}
     >
-      <div style={{ display: "flex", alignItems: "flex-end" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <textarea
           ref={textareaRef}
           rows={1}
@@ -384,8 +384,11 @@ export function ChatWidget({
             fontSize: 15,
             lineHeight: 1.5,
             resize: "none",
-            minHeight: 24,
+            minHeight: 36,
             maxHeight: 120,
+            margin: 0,
+            padding: "7px 4px 7px 0",
+            boxSizing: "border-box",
           }}
         />
         <button
@@ -405,7 +408,7 @@ export function ChatWidget({
             justifyContent: "center",
             flexShrink: 0,
             transition: "background 0.15s",
-            marginLeft: 8,
+            alignSelf: "center",
           }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
