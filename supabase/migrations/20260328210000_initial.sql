@@ -279,5 +279,5 @@ from public.wineries where slug = 'rex-hill';
 insert into public.widget_accounts (
   winery_id, api_key, active, domain_allowlist, plan, monthly_query_limit
 )
-select id, 'wk_test_rexhill', true, array['localhost', '127.0.0.1']::text[], 'partner', 1000
+select id, 'wk_test_rexhill', true, array['localhost', '127.0.0.1', 'pbrandipdx.github.io']::text[], 'partner', 1000
 from public.wineries where slug = 'rex-hill';

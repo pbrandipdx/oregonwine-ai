@@ -95,7 +95,8 @@ Deno.serve(async (req) => {
   if (accErr || !account?.active) {
     return new Response("Invalid or inactive API key", {
       status: 403,
-      headers: corsHeaders(origin, false),
+      // Reflect Origin on errors so browsers expose status/body (otherwise "Failed to fetch").
+      headers: corsHeaders(origin, !!origin),
     });
   }
 
@@ -103,7 +104,7 @@ Deno.serve(async (req) => {
   if (!allowed) {
     return new Response("Origin not allowed", {
       status: 403,
-      headers: corsHeaders(origin, false),
+      headers: corsHeaders(origin, !!origin),
     });
   }
 
