@@ -16,5 +16,9 @@ major_version = 15
 enabled = true
 port = 54323
 
-[functions]
+# Per-function config (CLI expects verify_jwt under [functions.NAME], not a global bool).
+[functions.chat]
+verify_jwt = false
+
+[functions.feedback]
 verify_jwt = false
