@@ -4,12 +4,9 @@
  * Usage:
  *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npx tsx scripts/crawl.ts <slug>
  *
- * The script reads a config file at data/<slug>.json that describes which
- * pages to fetch and how to chunk them.  It then:
- *   1. Fetches each configured URL
- *   2. Splits content into chunks (by section or custom splitter)
- *   3. Upserts chunks into winery_chunks (keyed on winery_id + source_url + chunk_type)
- *   4. Prints a summary of what was inserted / updated
+ * The script reads data/<slug>.json with hand-written chunk text per source URL, then
+ * inserts rows into winery_chunks. For live HTML split into many chunks, use
+ * `npm run crawl:fetch -- <slug>` (see data/<slug>-fetch.json).
  *
  * After running this script, run `npm run embed` to generate embeddings
  * for any new chunks.

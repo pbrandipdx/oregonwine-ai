@@ -12,5 +12,6 @@ createRoot(document.getElementById("widget-root")!).render(
     themeColor="#4a6741"
     wineryLabel="REX HILL"
     embedded
+    headerLogoUrl="https://rexhill.com/wp-content/uploads/2024/12/rex-hill-logo.webp"
   />
 );

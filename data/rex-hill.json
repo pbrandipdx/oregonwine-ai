@@ -114,6 +114,14 @@
       ]
     },
     {
+      "url": "https://rexhill.com/collection/current-releases/",
+      "chunk_type": "wine",
+      "confidence": 0.95,
+      "chunks": [
+        "Rex Hill retail bottle pricing: Current prices for individual bottles—including single-vineyard Pinot Noir such as La Colina Vineyard—are listed on Rex Hill's online shop (current releases). The authoritative, up-to-date source is https://rexhill.com/collection/current-releases/ . Shoppers can filter, for example, to red Pinot Noir at https://rexhill.com/collection/current-releases/?wineType=Red&wineVarietal=Pinot%20Noir . Vintage availability and dollar amounts change; do not quote a bottle price unless it appears in verified context—otherwise direct the user to that shop URL."
+      ]
+    },
+    {
       "url": "https://rexhill.com",
       "chunk_type": "sustainability",
       "confidence": 0.95,

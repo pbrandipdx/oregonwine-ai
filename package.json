@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "embed": "tsx scripts/embed.ts",
     "crawl": "tsx scripts/crawl.ts",
+    "crawl:fetch": "tsx scripts/crawl-fetch.ts",
     "smoke:chat": "tsx scripts/smoke-chat-buttons.ts",
     "deploy:supabase-remote": "bash scripts/deploy-supabase-remote.sh",
     "ingest:pairing": "tsx scripts/ingest-pairing-allowlist.ts"

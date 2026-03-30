@@ -13,6 +13,8 @@ type Props = {
   wineryLabel: string;
   /** When true, renders as a centered inline chat instead of a floating bubble */
   embedded?: boolean;
+  /** Shown in the locked top bar (embedded). */
+  headerLogoUrl?: string;
   /** Winery website for booking/info links */
   wineryUrl?: string;
   /** Winery phone number for escalation */
@@ -157,19 +159,21 @@ function TypingDots() {
   );
 }
 
+const EMBEDDED_TOP_BAR_PX = 56;
+
 export function ChatWidget({
   apiKey,
   themeColor: _themeColor,
   apiBase,
   wineryLabel,
   embedded,
+  headerLogoUrl,
   wineryUrl = "https://rexhill.com",
   wineryPhone = "(503) 538-0666",
 }: Props) {
   const sessionId = useId().replace(/:/g, "");
   const [open, setOpen] = useState(embedded ? true : false);
   const [input, setInput] = useState("");
-  const [showQuickReplies, setShowQuickReplies] = useState(true);
   const [showLanding, setShowLanding] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
@@ -238,7 +242,6 @@ export function ChatWidget({
       }
       setInput("");
       setError(null);
-      setShowQuickReplies(false);
       setShowLanding(false);
 
       // Reset textarea height
@@ -388,6 +391,48 @@ export function ChatWidget({
     </div>
   );
 
+  const quickPalette = { border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover };
+
+  const embeddedPageHeader = embedded ? (
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: EMBEDDED_TOP_BAR_PX,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "0 clamp(16px, 5vw, 32px)",
+        background: c.bg,
+        borderBottom: `1px solid ${c.border}`,
+        zIndex: 100000,
+        boxSizing: "border-box",
+      }}
+    >
+      {headerLogoUrl ? (
+        <img
+          src={headerLogoUrl}
+          alt=""
+          style={{ height: 28, width: "auto", maxWidth: 160, objectFit: "contain", flexShrink: 0 }}
+        />
+      ) : null}
+      <span
+        style={{
+          fontFamily: "'Playfair Display', Georgia, serif",
+          fontSize: 17,
+          fontWeight: 500,
+          color: c.text,
+          letterSpacing: "0.02em",
+          lineHeight: 1.2,
+        }}
+      >
+        {wineryLabel} Wine Agent
+      </span>
+    </header>
+  ) : null;
+
   const chatPanel = (
     <div
       style={{
@@ -403,7 +448,10 @@ export function ChatWidget({
         border: embedded ? "none" : `1px solid ${c.border}`,
         fontFamily: "'DM Sans', system-ui, sans-serif",
         overflow: "hidden",
-        ...(embedded ? {} : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
+        boxSizing: "border-box",
+        ...(embedded
+          ? { paddingTop: EMBEDDED_TOP_BAR_PX }
+          : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
       }}
     >
       {landingEmbedded ? (
@@ -431,9 +479,6 @@ export function ChatWidget({
             }}
           >
             <div style={{ textAlign: "center", padding: "0 24px", width: "100%", boxSizing: "border-box" }}>
-              <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
-                {wineryLabel} Wine Concierge
-              </div>
               <h2
                 style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
@@ -449,12 +494,8 @@ export function ChatWidget({
               </h2>
             </div>
             <div style={{ width: "100%", padding: "0 16px", marginTop: 22, boxSizing: "border-box" }}>{inputCardEl}</div>
-            {showQuickReplies && !loading && (
-              <QuickReplyChips
-                palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
-                onPick={sendMessage}
-                marginTop={48}
-              />
+            {!loading && (
+              <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={48} />
             )}
             <div
               style={{
@@ -492,7 +533,7 @@ export function ChatWidget({
             {showLanding && (
               <div style={{ textAlign: "center", maxWidth: "100%" }}>
                 <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
-                  {wineryLabel} Wine Concierge
+                  {wineryLabel} Wine Agent
                 </div>
                 <h2
                   style={{
@@ -674,15 +715,18 @@ export function ChatWidget({
 
       {/* Input area */}
       <div style={{ padding: "0 16px 16px", flex: "0 0 auto" }}>
+        {/* Quick replies: stay visible under the thread after answers */}
+        {!showLanding && !loading && (
+          <div style={{ marginBottom: 12 }}>
+            <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={0} />
+          </div>
+        )}
+
         {inputCardEl}
 
-        {/* Quick replies (floating widget landing) */}
-        {showQuickReplies && showLanding && !loading && !embedded && (
-          <QuickReplyChips
-            palette={{ border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover }}
-            onPick={sendMessage}
-            marginTop={14}
-          />
+        {/* Quick replies (floating widget landing only — embedded landing uses column above) */}
+        {showLanding && !loading && !embedded && (
+          <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={14} />
         )}
 
         {/* Footer */}
@@ -699,7 +743,14 @@ export function ChatWidget({
     </div>
   );
 
-  if (embedded) return chatPanel;
+  if (embedded) {
+    return (
+      <>
+        {embeddedPageHeader}
+        {chatPanel}
+      </>
+    );
+  }
 
   return (
     <>

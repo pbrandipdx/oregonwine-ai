@@ -1,0 +1,26 @@
+{
+  "slug": "rex-hill",
+  "winery_id": "8aa6c77b-5873-433c-baa7-c1c5f35edf04",
+  "name": "REX HILL",
+  "pages": [
+    { "url": "https://rexhill.com/" },
+    { "url": "https://rexhill.com/experiences/" },
+    { "url": "https://rexhill.com/tasting-room/" },
+    { "url": "https://rexhill.com/events/" },
+    { "url": "https://rexhill.com/private-events/" },
+    { "url": "https://rexhill.com/wine/" },
+    { "url": "https://rexhill.com/collection/" },
+    { "url": "https://rexhill.com/collection/current-releases/" },
+    { "url": "https://rexhill.com/collection/current-releases/?wineType=Red&wineVarietal=Pinot%20Noir" },
+    { "url": "https://rexhill.com/clubs/" },
+    { "url": "https://rexhill.com/vineyards/" },
+    { "url": "https://rexhill.com/winemaking/" },
+    { "url": "https://rexhill.com/recipes/" },
+    { "url": "https://rexhill.com/history/" },
+    { "url": "https://rexhill.com/our-commitment/" },
+    { "url": "https://rexhill.com/artist-in-residence/" },
+    { "url": "https://rexhill.com/contact/" },
+    { "url": "https://rexhill.com/careers/" },
+    { "url": "https://rexhill.com/terms-of-use/" }
+  ]
+}
