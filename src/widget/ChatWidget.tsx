@@ -53,6 +53,21 @@ const QUICK_REPLIES = [
   "Food pairings",
 ];
 
+/**
+ * Short chip label in the UI; expanded text for /chat so hybrid search hits seeded chunks.
+ * ("Food pairings" alone matches no FTS terms in DB → empty retrieval before.)
+ */
+function messageForChatApi(shortLabel: string, wineryLabel: string): string {
+  switch (shortLabel) {
+    case "Food pairings":
+      return `What foods pair well with ${wineryLabel} Pinot Noir, Chardonnay, and sparkling wines? Is any food served during wine tastings?`;
+    case "Wine club info":
+      return `Tell me about ${wineryLabel} wine club, membership, shipments, and benefits.`;
+    default:
+      return shortLabel;
+  }
+}
+
 type QuickPalette = { border: string; surface: string; text: string; borderHover: string };
 
 function QuickReplyChips({
@@ -241,6 +256,8 @@ export function ChatWidget({
         textareaRef.current.style.height = "auto";
       }
 
+      const apiMessage = messageForChatApi(trimmed, wineryLabel);
+
       setMessages((m) => [...m, { role: "user", text: trimmed }]);
       setLoading(true);
 
@@ -250,7 +267,7 @@ export function ChatWidget({
         const res = await fetch(`${apiBase}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-api-key": apiKey },
-          body: JSON.stringify({ message: trimmed, session_id: sessionId, history }),
+          body: JSON.stringify({ message: apiMessage, session_id: sessionId, history }),
         });
         if (!res.ok) {
           const t = await res.text();
@@ -288,7 +305,7 @@ export function ChatWidget({
         setLoading(false);
       }
     },
-    [apiBase, apiKey, loading, messages, sessionId]
+    [apiBase, apiKey, loading, messages, sessionId, wineryLabel]
   );
 
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
