@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "embed": "tsx scripts/embed.ts",
     "crawl": "tsx scripts/crawl.ts",
-    "smoke:chat": "tsx scripts/smoke-chat-buttons.ts"
+    "smoke:chat": "tsx scripts/smoke-chat-buttons.ts",
+    "deploy:supabase-remote": "bash scripts/deploy-supabase-remote.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
