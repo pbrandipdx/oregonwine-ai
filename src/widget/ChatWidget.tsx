@@ -565,7 +565,7 @@ export function ChatWidget({
                       border: `1px solid ${c.border}`,
                     }}
                   >
-                    Book a tasting \u2192
+                    Book a tasting
                   </a>
                 )}
                 {/club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
@@ -585,7 +585,7 @@ export function ChatWidget({
                       border: `1px solid ${c.border}`,
                     }}
                   >
-                    Explore wine clubs \u2192
+                    Explore wine clubs
                   </a>
                 )}
 
@@ -604,7 +604,7 @@ export function ChatWidget({
                       border: `1px solid ${c.border}`,
                     }}
                   >
-                    Talk to the team \u2192
+                    Talk to the team
                   </a>
                 )}
 
