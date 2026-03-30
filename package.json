@@ -8,6 +8,7 @@
     "build": "vite build",
     "build:widget": "vite build --config vite.widget.config.ts",
     "preview": "vite preview",
+    "design:headers": "python3 -m http.server 8765 --directory local --bind 127.0.0.1",
     "embed": "tsx scripts/embed.ts",
     "crawl": "tsx scripts/crawl.ts",
     "crawl:fetch": "tsx scripts/crawl-fetch.ts",
