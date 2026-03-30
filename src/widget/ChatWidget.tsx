@@ -15,6 +15,12 @@ type Props = {
   embedded?: boolean;
   /** Shown in the locked top bar (embedded). */
   headerLogoUrl?: string;
+  /**
+   * When a logo URL is set, the mark often includes the winery name.
+   * `logo-and-agent`: graphic + “Wine Agent” only (no extra REX HILL text).
+   * `full`: graphic + “REX HILL” + “Wine Agent” (wordmark stack).
+   */
+  headerLockup?: "full" | "logo-and-agent";
   /** Winery website for booking/info links */
   wineryUrl?: string;
   /** Winery phone number for escalation */
@@ -168,6 +174,7 @@ export function ChatWidget({
   wineryLabel,
   embedded,
   headerLogoUrl,
+  headerLockup = "logo-and-agent",
   wineryUrl = "https://rexhill.com",
   wineryPhone = "(503) 538-0666",
 }: Props) {
@@ -393,6 +400,14 @@ export function ChatWidget({
 
   const quickPalette = { border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover };
 
+  /** Muted header typography (avoid stark white on #0d0d0d). */
+  const headerTone = {
+    winery: "#9a9088",
+    sep: "#4a4543",
+    agent: "#a87880",
+    agentAlt: "#8f7a7c",
+  };
+
   const embeddedPageHeader = embedded ? (
     <header
       style={{
@@ -403,7 +418,6 @@ export function ChatWidget({
         height: EMBEDDED_TOP_BAR_PX,
         display: "flex",
         alignItems: "center",
-        gap: 14,
         padding: "0 clamp(16px, 5vw, 32px)",
         background: c.bg,
         borderBottom: `1px solid ${c.border}`,
@@ -411,25 +425,71 @@ export function ChatWidget({
         boxSizing: "border-box",
       }}
     >
-      {headerLogoUrl ? (
-        <img
-          src={headerLogoUrl}
-          alt=""
-          style={{ height: 28, width: "auto", maxWidth: 160, objectFit: "contain", flexShrink: 0 }}
-        />
-      ) : null}
-      <span
+      <div
         style={{
-          fontFamily: "'Playfair Display', Georgia, serif",
-          fontSize: 17,
-          fontWeight: 500,
-          color: c.text,
-          letterSpacing: "0.02em",
-          lineHeight: 1.2,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          minWidth: 0,
+          flexWrap: "nowrap",
         }}
       >
-        {wineryLabel} Wine Agent
-      </span>
+        {headerLogoUrl ? (
+          <img
+            src={headerLogoUrl}
+            alt=""
+            style={{
+              height: 30,
+              width: "auto",
+              maxWidth: 152,
+              objectFit: "contain",
+              flexShrink: 0,
+              filter: "brightness(1.12) contrast(1.05)",
+            }}
+          />
+        ) : null}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            flexWrap: "wrap",
+            columnGap: 8,
+            rowGap: 2,
+            minWidth: 0,
+          }}
+        >
+          {(headerLockup === "full" || !headerLogoUrl) && (
+            <>
+              <span
+                style={{
+                  fontFamily: "'DM Sans', system-ui, sans-serif",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  letterSpacing: "0.11em",
+                  color: headerTone.winery,
+                  textTransform: "uppercase",
+                }}
+              >
+                {wineryLabel}
+              </span>
+              <span style={{ color: headerTone.sep, fontSize: 10, userSelect: "none" }} aria-hidden>
+                ·
+              </span>
+            </>
+          )}
+          <span
+            style={{
+              fontFamily: "'Playfair Display', Georgia, serif",
+              fontSize: 15,
+              fontWeight: 500,
+              color: headerTone.agent,
+              letterSpacing: "0.03em",
+            }}
+          >
+            Wine Agent
+          </span>
+        </div>
+      </div>
     </header>
   ) : null;
 

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rex Hill header — style variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #9a9088;
+      padding: 32px 24px 80px;
+      line-height: 1.5;
+    }
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 500;
+      color: #8f827d;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+    p.note { font-size: 13px; color: #5c5552; max-width: 52rem; margin-bottom: 28px; }
+    .sample {
+      margin-bottom: 36px;
+    }
+    .sample h2 {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #5a524e;
+      margin-bottom: 10px;
+    }
+    .bar {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      background: #0d0d0d;
+      border-bottom: 1px solid #2e2e2e;
+    }
+    .bar img {
+      height: 30px;
+      width: auto;
+      max-width: 152px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .lockup {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      margin-left: 12px;
+    }
+    .rex {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .dot { font-size: 10px; user-select: none; }
+    .agent {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+    }
+    /* Version 1 — warm taupe + dusty rose (closest to live widget default) */
+    .v1 img { filter: brightness(1.12) contrast(1.05); }
+    .v1 .rex { color: #9a9088; }
+    .v1 .dot { color: #4a4543; }
+    .v1 .agent { color: #a87880; }
+    /* Version 2 — sage uppercase + muted mauve agent */
+    .v2 img { filter: brightness(1.05) saturate(0.92); }
+    .v2 .rex { color: #a8a898; letter-spacing: 0.14em; }
+    .v2 .dot { color: #3d3a38; }
+    .v2 .agent { color: #9a7b82; font-style: italic; }
+    /* Version 3 — bronze / terracotta (no pink) */
+    .v3 img { filter: brightness(1.15) sepia(0.12); }
+    .v3 .rex { color: #9e8f7c; }
+    .v3 .dot { color: #554c44; }
+    .v3 .agent { color: #b3967a; font-family: 'DM Sans', sans-serif; font-weight: 500; font-style: normal; letter-spacing: 0.05em; font-size: 13px; }
+    /* Version 4 — single muted line, low contrast elegant */
+    .v4 img { filter: brightness(1.08); }
+    .v4 .lockup { margin-left: 14px; align-items: center; }
+    .v4 .rex { color: #7d756d; font-weight: 500; }
+    .v4 .dot { color: #3a3634; }
+    .v4 .agent { color: #847a78; font-size: 14px; }
+    .v4 .one-line { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <h1>Rex Hill top bar — color variants</h1>
+  <p class="note">
+    Live widget uses <strong>Version 1</strong> with <code>headerLockup: &quot;logo-and-agent&quot;</code> (logo + Wine Agent; winery name is usually in the artwork).
+    Open this file from the dev server as <code>/rex-hill-header-variants.html</code> or from GitHub Pages with your site base path. Logo: Rex Hill official web asset.
+  </p>
+
+  <div class="sample">
+    <h2>Version 1 — Taupe + dusty rose (widget default)</h2>
+    <div class="bar v1">
+      <img src="https://rexhill.com/wp-content/uploads/2024/12/rex-hill-logo.webp" alt="" />
+      <div class="lockup">
+        <span class="agent">Wine Agent</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sample">
+    <h2>Version 2 — Sage italic “Wine Agent”</h2>
+    <div class="bar v2">
+      <img src="https://rexhill.com/wp-content/uploads/2024/12/rex-hill-logo.webp" alt="" />
+      <div class="lockup">
+        <span class="agent">Wine Agent</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sample">
+    <h2>Version 3 — Bronze / neutral (no white, less pink)</h2>
+    <div class="bar v3">
+      <img src="https://rexhill.com/wp-content/uploads/2024/12/rex-hill-logo.webp" alt="" />
+      <div class="lockup">
+        <span class="agent">Wine Agent</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sample">
+    <h2>Version 4 — Explicit REX HILL · Wine Agent (when logo is crest-only)</h2>
+    <div class="bar v4">
+      <img src="https://rexhill.com/wp-content/uploads/2024/12/rex-hill-logo.webp" alt="" />
+      <div class="lockup one-line">
+        <span class="rex">Rex Hill</span>
+        <span class="dot">·</span>
+        <span class="agent">Wine Agent</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
