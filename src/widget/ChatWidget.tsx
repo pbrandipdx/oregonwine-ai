@@ -13,12 +13,17 @@ type Props = {
   wineryLabel: string;
   /** When true, renders as a centered inline chat instead of a floating bubble */
   embedded?: boolean;
-  /** Shown in the locked top bar (embedded). */
+  /** Full wordmark image (crest + type). Ignored when `headerCrestImageUrl` is set. */
   headerLogoUrl?: string;
   /**
-   * When a logo URL is set, the mark often includes the winery name.
-   * `logo-and-agent`: graphic + “Wine Agent” only (no extra REX HILL text).
-   * `full`: graphic + “REX HILL” + “Wine Agent” (wordmark stack).
+   * Crest / emblem only — triggers the three-part bar: crest · dark serif winery · gold italic “Wine Agent”
+   * (matches the approved mockup).
+   */
+  headerCrestImageUrl?: string;
+  /**
+   * When `headerCrestImageUrl` is unset and `headerLogoUrl` is set:
+   * `logo-and-agent`: graphic + “Wine Agent” only.
+   * `full`: graphic + winery + “Wine Agent”.
    */
   headerLockup?: "full" | "logo-and-agent";
   /** Winery website for booking/info links */
@@ -174,6 +179,7 @@ export function ChatWidget({
   wineryLabel,
   embedded,
   headerLogoUrl,
+  headerCrestImageUrl,
   headerLockup = "logo-and-agent",
   wineryUrl = "https://rexhill.com",
   wineryPhone = "(503) 538-0666",
@@ -413,14 +419,29 @@ export function ChatWidget({
 
   const quickPalette = { border: c.border, surface: c.surface, text: c.text, borderHover: c.borderHover };
 
-  /** Header lockup: winery UI tone + crest bronze (matches Rex Hill emblem on dark bg). */
+  /** Header lockup: dark wordmark + crest bronze “Wine Agent”. */
   const headerTone = {
     winery: "#9a9088",
     sep: "#4a4543",
-    /** Bronze/gold aligned with crest artwork (not stark white). */
     agent: "#b9a068",
+    winerySerifMuted: "#4f3e42",
     agentAlt: "#8f7a7c",
   };
+
+  const wineAgentTitle = (
+    <span
+      style={{
+        fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+        fontSize: 16,
+        fontWeight: 500,
+        fontStyle: "italic",
+        color: headerTone.agent,
+        letterSpacing: "0.02em",
+      }}
+    >
+      Wine Agent
+    </span>
+  );
 
   const embeddedPageHeader = embedded ? (
     <header
@@ -443,66 +464,96 @@ export function ChatWidget({
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 12,
+          gap: 14,
           minWidth: 0,
           flexWrap: "nowrap",
         }}
       >
-        {headerLogoUrl ? (
-          <img
-            src={headerLogoUrl}
-            alt=""
-            style={{
-              height: 30,
-              width: "auto",
-              maxWidth: 152,
-              objectFit: "contain",
-              flexShrink: 0,
-            }}
-          />
-        ) : null}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            flexWrap: "wrap",
-            columnGap: 8,
-            rowGap: 2,
-            minWidth: 0,
-          }}
-        >
-          {(headerLockup === "full" || !headerLogoUrl) && (
-            <>
+        {headerCrestImageUrl ? (
+          <>
+            <img
+              src={headerCrestImageUrl}
+              alt=""
+              style={{
+                height: 34,
+                width: 34,
+                objectFit: "contain",
+                flexShrink: 0,
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                flexWrap: "wrap",
+                columnGap: 12,
+                rowGap: 2,
+                minWidth: 0,
+              }}
+            >
               <span
                 style={{
-                  fontFamily: "'DM Sans', system-ui, sans-serif",
-                  fontSize: 12,
+                  fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                  fontSize: 13,
                   fontWeight: 600,
-                  letterSpacing: "0.11em",
-                  color: headerTone.winery,
+                  letterSpacing: "0.1em",
+                  color: headerTone.winerySerifMuted,
                   textTransform: "uppercase",
                 }}
               >
                 {wineryLabel}
               </span>
-              <span style={{ color: headerTone.sep, fontSize: 10, userSelect: "none" }} aria-hidden>
-                ·
-              </span>
-            </>
-          )}
-          <span
-            style={{
-              fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-              fontSize: 16,
-              fontWeight: 500,
-              fontStyle: "italic",
-              color: headerTone.agent,
-              letterSpacing: "0.02em",
-            }}
-          >
-            Wine Agent
-          </span>
-        </div>
+              {wineAgentTitle}
+            </div>
+          </>
+        ) : (
+          <>
+            {headerLogoUrl ? (
+              <img
+                src={headerLogoUrl}
+                alt=""
+                style={{
+                  height: 30,
+                  width: "auto",
+                  maxWidth: 152,
+                  objectFit: "contain",
+                  flexShrink: 0,
+                }}
+              />
+            ) : null}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                flexWrap: "wrap",
+                columnGap: 8,
+                rowGap: 2,
+                minWidth: 0,
+              }}
+            >
+              {(headerLockup === "full" || !headerLogoUrl) && (
+                <>
+                  <span
+                    style={{
+                      fontFamily: "'DM Sans', system-ui, sans-serif",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      letterSpacing: "0.11em",
+                      color: headerTone.winery,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {wineryLabel}
+                  </span>
+                  <span style={{ color: headerTone.sep, fontSize: 10, userSelect: "none" }} aria-hidden>
+                    ·
+                  </span>
+                </>
+              )}
+              {wineAgentTitle}
+            </div>
+          </>
+        )}
       </div>
     </header>
   ) : null;

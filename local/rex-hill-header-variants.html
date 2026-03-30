@@ -68,6 +68,15 @@
       letter-spacing: 0.11em;
       text-transform: uppercase;
     }
+    .rex-serif {
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4f3e42;
+    }
+    .v-live .lockup { gap: 12px; align-items: baseline; }
     .dot { font-size: 10px; user-select: none; }
     /* Label / bottle-adjacent serif — same family rexhill.com uses for hero type */
     .agent {
@@ -88,10 +97,21 @@
 <body>
   <h1>Rex Hill top bar</h1>
   <p class="note">
-    The live widget matches <strong>Version 2</strong>: <strong>Crimson Pro</strong> (italic 500) at <strong>#b9a068</strong>
-    — same serif family as <a href="https://rexhill.com/" style="color: var(--crest-bronze);">rexhill.com</a>, echoing the crest bronze.
-    Open locally: <code>npm run design:headers</code> → <code>http://127.0.0.1:8765/rex-hill-header-variants.html</code>.
+    The <strong>live widget</strong> uses the <strong>three-part bar</strong>: crest PNG
+    <code>cropped-rexhill-192x192.png</code> · dark Crimson <strong>REX HILL</strong> · italic gold <strong>Wine Agent</strong>
+    (same colors as below). Preview: <code>npm run design:headers</code> → this file.
   </p>
+
+  <div class="sample">
+    <h2>Live layout — crest + REX HILL + Wine Agent</h2>
+    <div class="bar v-live">
+      <img src="https://rexhill.com/wp-content/uploads/2020/06/cropped-rexhill-192x192.png" alt="" style="height:34px;width:34px;object-fit:contain;" />
+      <div class="lockup one-line">
+        <span class="rex-serif">Rex Hill</span>
+        <span class="agent">Wine Agent</span>
+      </div>
+    </div>
+  </div>
 
   <div class="sample">
     <h2>Version 1 — Upright 600 (heavier)</h2>
