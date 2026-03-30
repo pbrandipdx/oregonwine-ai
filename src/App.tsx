@@ -31,6 +31,7 @@ export default function App() {
             <Route path="/w/:slug" element={<WineryPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
+            <Route path="/analytics/:slug" element={<AnalyticsPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

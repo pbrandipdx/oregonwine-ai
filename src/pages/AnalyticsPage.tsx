@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
-type Winery = { id: string; name: string };
+type Winery = { id: string; name: string; slug: string };
 type DayStat = {
   day: string;
   total_messages: number;
@@ -16,6 +17,7 @@ type TopQuestion = {
 };
 
 export function AnalyticsPage() {
+  const { slug } = useParams<{ slug?: string }>();
   const [wineries, setWineries] = useState<Winery[]>([]);
   const [selectedWinery, setSelectedWinery] = useState("");
   const [stats, setStats] = useState<DayStat[]>([]);
@@ -32,15 +34,23 @@ export function AnalyticsPage() {
   useEffect(() => {
     supabase
       .from("wineries")
-      .select("id, name")
+      .select("id, name, slug")
       .order("name")
       .then(({ data }) => {
         if (data) {
           setWineries(data);
+          // If a slug is in the URL, select that winery
+          if (slug) {
+            const match = data.find((w: any) => w.slug === slug);
+            if (match) {
+              setSelectedWinery(match.id);
+              return;
+            }
+          }
           if (data.length > 0) setSelectedWinery(data[0].id);
         }
       });
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
     if (!selectedWinery) return;
