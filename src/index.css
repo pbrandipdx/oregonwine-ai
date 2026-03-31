@@ -42,6 +42,18 @@ body {
 .nav-links a:hover {
   color: #722f37;
 }
+.nav-links .nav-link-btn {
+  font: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #4a3d4c;
+  font-size: 0.95rem;
+  padding: 0;
+}
+.nav-links .nav-link-btn:hover {
+  color: #722f37;
+}
 .main {
   flex: 1;
   padding: 2rem 1.5rem 3rem;
@@ -186,4 +198,171 @@ body {
 }
 .panel a {
   color: #722f37;
+}
+
+/* ── Research page ──────────────────────────────────────────────────── */
+.research-page {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.research-page .back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: #722f37;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+.research-page .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #722f37;
+  margin: 0 0 0.35rem;
+}
+
+/* table */
+.research-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  min-width: 640px;
+}
+.research-table th {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid rgba(114, 47, 55, 0.2);
+  color: #722f37;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.research-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(114, 47, 55, 0.08);
+  vertical-align: top;
+}
+.research-table tr:last-child td {
+  border-bottom: none;
+}
+.research-table code {
+  font-size: 0.8rem;
+  background: rgba(114, 47, 55, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* finding cards */
+.finding-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.finding-card {
+  background: #faf6f2;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(114, 47, 55, 0.08);
+}
+.finding-card h3 {
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem;
+  color: #2d1f2e;
+}
+.finding-card p {
+  font-size: 0.875rem;
+  margin: 0;
+  color: #4a3d4c;
+  line-height: 1.55;
+}
+.finding-card code {
+  font-size: 0.8rem;
+  background: rgba(114, 47, 55, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* stage cards */
+.stage-card {
+  background: #faf6f2;
+  border-radius: 10px;
+  padding: 1.25rem;
+  border: 1px solid rgba(114, 47, 55, 0.08);
+  margin-bottom: 1rem;
+}
+.stage-card:last-child {
+  margin-bottom: 0;
+}
+.stage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+.stage-header h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: #722f37;
+}
+.stage-timeline {
+  font-size: 0.8rem;
+  color: #fff;
+  background: #722f37;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.stage-desc {
+  font-size: 0.9rem;
+  margin: 0 0 0.75rem;
+  color: #4a3d4c;
+  line-height: 1.55;
+}
+.stage-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .stage-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.stage-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #722f37;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.stage-detail-grid p {
+  font-size: 0.85rem;
+  margin: 0;
+  color: #4a3d4c;
+  line-height: 1.5;
+}
+
+/* ROI grid */
+.roi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.roi-card {
+  text-align: center;
+  background: #faf6f2;
+  border-radius: 10px;
+  padding: 1.25rem 1rem;
+  border: 1px solid rgba(114, 47, 55, 0.08);
+}
+.roi-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #722f37;
+}
+.roi-label {
+  font-size: 0.8rem;
+  color: #6b5c6b;
+  margin-top: 0.25rem;
 }

@@ -100,8 +100,8 @@ export function WineryPage() {
     return (
       <div className="panel panel-warn">
         <p>{err ?? "Something went wrong."}</p>
-        <Link className="btn btn-ghost" to="/directory">
-          ← Back to directory
+        <Link className="btn btn-ghost" to="/">
+          ← Home
         </Link>
       </div>
     );
@@ -113,8 +113,8 @@ export function WineryPage() {
 
   return (
     <article className="winery-detail">
-      <Link className="back" to="/directory">
-        ← Directory
+      <Link className="back" to="/">
+        ← Home
       </Link>
       <header className="page-head">
         <h1>{winery.name}</h1>

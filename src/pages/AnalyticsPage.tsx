@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
+import { fetchMemberWineries, type MemberWinery } from "../lib/membership";
 
-type Winery = { id: string; name: string; slug: string };
+type WineryMeta = { id: string; name: string; slug: string };
 
 type ChatLogRow = {
   created_at: string;
@@ -76,8 +78,16 @@ function aggregateByDay(rows: ChatLogRow[]): DayStat[] {
 }
 
 export function AnalyticsPage() {
-  const { slug } = useParams<{ slug?: string }>();
-  const [wineries, setWineries] = useState<Winery[]>([]);
+  const { session } = useAuth();
+  const navigate = useNavigate();
+  const { slug: slugParam } = useParams<{ slug?: string }>();
+  const slug = slugParam?.trim() || undefined;
+  const [wineryMeta, setWineryMeta] = useState<WineryMeta | null>(null);
+  const [wineryErr, setWineryErr] = useState<string | null>(null);
+  const [wineryLoading, setWineryLoading] = useState(false);
+  const [accessAllowed, setAccessAllowed] = useState<boolean | null>(null);
+  const [memberWineries, setMemberWineries] = useState<MemberWinery[] | null>(null);
+  const [hubErr, setHubErr] = useState<string | null>(null);
   const [selectedWinery, setSelectedWinery] = useState("");
   const [stats, setStats] = useState<DayStat[]>([]);
   const [topQuestions, setTopQuestions] = useState<TopQuestion[]>([]);
@@ -101,32 +111,86 @@ export function AnalyticsPage() {
   }, []);
 
   useEffect(() => {
-    if (!supabase) return;
+    if (!supabase || !slug) {
+      setWineryMeta(null);
+      setWineryErr(null);
+      setSelectedWinery("");
+      setWineryLoading(false);
+      return;
+    }
+    setWineryLoading(true);
+    setWineryErr(null);
+    setWineryMeta(null);
+    setSelectedWinery("");
+    let cancelled = false;
     supabase
       .from("wineries")
       .select("id, name, slug")
-      .order("name")
+      .eq("slug", slug)
+      .eq("status", "active")
+      .maybeSingle()
       .then(({ data, error }) => {
+        if (cancelled) return;
+        setWineryLoading(false);
         if (error) {
-          setLoadError(error.message);
+          setWineryErr(error.message);
           return;
         }
-        if (data) {
-          setWineries(data);
-          if (slug) {
-            const match = data.find((w) => w.slug === slug);
-            if (match) {
-              setSelectedWinery(match.id);
-              return;
-            }
-          }
-          if (data.length > 0) setSelectedWinery(data[0].id);
+        if (!data) {
+          setWineryErr(`No active winery found for slug “${slug}”.`);
+          return;
         }
+        setWineryMeta(data);
+        setSelectedWinery(data.id);
       });
+    return () => {
+      cancelled = true;
+    };
   }, [slug]);
 
   useEffect(() => {
-    if (!supabase || !selectedWinery) return;
+    if (!supabase || !session || slug) return;
+    let cancelled = false;
+    setHubErr(null);
+    setMemberWineries(null);
+    fetchMemberWineries(supabase, session.user.id)
+      .then((rows) => {
+        if (cancelled) return;
+        setMemberWineries(rows);
+        if (rows.length === 1) {
+          navigate(`/analytics/${rows[0].slug}`, { replace: true });
+        }
+      })
+      .catch((e) => {
+        if (!cancelled) setHubErr(e instanceof Error ? e.message : "Could not load your account.");
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase, session, slug, navigate]);
+
+  useEffect(() => {
+    if (!supabase || !session || !slug || !wineryMeta) {
+      setAccessAllowed(null);
+      return;
+    }
+    let cancelled = false;
+    setAccessAllowed(null);
+    fetchMemberWineries(supabase, session.user.id)
+      .then((rows) => {
+        if (cancelled) return;
+        setAccessAllowed(rows.some((r) => r.winery_id === wineryMeta.id));
+      })
+      .catch(() => {
+        if (!cancelled) setAccessAllowed(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [supabase, session, slug, wineryMeta]);
+
+  useEffect(() => {
+    if (!supabase || !selectedWinery || accessAllowed !== true) return;
 
     let cancelled = false;
     setLoading(true);
@@ -234,13 +298,132 @@ export function AnalyticsPage() {
     return () => {
       cancelled = true;
     };
-  }, [selectedWinery, sinceIso]);
+  }, [selectedWinery, sinceIso, accessAllowed]);
 
   if (!supabase) {
     return (
       <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
         <h1>Chat Analytics</h1>
         <p style={{ color: "#b00020" }}>{supabaseEnvHint()}</p>
+      </div>
+    );
+  }
+
+  if (!slug) {
+    if (hubErr) {
+      return (
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
+          <h1>Chat Analytics</h1>
+          <p style={{ color: "#b00020" }}>{hubErr}</p>
+          <Link to="/">← Home</Link>
+        </div>
+      );
+    }
+    if (memberWineries === null) {
+      return (
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
+          <h1>Chat Analytics</h1>
+          <p style={{ color: "#666" }}>Loading your wineries…</p>
+        </div>
+      );
+    }
+    if (memberWineries.length === 0) {
+      return (
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
+          <h1>Chat Analytics</h1>
+          <p style={{ color: "#444", lineHeight: 1.6 }}>
+            Your account is signed in, but it isn’t linked to a winery yet. After OregonWine.ai adds your
+            email in Supabase (<code>winery_members</code>), refresh this page.
+          </p>
+          <p>
+            <Link to="/">← Home</Link>
+          </p>
+        </div>
+      );
+    }
+    if (memberWineries.length === 1) {
+      return (
+        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
+          <h1>Chat Analytics</h1>
+          <p style={{ color: "#666" }}>Opening your dashboard…</p>
+        </div>
+      );
+    }
+    return (
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
+        <h1>Chat Analytics</h1>
+        <p className="muted" style={{ marginBottom: 16 }}>
+          Choose a winery to view widget metrics.
+        </p>
+        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+          {memberWineries.map((w) => (
+            <li key={w.winery_id} style={{ marginBottom: 12 }}>
+              <Link
+                to={`/analytics/${w.slug}`}
+                style={{
+                  display: "block",
+                  padding: "12px 16px",
+                  borderRadius: 10,
+                  border: "1px solid rgba(114, 47, 55, 0.2)",
+                  textDecoration: "none",
+                  color: "#2d1f2e",
+                  background: "#fff",
+                }}
+              >
+                <strong>{w.name}</strong>
+                <span style={{ color: "#666", marginLeft: 8 }}>({w.slug})</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p style={{ marginTop: 24 }}>
+          <Link to="/">← Home</Link>
+        </p>
+      </div>
+    );
+  }
+
+  if (wineryLoading) {
+    return (
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+        <h1>Chat Analytics</h1>
+        <p style={{ color: "#666" }}>Loading winery…</p>
+      </div>
+    );
+  }
+
+  if (wineryErr || !wineryMeta) {
+    return (
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+        <h1>Chat Analytics</h1>
+        <p style={{ color: "#b00020" }}>{wineryErr ?? "Winery not found."}</p>
+        <p>
+          <Link to="/">← Home</Link>
+        </p>
+      </div>
+    );
+  }
+
+  if (accessAllowed === null) {
+    return (
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+        <h1>Chat Analytics</h1>
+        <p style={{ color: "#666" }}>Checking access…</p>
+      </div>
+    );
+  }
+
+  if (accessAllowed === false) {
+    return (
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
+        <h1>Chat Analytics</h1>
+        <p style={{ color: "#b00020" }}>
+          Your account doesn’t have access to <strong>{wineryMeta.name}</strong>. Open a dashboard for a winery
+          you’re assigned to, or ask OregonWine.ai to update <code>winery_members</code>.
+        </p>
+        <p>
+          <Link to="/analytics">Your wineries</Link> · <Link to="/">Home</Link>
+        </p>
       </div>
     );
   }
@@ -258,9 +441,13 @@ export function AnalyticsPage() {
   return (
     <div style={{ maxWidth: 960, margin: "0 auto", padding: 20 }}>
       <h1>Chat Analytics</h1>
+      <p style={{ marginBottom: 8 }}>
+        <strong>{wineryMeta.name}</strong>{" "}
+        <span style={{ color: "#666" }}>({wineryMeta.slug})</span>
+      </p>
       <p style={{ color: "#666", fontSize: 14, marginBottom: 16 }}>
-        Data from <code>chat_logs</code> (last {LOOKBACK_DAYS} days, up to {MAX_ROWS.toLocaleString()} messages per
-        winery). Sessions also checks <code>chat_sessions</code> when populated.
+        Data from <code>chat_logs</code> for this winery only (last {LOOKBACK_DAYS} days, up to{" "}
+        {MAX_ROWS.toLocaleString()} messages). Sessions also checks <code>chat_sessions</code> when populated.
       </p>
 
       {loadError && (
@@ -277,21 +464,6 @@ export function AnalyticsPage() {
         </div>
       )}
       {loading && <p style={{ color: "#666" }}>Loading…</p>}
-
-      <label style={{ fontWeight: 600 }}>
-        Winery:{" "}
-        <select
-          value={selectedWinery}
-          onChange={(e) => setSelectedWinery(e.target.value)}
-          style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", marginLeft: 8 }}
-        >
-          {wineries.map((w) => (
-            <option key={w.id} value={w.id}>
-              {w.name} ({w.slug})
-            </option>
-          ))}
-        </select>
-      </label>
 
       <div
         style={{

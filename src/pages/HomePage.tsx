@@ -6,17 +6,25 @@ export function HomePage() {
       <p className="eyebrow">Willamette Valley</p>
       <h1>OregonWine.ai</h1>
       <p className="lede">
-        Embeddable RAG chat for Oregon wineries, plus a public directory backed by verified crawl
-        chunks and analytics-ready logging.
+        Embeddable RAG chat for Oregon wineries—verified crawl chunks, widget analytics, and a{" "}
+        <strong>dedicated page per partner</strong> (<code>/w/your-slug</code>) so listings are not
+        surfaced next to competitors on this site.
       </p>
       <div className="hero-actions">
-        <Link className="btn" to="/directory">
-          Browse wineries
+        <Link className="btn" to="/w/rex-hill">
+          Example partner page
         </Link>
-        <a className="btn btn-ghost" href="/widget-test.html" target="_blank" rel="noreferrer">
-          Widget test page
+        <Link className="btn btn-ghost" to="/login">
+          Partner login
+        </Link>
+        <a className="btn btn-ghost" href={`${import.meta.env.BASE_URL}widget-test.html`} target="_blank" rel="noreferrer">
+          Widget demo
         </a>
       </div>
+      <p className="muted" style={{ marginTop: "1.5rem", maxWidth: "36rem" }}>
+        Each winery receives its own shareable URL. Analytics and admin require sign-in; access is tied to your
+        account in Supabase after OregonWine.ai links you to a winery.
+      </p>
     </section>
   );
 }
