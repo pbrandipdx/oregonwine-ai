@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
-import { fetchMemberWineries } from "../lib/membership";
 
 type Winery = { id: string; name: string; slug: string };
 type Fact = {
@@ -35,7 +32,6 @@ const CATEGORIES = [
 ];
 
 export function AdminPage() {
-  const { session } = useAuth();
   const [wineries, setWineries] = useState<Winery[]>([]);
   const [selectedWinery, setSelectedWinery] = useState<string>("");
   const [facts, setFacts] = useState<Fact[]>([]);
@@ -45,42 +41,23 @@ export function AdminPage() {
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [message, setMessage] = useState("");
-  const [loadingMembers, setLoadingMembers] = useState(true);
 
   useEffect(() => {
-    if (!supabase || !session) {
-      setLoadingMembers(false);
-      return;
-    }
-    let cancelled = false;
-    setLoadingMembers(true);
-    fetchMemberWineries(supabase, session.user.id)
-      .then((rows) => {
-        if (cancelled) return;
-        const mapped: Winery[] = rows.map((r) => ({
-          id: r.winery_id,
-          name: r.name,
-          slug: r.slug,
-        }));
-        mapped.sort((a, b) => a.name.localeCompare(b.name));
-        setWineries(mapped);
-        setSelectedWinery((prev) =>
-          mapped.some((w) => w.id === prev) ? prev : mapped[0]?.id ?? ""
-        );
-      })
-      .catch(() => {
-        if (!cancelled) setWineries([]);
-      })
-      .finally(() => {
-        if (!cancelled) setLoadingMembers(false);
+    if (!supabase) return;
+    supabase
+      .from("wineries")
+      .select("id, name, slug")
+      .order("name")
+      .then(({ data }) => {
+        if (data) {
+          setWineries(data);
+          if (data.length > 0) setSelectedWinery(data[0].id);
+        }
       });
-    return () => {
-      cancelled = true;
-    };
-  }, [session]);
+  }, []);
 
   const loadFacts = useCallback(async () => {
-    if (!selectedWinery) return;
+    if (!supabase || !selectedWinery) return;
     const { data } = await supabase
       .from("winery_facts")
       .select("*")
@@ -90,7 +67,7 @@ export function AdminPage() {
   }, [selectedWinery]);
 
   const loadGaps = useCallback(async () => {
-    if (!selectedWinery) return;
+    if (!supabase || !selectedWinery) return;
     const { data } = await supabase
       .from("chat_gaps")
       .select("*")
@@ -105,7 +82,7 @@ export function AdminPage() {
   }, [loadFacts, loadGaps]);
 
   const addFact = async () => {
-    if (!newFact.trim() || !selectedWinery) return;
+    if (!supabase || !newFact.trim() || !selectedWinery) return;
     setSaving(true);
     setMessage("");
     const { error } = await supabase.from("winery_facts").insert({
@@ -125,7 +102,7 @@ export function AdminPage() {
   };
 
   const syncFacts = async () => {
-    if (!selectedWinery) return;
+    if (!supabase || !selectedWinery) return;
     setSyncing(true);
     setMessage("");
     const { data, error } = await supabase.rpc("sync_facts_to_chunks", {
@@ -151,30 +128,6 @@ export function AdminPage() {
       <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
         <h1>Winery Admin</h1>
         <p style={{ color: "#b00020" }}>{supabaseEnvHint()}</p>
-      </div>
-    );
-  }
-
-  if (loadingMembers) {
-    return (
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
-        <h1>Winery Admin</h1>
-        <p style={{ color: "#666" }}>Loading…</p>
-      </div>
-    );
-  }
-
-  if (wineries.length === 0) {
-    return (
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
-        <h1>Winery Admin</h1>
-        <p style={{ color: "#444", lineHeight: 1.6 }}>
-          You don’t have access to any wineries yet. Ask OregonWine.ai to add your account to{" "}
-          <code>winery_members</code>, then refresh.
-        </p>
-        <p>
-          <Link to="/analytics">Analytics</Link> · <Link to="/">Home</Link>
-        </p>
       </div>
     );
   }

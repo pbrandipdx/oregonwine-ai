@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
+import { Link, useParams } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
-import { fetchMemberWineries, type MemberWinery } from "../lib/membership";
 
 type WineryMeta = { id: string; name: string; slug: string };
 
@@ -78,16 +76,11 @@ function aggregateByDay(rows: ChatLogRow[]): DayStat[] {
 }
 
 export function AnalyticsPage() {
-  const { session } = useAuth();
-  const navigate = useNavigate();
   const { slug: slugParam } = useParams<{ slug?: string }>();
   const slug = slugParam?.trim() || undefined;
   const [wineryMeta, setWineryMeta] = useState<WineryMeta | null>(null);
   const [wineryErr, setWineryErr] = useState<string | null>(null);
   const [wineryLoading, setWineryLoading] = useState(false);
-  const [accessAllowed, setAccessAllowed] = useState<boolean | null>(null);
-  const [memberWineries, setMemberWineries] = useState<MemberWinery[] | null>(null);
-  const [hubErr, setHubErr] = useState<string | null>(null);
   const [selectedWinery, setSelectedWinery] = useState("");
   const [stats, setStats] = useState<DayStat[]>([]);
   const [topQuestions, setTopQuestions] = useState<TopQuestion[]>([]);
@@ -149,48 +142,7 @@ export function AnalyticsPage() {
   }, [slug]);
 
   useEffect(() => {
-    if (!supabase || !session || slug) return;
-    let cancelled = false;
-    setHubErr(null);
-    setMemberWineries(null);
-    fetchMemberWineries(supabase, session.user.id)
-      .then((rows) => {
-        if (cancelled) return;
-        setMemberWineries(rows);
-        if (rows.length === 1) {
-          navigate(`/analytics/${rows[0].slug}`, { replace: true });
-        }
-      })
-      .catch((e) => {
-        if (!cancelled) setHubErr(e instanceof Error ? e.message : "Could not load your account.");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [supabase, session, slug, navigate]);
-
-  useEffect(() => {
-    if (!supabase || !session || !slug || !wineryMeta) {
-      setAccessAllowed(null);
-      return;
-    }
-    let cancelled = false;
-    setAccessAllowed(null);
-    fetchMemberWineries(supabase, session.user.id)
-      .then((rows) => {
-        if (cancelled) return;
-        setAccessAllowed(rows.some((r) => r.winery_id === wineryMeta.id));
-      })
-      .catch(() => {
-        if (!cancelled) setAccessAllowed(false);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [supabase, session, slug, wineryMeta]);
-
-  useEffect(() => {
-    if (!supabase || !selectedWinery || accessAllowed !== true) return;
+    if (!supabase || !selectedWinery) return;
 
     let cancelled = false;
     setLoading(true);
@@ -298,7 +250,7 @@ export function AnalyticsPage() {
     return () => {
       cancelled = true;
     };
-  }, [selectedWinery, sinceIso, accessAllowed]);
+  }, [selectedWinery, sinceIso]);
 
   if (!supabase) {
     return (
@@ -310,73 +262,25 @@ export function AnalyticsPage() {
   }
 
   if (!slug) {
-    if (hubErr) {
-      return (
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
-          <h1>Chat Analytics</h1>
-          <p style={{ color: "#b00020" }}>{hubErr}</p>
-          <Link to="/">← Home</Link>
-        </div>
-      );
-    }
-    if (memberWineries === null) {
-      return (
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
-          <h1>Chat Analytics</h1>
-          <p style={{ color: "#666" }}>Loading your wineries…</p>
-        </div>
-      );
-    }
-    if (memberWineries.length === 0) {
-      return (
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
-          <h1>Chat Analytics</h1>
-          <p style={{ color: "#444", lineHeight: 1.6 }}>
-            Your account is signed in, but it isn’t linked to a winery yet. After OregonWine.ai adds your
-            email in Supabase (<code>winery_members</code>), refresh this page.
-          </p>
-          <p>
-            <Link to="/">← Home</Link>
-          </p>
-        </div>
-      );
-    }
-    if (memberWineries.length === 1) {
-      return (
-        <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
-          <h1>Chat Analytics</h1>
-          <p style={{ color: "#666" }}>Opening your dashboard…</p>
-        </div>
-      );
-    }
+    const base = import.meta.env.BASE_URL || "/";
     return (
       <div style={{ maxWidth: 640, margin: "0 auto", padding: 24 }}>
-        <h1>Chat Analytics</h1>
-        <p className="muted" style={{ marginBottom: 16 }}>
-          Choose a winery to view widget metrics.
+        <h1>Partner analytics</h1>
+        <p style={{ color: "#444", lineHeight: 1.6 }}>
+          Metrics are scoped to <strong>one winery at a time</strong> so partners don’t see each other in a
+          shared directory or picker. Use the link you were given, with your slug:
         </p>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          {memberWineries.map((w) => (
-            <li key={w.winery_id} style={{ marginBottom: 12 }}>
-              <Link
-                to={`/analytics/${w.slug}`}
-                style={{
-                  display: "block",
-                  padding: "12px 16px",
-                  borderRadius: 10,
-                  border: "1px solid rgba(114, 47, 55, 0.2)",
-                  textDecoration: "none",
-                  color: "#2d1f2e",
-                  background: "#fff",
-                }}
-              >
-                <strong>{w.name}</strong>
-                <span style={{ color: "#666", marginLeft: 8 }}>({w.slug})</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <p style={{ marginTop: 24 }}>
+        <p style={{ fontSize: 15 }}>
+          <code style={{ background: "#f5f5f5", padding: "6px 10px", borderRadius: 6 }}>
+            {typeof window !== "undefined" ? window.location.origin : ""}
+            {base}
+            analytics/<strong>your-slug</strong>
+          </code>
+        </p>
+        <p style={{ color: "#666", fontSize: 14 }}>
+          Example (public demo): <Link to="/analytics/rex-hill">/analytics/rex-hill</Link>
+        </p>
+        <p>
           <Link to="/">← Home</Link>
         </p>
       </div>
@@ -399,30 +303,6 @@ export function AnalyticsPage() {
         <p style={{ color: "#b00020" }}>{wineryErr ?? "Winery not found."}</p>
         <p>
           <Link to="/">← Home</Link>
-        </p>
-      </div>
-    );
-  }
-
-  if (accessAllowed === null) {
-    return (
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
-        <h1>Chat Analytics</h1>
-        <p style={{ color: "#666" }}>Checking access…</p>
-      </div>
-    );
-  }
-
-  if (accessAllowed === false) {
-    return (
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: 24 }}>
-        <h1>Chat Analytics</h1>
-        <p style={{ color: "#b00020" }}>
-          Your account doesn’t have access to <strong>{wineryMeta.name}</strong>. Open a dashboard for a winery
-          you’re assigned to, or ask OregonWine.ai to update <code>winery_members</code>.
-        </p>
-        <p>
-          <Link to="/analytics">Your wineries</Link> · <Link to="/">Home</Link>
         </p>
       </div>
     );

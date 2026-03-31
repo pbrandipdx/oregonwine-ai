@@ -42,18 +42,6 @@ body {
 .nav-links a:hover {
   color: #722f37;
 }
-.nav-links .nav-link-btn {
-  font: inherit;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #4a3d4c;
-  font-size: 0.95rem;
-  padding: 0;
-}
-.nav-links .nav-link-btn:hover {
-  color: #722f37;
-}
 .main {
   flex: 1;
   padding: 2rem 1.5rem 3rem;

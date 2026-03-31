@@ -14,16 +14,13 @@ export function HomePage() {
         <Link className="btn" to="/w/rex-hill">
           Example partner page
         </Link>
-        <Link className="btn btn-ghost" to="/login">
-          Partner login
-        </Link>
         <a className="btn btn-ghost" href={`${import.meta.env.BASE_URL}widget-test.html`} target="_blank" rel="noreferrer">
           Widget demo
         </a>
       </div>
       <p className="muted" style={{ marginTop: "1.5rem", maxWidth: "36rem" }}>
-        Each winery receives its own shareable URL. Analytics and admin require sign-in; access is tied to your
-        account in Supabase after OregonWine.ai links you to a winery.
+        Each winery receives its own shareable URL. Chat analytics use the same slug:{" "}
+        <code>/analytics/rex-hill</code> — only that winery’s data is loaded (no directory).
       </p>
     </section>
   );
