@@ -5,5 +5,6 @@ dist-widget
 .env.local
 data/pairing-allowlist.json
 .DS_Store
+vite.config.ts.timestamp-*.mjs
 supabase/.branches
 supabase/.temp
