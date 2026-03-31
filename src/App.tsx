@@ -51,7 +51,11 @@ function AppNav() {
         )}
         <div className="nav-links">
           <Link to="/admin">Admin</Link>
-          <a href={`${base}widget-test.html`} target="_blank" rel="noreferrer">
+          <a
+            href={`${base}widget-test.html${activeSlug === "rex-hill" ? "?partner=rex-hill" : ""}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             Widget demo
           </a>
         </div>

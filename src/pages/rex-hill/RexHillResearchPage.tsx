@@ -314,7 +314,7 @@ export function RexHillResearchPage() {
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
           <a
             className="btn"
-            href={`${import.meta.env.BASE_URL}widget-test.html`}
+            href={`${import.meta.env.BASE_URL}widget-test.html?partner=rex-hill`}
             target="_blank"
             rel="noreferrer"
           >

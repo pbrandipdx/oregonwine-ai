@@ -210,6 +210,19 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
         Hours and fees change often. Use the partner chat widget on the winery site for
         retrieval-grounded answers with &quot;last verified&quot; dates when available.
       </p>
+
+      {winery.slug === "rex-hill" && (
+        <p style={{ marginTop: "1rem" }}>
+          <a
+            className="btn"
+            href={`${import.meta.env.BASE_URL}widget-test.html?partner=rex-hill`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Try the Rex Hill chat demo
+          </a>
+        </p>
+      )}
     </article>
   );
 }

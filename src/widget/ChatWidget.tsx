@@ -181,8 +181,8 @@ export function ChatWidget({
   headerLogoUrl,
   headerCrestImageUrl,
   headerLockup = "logo-and-agent",
-  wineryUrl = "https://rexhill.com",
-  wineryPhone = "(503) 538-0666",
+  wineryUrl,
+  wineryPhone,
 }: Props) {
   const sessionId = useId().replace(/:/g, "");
   const [open, setOpen] = useState(embedded ? true : false);
@@ -717,9 +717,10 @@ export function ChatWidget({
             {/* CTA buttons + feedback after assistant messages */}
             {m.role === "assistant" && m.logId && (
               <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                {/tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
+                {wineryUrl &&
+                  /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
                   <a
-                    href={`${wineryUrl}/experiences/`}
+                    href={`${wineryUrl.replace(/\/$/, "")}/experiences/`}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -737,9 +738,10 @@ export function ChatWidget({
                     Book a tasting
                   </a>
                 )}
-                {/club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
+                {wineryUrl &&
+                  /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
                   <a
-                    href={`${wineryUrl}/clubs/`}
+                    href={`${wineryUrl.replace(/\/$/, "")}/clubs/`}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -758,7 +760,8 @@ export function ChatWidget({
                   </a>
                 )}
 
-                {isDeflected(plainForTriggers(m.text)) && (
+                {wineryPhone &&
+                  isDeflected(plainForTriggers(m.text)) && (
                   <a
                     href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
                     style={{
