@@ -2,14 +2,50 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
 
 type Winery = { id: string; name: string; slug: string };
+
+/** Row shape for public.winery_facts (see supabase/migrations/20260328210000_initial.sql). */
+type WineryFactRow = {
+  id: string;
+  fact_type: string | null;
+  fact_value: unknown;
+  source_url: string | null;
+  fetched_at: string | null;
+  confidence: number | null;
+  in_quarantine: boolean | null;
+  promoted_chunk_id: string | null;
+};
+
 type Fact = {
   id: string;
   fact_text: string;
   category: string;
   active: boolean;
   synced_to_chunks: boolean;
-  created_at: string;
 };
+
+function factValueToDisplayText(v: unknown): string {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v === "object" && v !== null && "text" in v) {
+    const t = (v as { text: unknown }).text;
+    if (typeof t === "string") return t;
+  }
+  try {
+    return JSON.stringify(v, null, 2);
+  } catch {
+    return String(v);
+  }
+}
+
+function rowToFact(row: WineryFactRow): Fact {
+  return {
+    id: row.id,
+    fact_text: factValueToDisplayText(row.fact_value),
+    category: row.fact_type ?? "general",
+    active: !(row.in_quarantine ?? false),
+    synced_to_chunks: row.promoted_chunk_id != null && row.promoted_chunk_id !== "",
+  };
+}
 type Gap = {
   id: string;
   user_message: string;
@@ -58,12 +94,20 @@ export function AdminPage() {
 
   const loadFacts = useCallback(async () => {
     if (!supabase || !selectedWinery) return;
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("winery_facts")
-      .select("*")
+      .select(
+        "id, fact_type, fact_value, source_url, fetched_at, confidence, in_quarantine, promoted_chunk_id"
+      )
       .eq("winery_id", selectedWinery)
-      .order("created_at", { ascending: false });
-    setFacts(data ?? []);
+      .order("fetched_at", { ascending: false, nullsFirst: false }); // nulls last so seeded rows without fetched_at sit below newer facts
+    if (error) {
+      setMessage("Error loading facts: " + error.message);
+      setFacts([]);
+      return;
+    }
+    const rows = (data ?? []) as WineryFactRow[];
+    setFacts(rows.map(rowToFact));
   }, [selectedWinery]);
 
   const loadGaps = useCallback(async () => {
@@ -87,9 +131,12 @@ export function AdminPage() {
     setMessage("");
     const { error } = await supabase.from("winery_facts").insert({
       winery_id: selectedWinery,
-      fact_text: newFact.trim(),
-      category: newCategory,
-      added_by: "admin",
+      fact_type: newCategory,
+      fact_value: { text: newFact.trim(), source: "admin_ui" },
+      source_url: null,
+      fetched_at: new Date().toISOString(),
+      confidence: 1.0,
+      in_quarantine: false,
     });
     if (error) {
       setMessage("Error: " + error.message);
@@ -111,7 +158,8 @@ export function AdminPage() {
     if (error) {
       setMessage("Sync error: " + error.message);
     } else {
-      setMessage(`Synced ${data} fact(s) to knowledge base.`);
+      const n = typeof data === "number" ? data : Number(data);
+      setMessage(`Synced ${Number.isFinite(n) ? n : 0} fact(s) to knowledge base.`);
       loadFacts();
     }
     setSyncing(false);
@@ -119,7 +167,7 @@ export function AdminPage() {
 
   const toggleFact = async (factId: string, active: boolean) => {
     if (!supabase) return;
-    await supabase.from("winery_facts").update({ active }).eq("id", factId);
+    await supabase.from("winery_facts").update({ in_quarantine: !active }).eq("id", factId);
     loadFacts();
   };
 
