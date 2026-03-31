@@ -17,12 +17,74 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem 1.25rem;
+  flex-wrap: wrap;
   padding: 1rem 1.5rem;
   background: #fff;
   border-bottom: 1px solid rgba(114, 47, 55, 0.12);
   position: sticky;
   top: 0;
   z-index: 10;
+}
+.nav-start {
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.25rem;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem 1.5rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+  min-width: 0;
+}
+.nav-winery-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #4a3d4c;
+}
+.nav-winery-cue {
+  font-weight: 600;
+  color: #6b5c6b;
+  white-space: nowrap;
+}
+.nav-winery-select {
+  font: inherit;
+  min-width: 9.5rem;
+  padding: 0.45rem 2rem 0.45rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid rgba(114, 47, 55, 0.28);
+  background: #fffef8;
+  color: #2d1f2e;
+  cursor: pointer;
+}
+.nav-winery-select:focus {
+  outline: 2px solid rgba(114, 47, 55, 0.35);
+  outline-offset: 1px;
+}
+.nav-winery-pages {
+  display: flex;
+  align-items: center;
+  gap: 1rem 1.1rem;
+  padding-right: 0.75rem;
+  margin-right: 0.25rem;
+  border-right: 1px solid rgba(114, 47, 55, 0.15);
+  flex-wrap: wrap;
+}
+.nav-winery-pages a {
+  color: #722f37;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.nav-winery-pages a:hover {
+  text-decoration: underline;
 }
 .brand {
   font-weight: 700;
@@ -33,6 +95,8 @@ body {
 .nav-links {
   display: flex;
   gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .nav-links a {
   color: #4a3d4c;
@@ -73,6 +137,43 @@ body {
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.5rem;
+}
+.home-partners {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(114, 47, 55, 0.12);
+}
+.home-partners-title {
+  font-size: 1.2rem;
+  color: #722f37;
+  margin: 0 0 0.5rem;
+  font-weight: 700;
+}
+.home-partners-hint {
+  max-width: 40rem;
+  line-height: 1.5;
+  margin: 0 0 0.25rem;
+}
+.home-partner-grid {
+  margin-top: 1rem;
+}
+.card-region {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #722f37;
+  margin: 0.25rem 0 0;
+  font-weight: 600;
+}
+.card .card-cta {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #722f37;
+}
+.card:hover .card-cta {
+  text-decoration: underline;
 }
 .page-head h1 {
   font-size: 1.75rem;
