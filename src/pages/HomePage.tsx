@@ -11,7 +11,7 @@ export function HomePage() {
         surfaced next to competitors on this site.
       </p>
       <div className="hero-actions">
-        <Link className="btn" to="/w/rex-hill">
+        <Link className="btn" to="/rex-hill">
           Example partner page
         </Link>
         <a className="btn btn-ghost" href={`${import.meta.env.BASE_URL}widget-test.html`} target="_blank" rel="noreferrer">

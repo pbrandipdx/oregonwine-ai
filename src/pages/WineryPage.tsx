@@ -29,8 +29,11 @@ type Fact = {
   source_url: string | null;
 };
 
-export function WineryPage() {
-  const { slug } = useParams<{ slug: string }>();
+export type WineryPageProps = { slug?: string };
+
+export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
+  const { slug: slugParam } = useParams<{ slug: string }>();
+  const slug = (slugProp ?? slugParam)?.trim();
   const [winery, setWinery] = useState<Winery | null>(null);
   const [facts, setFacts] = useState<Fact[]>([]);
   const [err, setErr] = useState<string | null>(null);

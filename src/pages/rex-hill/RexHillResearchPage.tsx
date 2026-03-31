@@ -161,7 +161,7 @@ export function RexHillResearchPage() {
         <h1>Rex Hill — Site Infrastructure Analysis</h1>
         <p className="muted" style={{ maxWidth: "42rem", marginTop: "0.5rem" }}>
           A verified breakdown of how rexhill.com is built, hosted, and connected — and how
-          OregonWine.ai integrates at every stage without disrupting existing infrastructure.
+          OregonWine.ai integrates at every stage without disrupting their existing infrastructure.
         </p>
       </header>
 
@@ -320,7 +320,7 @@ export function RexHillResearchPage() {
           >
             Try the live demo
           </a>
-          <Link className="btn btn-ghost" to="/w/rex-hill">
+          <Link className="btn btn-ghost" to="/rex-hill">
             Rex Hill partner page
           </Link>
         </div>
