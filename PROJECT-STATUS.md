@@ -1,4 +1,4 @@
-# oregonwine.ai — Master Project Status
+# crushpad.ai — Master Project Status
 
 **Last updated:** March 29, 2026
 
@@ -27,7 +27,7 @@ An AI chat agent that lives on a winery's website and answers every visitor ques
 | Email | Resend | No MCP — will use npm package directly |
 | Automation | n8n | Connected, ready for scrape/refresh workflows |
 | Payments | Stripe | Connected, ready for billing |
-| Repo | github.com/pbrandipdx/oregonwine-ai | |
+| Repo | github.com/pbrandipdx/crushpad-ai | |
 
 ---
 
@@ -236,7 +236,7 @@ Everything. The Edge Function, widget component, RAG pipeline, embed script, hos
 - **Owners:** "It pays for itself with one extra club signup a month."
 
 ### vs. ChatGPT
-ChatGPT doesn't know their Library Loft costs $50 or that walk-ins are welcome. The oregonwine.ai agent does. It's grounded in their actual content, sounds like their brand, and is embedded directly on their site.
+ChatGPT doesn't know their Library Loft costs $50 or that walk-ins are welcome. The crushpad.ai agent does. It's grounded in their actual content, sounds like their brand, and is embedded directly on their site.
 
 ### vs. Generic Chatbots (Intercom, Drift, Tidio)
 Those require significant DIY setup, charge per conversation, have zero wine industry knowledge, and cost 3-5x more for comparable functionality.
@@ -324,7 +324,7 @@ Technology will commoditize. What won't:
 ---
 
 ## Live URLs
-- GitHub Pages: https://pbrandipdx.github.io/oregonwine-ai/
-- Sales pitch: https://pbrandipdx.github.io/oregonwine-ai/sales-pitch.html
-- Widget mockup: https://pbrandipdx.github.io/oregonwine-ai/widget-mockup-v2.html
-- Repo: https://github.com/pbrandipdx/oregonwine-ai
+- GitHub Pages: https://pbrandipdx.github.io/crushpad-ai/
+- Sales pitch: https://pbrandipdx.github.io/crushpad-ai/sales-pitch.html
+- Widget mockup: https://pbrandipdx.github.io/crushpad-ai/widget-mockup-v2.html
+- Repo: https://github.com/pbrandipdx/crushpad-ai

@@ -1,5 +1,5 @@
 # Local Supabase — https://supabase.com/docs/guides/cli/config
-project_id = "oregonwine-ai"
+project_id = "crushpad-ai"
 
 [api]
 enabled = true

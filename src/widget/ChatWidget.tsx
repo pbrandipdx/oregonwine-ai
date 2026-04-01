@@ -636,7 +636,7 @@ export function ChatWidget({
                 boxSizing: "border-box",
               }}
             >
-              Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
+              Powered by <span style={{ color: c.textMuted }}>Crushpad.ai</span>
             </div>
           </div>
         </div>
@@ -862,7 +862,7 @@ export function ChatWidget({
 
         {/* Footer */}
         <div style={{ textAlign: "center", marginTop: 10, fontSize: 11, color: c.textDim }}>
-          Powered by <span style={{ color: c.textMuted }}>OregonWine.ai</span>
+          Powered by <span style={{ color: c.textMuted }}>Crushpad.ai</span>
         </div>
       </div>
         </>

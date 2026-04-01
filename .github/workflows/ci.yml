@@ -26,7 +26,7 @@ jobs:
           cache: npm
       - name: Install and build
         env:
-          VITE_BASE_PATH: /oregonwine-ai/
+          VITE_BASE_PATH: /crushpad-ai/
           VITE_SUPABASE_URL: https://sdobipmpvcuxnjqwpggp.supabase.co
           VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkb2JpcG1wdmN1eG5qcXdwZ2dwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NDE2OTQsImV4cCI6MjA5MDMxNzY5NH0.VLzJ8bzHmVFoOlN-Mpmwj_NX9dtzJHyAonErXSqu09I
           VITE_SUPABASE_FUNCTIONS_URL: https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1

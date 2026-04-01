@@ -48,7 +48,7 @@ begin
       p_winery_id,
       body,
       'admin_fact',
-      coalesce(nullif(trim(r.source_url), ''), 'https://admin.oregonwine.ai/fact/' || r.id::text),
+      coalesce(nullif(trim(r.source_url), ''), 'https://admin.crushpad.ai/fact/' || r.id::text),
       coalesce(r.fetched_at, now()),
       coalesce(r.confidence, 1.0)
     )

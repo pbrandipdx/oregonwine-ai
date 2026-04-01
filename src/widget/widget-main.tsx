@@ -4,10 +4,10 @@ import { ChatWidget } from "./ChatWidget";
 const scripts = document.querySelectorAll<HTMLScriptElement>("script[data-key]");
 const el = scripts[scripts.length - 1];
 if (!el) {
-  console.error("[OregonWine.ai] No widget script tag with data-key found.");
+  console.error("[Crushpad.ai] No widget script tag with data-key found.");
 } else {
   const mount = document.createElement("div");
-  mount.id = "oregonwine-widget-root";
+  mount.id = "crushpad-widget-root";
   el.insertAdjacentElement("afterend", mount);
   const apiBase =
     el.dataset.apiBase?.replace(/\/$/, "") ||

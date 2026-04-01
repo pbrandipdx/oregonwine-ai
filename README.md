@@ -1,4 +1,4 @@
-# OregonWine.ai
+# Crushpad.ai
 
 Willamette winery SaaS scaffold: embeddable RAG chat widget, Supabase schema, and a streaming `/chat` Edge Function (hybrid keyword + vector retrieval, Claude replies).
 
@@ -11,7 +11,7 @@ Willamette winery SaaS scaffold: embeddable RAG chat widget, Supabase schema, an
 ## Setup
 
 ```bash
-cd oregonwine-ai
+cd crushpad-ai
 npm install
 cp .env.example .env
 ```

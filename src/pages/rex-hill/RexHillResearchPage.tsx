@@ -161,7 +161,7 @@ export function RexHillResearchPage() {
         <h1>Rex Hill — Site Infrastructure Analysis</h1>
         <p className="muted" style={{ maxWidth: "42rem", marginTop: "0.5rem" }}>
           A verified breakdown of how rexhill.com is built, hosted, and connected — and how
-          OregonWine.ai integrates at every stage without disrupting their existing infrastructure.
+          Crushpad.ai integrates at every stage without disrupting their existing infrastructure.
         </p>
       </header>
 
@@ -257,7 +257,7 @@ export function RexHillResearchPage() {
       <section className="panel">
         <h2>Integration Roadmap</h2>
         <p className="muted small" style={{ marginBottom: "1rem" }}>
-          How the OregonWine.ai agent connects to Rex Hill's existing infrastructure at each stage —
+          How the Crushpad.ai agent connects to Rex Hill's existing infrastructure at each stage —
           zero disruption, increasing value.
         </p>
         {INTEGRATION_STAGES.map((s) => (

@@ -29,7 +29,7 @@ createRoot(document.getElementById("widget-root")!).render(
       apiKey={apiKey}
       apiBase={apiBase}
       themeColor="#722f37"
-      wineryLabel="OregonWine.ai"
+      wineryLabel="Crushpad.ai"
       embedded
       headerLockup="full"
     />

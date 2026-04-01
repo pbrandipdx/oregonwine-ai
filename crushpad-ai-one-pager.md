@@ -1,4 +1,4 @@
-# OregonWine.ai — One Pager
+# Crushpad.ai — One Pager
 
 ## What We're Building
 
@@ -74,5 +74,5 @@ Technology commoditizes. What doesn't: winery relationships (high switching cost
 
 ---
 
-**Live demo:** [Rex Hill Agent](https://pbrandipdx.github.io/oregonwine-ai/)
-**Repo:** [github.com/pbrandipdx/oregonwine-ai](https://github.com/pbrandipdx/oregonwine-ai)
+**Live demo:** [Rex Hill Agent](https://pbrandipdx.github.io/crushpad-ai/)
+**Repo:** [github.com/pbrandipdx/crushpad-ai](https://github.com/pbrandipdx/crushpad-ai)

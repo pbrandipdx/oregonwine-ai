@@ -44,7 +44,7 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
     cardTitle: "Soter Vineyards",
     region: "Mineral Springs Ranch · Yamhill-Carlton AVA",
     blurb:
-      "Biodynamic estate Pinot Noir, Chardonnay, sparkling, and more—visit by appointment. OregonWine.ai hub for crawl, widget, and research.",
+      "Biodynamic estate Pinot Noir, Chardonnay, sparkling, and more—visit by appointment. Crushpad.ai hub for crawl, widget, and research.",
   },
 };
 

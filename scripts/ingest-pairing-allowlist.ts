@@ -25,7 +25,7 @@ const ROOT = path.resolve(__dirname, "..");
 const CONFIG_PATH = path.join(ROOT, "data", "pairing-allowlist.json");
 
 const UA =
-  "OregonWineAI-PairingIngest/0.1 (+https://oregonwine.ai; internal research ingest)";
+  "CrushpadAI-PairingIngest/0.1 (+https://crushpad.ai; internal research ingest)";
 
 type WikiSource = {
   kind: "wikipedia";

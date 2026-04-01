@@ -7,7 +7,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/widget/widget-main.tsx"),
-      name: "OregonWineWidget",
+      name: "CrushpadWidget",
       formats: ["iife"],
       fileName: () => "widget.js",
     },

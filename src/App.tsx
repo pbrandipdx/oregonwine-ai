@@ -37,7 +37,7 @@ function AppNav() {
     <nav className="nav">
       <div className="nav-start">
         <Link className="brand" to="/">
-          OregonWine.ai
+          Crushpad.ai
         </Link>
         <NavWinerySelect />
       </div>

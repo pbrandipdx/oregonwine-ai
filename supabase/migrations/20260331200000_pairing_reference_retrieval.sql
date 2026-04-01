@@ -4,7 +4,7 @@ insert into public.wineries (name, slug, website, description, status, state)
 values (
   'Global pairing reference',
   'pairing-reference',
-  'https://oregonwine.ai',
+  'https://crushpad.ai',
   'Educational pairing text from allowlisted sources (not a tasting room). Chunks are labeled in text; verify licenses before production.',
   'active',
   'OR'

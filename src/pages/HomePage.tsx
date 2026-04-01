@@ -18,7 +18,7 @@ function blurbFor(w: { slug: string; name: string; description: string | null })
   if (ov) return ov;
   const d = w.description?.trim();
   if (d) return d.length > 280 ? `${d.slice(0, 277)}…` : d;
-  return `Tasting room and visit details for ${w.name}—powered by OregonWine.ai crawl and RAG.`;
+  return `Tasting room and visit details for ${w.name}—powered by Crushpad.ai crawl and RAG.`;
 }
 
 function titleFor(w: { slug: string; name: string }): string {
@@ -32,7 +32,7 @@ export function HomePage() {
     <>
       <section className="hero">
         <p className="eyebrow">Willamette Valley</p>
-        <h1>OregonWine.ai</h1>
+        <h1>Crushpad.ai</h1>
         <p className="lede">
           Embeddable RAG chat for Oregon wineries. Below are <strong>active partners in your database</strong>
           — add more rows in Supabase or run your crawl scripts to grow this list. Open a card for the full

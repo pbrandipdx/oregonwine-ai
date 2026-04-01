@@ -18,7 +18,7 @@ const MAX_CHUNK_CHARS = 1100;
 const MIN_CHUNK_CHARS = 120;
 const FETCH_TIMEOUT_MS = 25_000;
 const USER_AGENT =
-  "OregonWine.ai/1.0 (+https://github.com/pbrandipdx/oregonwine-ai; winery content fetch)";
+  "Crushpad.ai/1.0 (+https://github.com/pbrandipdx/crushpad-ai; winery content fetch)";
 
 interface FetchPage {
   url: string;

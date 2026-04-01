@@ -1,4 +1,4 @@
--- OregonWine.ai — core + analytics + seed (Phase 0)
+-- Crushpad.ai — core + analytics + seed (Phase 0)
 create extension if not exists vector;
 
 -- --- wineries

@@ -1,14 +1,14 @@
 // vite.widget.config.ts
-import { defineConfig } from "file:///sessions/modest-vibrant-brahmagupta/mnt/oregonwine-ai/node_modules/vite/dist/node/index.js";
-import react from "file:///sessions/modest-vibrant-brahmagupta/mnt/oregonwine-ai/node_modules/@vitejs/plugin-react/dist/index.js";
+import { defineConfig } from "file:///sessions/modest-vibrant-brahmagupta/mnt/crushpad-ai/node_modules/vite/dist/node/index.js";
+import react from "file:///sessions/modest-vibrant-brahmagupta/mnt/crushpad-ai/node_modules/@vitejs/plugin-react/dist/index.js";
 import path from "node:path";
-var __vite_injected_original_dirname = "/sessions/modest-vibrant-brahmagupta/mnt/oregonwine-ai";
+var __vite_injected_original_dirname = "/sessions/modest-vibrant-brahmagupta/mnt/crushpad-ai";
 var vite_widget_config_default = defineConfig({
   plugins: [react()],
   build: {
     lib: {
       entry: path.resolve(__vite_injected_original_dirname, "src/widget/widget-main.tsx"),
-      name: "OregonWineWidget",
+      name: "CrushpadWidget",
       formats: ["iife"],
       fileName: () => "widget.js"
     },
