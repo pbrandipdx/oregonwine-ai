@@ -312,14 +312,9 @@ export function RexHillResearchPage() {
           experiences, wine clubs, directions — and see how it responds in their voice.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <a
-            className="btn"
-            href={`${import.meta.env.BASE_URL}widget-test.html?partner=rex-hill`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Try the live demo
-          </a>
+          <Link className="btn" to="/widget-demo?partner=rex-hill">
+            Try it live
+          </Link>
           <Link className="btn btn-ghost" to="/rex-hill">
             Rex Hill partner page
           </Link>

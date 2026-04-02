@@ -1,0 +1,540 @@
+:root {
+  --hiw-bg: #080808;
+  --hiw-bg2: #0f0f0f;
+  --hiw-surface: #141414;
+  --hiw-border: #2a2a2a;
+  --hiw-border-strong: #3a3a3a;
+  --hiw-accent: #c47a84;
+  --hiw-accent-dim: rgba(196, 122, 132, 0.35);
+  --hiw-text: #eceae8;
+  --hiw-muted: #a8a39e;
+  --hiw-dim: #6b6560;
+  --hiw-ok: #7dcda0;
+  --hiw-bad: #e05555;
+  --hiw-warn: #d4a853;
+  --hiw-font-display: "Cormorant Garamond", Georgia, serif;
+  --hiw-font-mono: "Space Mono", ui-monospace, monospace;
+}
+
+.hiw {
+  --bg: var(--hiw-bg);
+  --bg2: var(--hiw-bg2);
+  --surface: var(--hiw-surface);
+  --border: var(--hiw-border);
+  --border-strong: var(--hiw-border-strong);
+  --accent: var(--hiw-accent);
+  --accent-dim: var(--hiw-accent-dim);
+  --text: var(--hiw-text);
+  --muted: var(--hiw-muted);
+  --dim: var(--hiw-dim);
+  --ok: var(--hiw-ok);
+  --bad: var(--hiw-bad);
+  --warn: var(--hiw-warn);
+  --font-display: var(--hiw-font-display);
+  --font-mono: var(--hiw-font-mono);
+}
+
+    /* hiw */
+    .hiw .hero {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      padding: 3.5rem 1.5rem 4.25rem;
+      text-align: left;
+    }
+
+    .hiw .hero-inner {
+      max-width: 40rem;
+      margin: 0 auto;
+    }
+
+    .hiw .hero-badge {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 1.1rem;
+    }
+
+    .hiw .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 4vw, 2.65rem);
+      font-weight: 600;
+      line-height: 1.14;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hiw .hero p {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 36rem;
+      margin: 0 0 1.65rem;
+    }
+
+    .hiw .hero p em {
+      color: var(--text);
+      font-style: italic;
+    }
+
+    .hiw .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 0.35rem;
+    }
+
+    .hiw .hero-cta {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.85rem 1.35rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .hiw .hero-cta:not(.ghost) {
+      background: var(--accent);
+      color: var(--bg);
+      border: 1px solid var(--accent);
+    }
+
+    .hiw .hero-cta:not(.ghost):hover {
+      background: transparent;
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hiw .hero-cta.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border-strong);
+    }
+
+    .hiw .hero-cta.ghost:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    /* Stats — generous rhythm; cards breathe */
+    .hiw .stats-banner {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 1.35rem;
+      row-gap: 1.25rem;
+      max-width: 980px;
+      margin: 3rem auto 3.5rem;
+      padding: 0 clamp(1.25rem, 4vw, 2.25rem);
+      position: relative;
+      z-index: 2;
+    }
+
+    .hiw .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem 1.35rem 1.65rem;
+      text-align: center;
+      border-top: 3px solid var(--accent);
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .hiw .stat-card:hover {
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28), 0 0 0 1px var(--accent-dim);
+      border-color: var(--border-strong);
+    }
+
+    .hiw .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(1.85rem, 2.8vw, 2.25rem);
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.15rem;
+    }
+
+    .hiw .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text);
+      margin-top: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .hiw .stat-source {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--dim);
+      margin: 0.55rem auto 0;
+      line-height: 1.55;
+      max-width: 22ch;
+    }
+
+    .hiw .container {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .hiw .section {
+      background: var(--surface);
+      padding: 2.75rem 2.25rem;
+      margin: 2.75rem 0;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .hiw .section h2 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    .hiw .section .subtitle {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 0.74rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1.45;
+      max-width: 38rem;
+    }
+
+    .hiw .section h3 {
+      font-family: var(--font-display);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 1.5rem 0 0.5rem;
+    }
+
+    .hiw .section p,
+    .hiw .section li {
+      margin-bottom: 0.75rem;
+      color: var(--muted);
+    }
+
+    .hiw .section strong {
+      color: var(--text);
+    }
+
+    .hiw .section ul {
+      margin: 0.5rem 0 0.5rem 1.25rem;
+    }
+
+    .hiw .highlight {
+      background: rgba(196, 122, 132, 0.07);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.35rem 1.5rem;
+      border-radius: 0 2px 2px 0;
+      margin: 1.5rem 0;
+    }
+
+    .hiw .highlight h3 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .hiw .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0;
+      margin: 1.75rem 0;
+      border: 1px solid var(--border);
+    }
+
+    .hiw .feature-card {
+      background: var(--bg2);
+      padding: 1.35rem 1.25rem;
+      border: 1px solid var(--border);
+      margin: -1px 0 0 -1px;
+      transition: box-shadow 0.2s;
+    }
+
+    .hiw .feature-card:hover {
+      box-shadow: inset 0 0 0 1px var(--accent-dim);
+    }
+
+    .hiw .feature-icon {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+      min-height: auto;
+      display: block;
+      text-align: left;
+    }
+
+    .hiw .feature-card h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .hiw .feature-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .hiw .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.35rem 0;
+      font-size: 0.9rem;
+    }
+
+    .hiw .comparison-table th {
+      background: var(--bg2);
+      color: var(--text);
+      padding: 0.65rem 0.85rem;
+      text-align: left;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--accent);
+    }
+
+    .hiw .comparison-table td {
+      padding: 0.75rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .hiw .comparison-table tr:hover td {
+      background: rgba(196, 122, 132, 0.04);
+    }
+
+    .hiw .check {
+      color: var(--ok);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .hiw .cross {
+      color: var(--bad);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .hiw .warn {
+      color: var(--warn);
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+
+    .hiw .pricing-box {
+      background: var(--bg2);
+      color: var(--text);
+      border: 1px solid var(--accent-dim);
+      padding: 2rem;
+      border-radius: 2px;
+      margin: 1.75rem 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .hiw .pricing-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      color: var(--text);
+      margin: 0 0 0.35rem;
+    }
+
+    .hiw .price {
+      font-family: var(--font-display);
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0.35rem 0;
+    }
+
+    .hiw .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .hiw .pricing-box ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hiw .pricing-box li {
+      padding: 0.5rem 0 0.5rem 1.1rem;
+      position: relative;
+      font-size: 0.98rem;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hiw .pricing-box li:last-child {
+      border-bottom: none;
+    }
+
+    .hiw .pricing-box li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.85em;
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+
+    .hiw .cta-section {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 3rem 2rem;
+      border-radius: 2px;
+      text-align: center;
+      margin: 2.25rem 0;
+    }
+
+    .hiw .cta-section h2 {
+      font-family: var(--font-display);
+      color: var(--text);
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .hiw .cta-section p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hiw .cta-section .hero-actions {
+      justify-content: center;
+    }
+
+    .hiw .cta-badges {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem 1.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--dim);
+    }
+
+    .hiw .use-cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin: 1.35rem 0;
+    }
+
+    .hiw .use-case {
+      background: var(--bg2);
+      padding: 1.15rem;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      transition: border-color 0.2s;
+    }
+
+    .hiw .use-case:hover {
+      border-color: var(--accent-dim);
+    }
+
+    .hiw .use-case h4 {
+      font-family: var(--font-mono);
+      color: var(--accent);
+      margin-bottom: 0.45rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+
+    .hiw .use-case p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .hiw .page-footer {
+      text-align: center;
+      padding: 2rem 1.5rem 2.5rem;
+      font-size: 0.68rem;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+
+    .hiw .page-footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .hiw .page-footer a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .hiw .hero {
+        padding: 2.5rem 1.25rem 2.75rem;
+      }
+
+      .hiw .section {
+        padding: 1.5rem 1.25rem;
+      }
+
+      .hiw .pricing-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hiw .stats-banner {
+        margin: 2.25rem auto 2.75rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+        row-gap: 1.1rem;
+      }
+
+      .hiw .stat-card {
+        padding: 1.5rem 1.15rem 1.45rem;
+      }
+
+      .hiw .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  

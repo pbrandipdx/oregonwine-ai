@@ -13,6 +13,11 @@ type Props = {
   wineryLabel: string;
   /** When true, renders as a centered inline chat instead of a floating bubble */
   embedded?: boolean;
+  /**
+   * When `embedded` is true: `viewport` uses a fixed top bar (full-page embeds).
+   * `panel` relies on the host page chrome — no duplicate Crushpad / Wine Agent strip.
+   */
+  embeddedChrome?: "viewport" | "panel";
   /** Full wordmark image (crest + type). Ignored when `headerCrestImageUrl` is set. */
   headerLogoUrl?: string;
   /**
@@ -178,12 +183,17 @@ export function ChatWidget({
   apiBase,
   wineryLabel,
   embedded,
+  embeddedChrome,
   headerLogoUrl,
   headerCrestImageUrl,
   headerLockup = "logo-and-agent",
   wineryUrl,
   wineryPhone,
 }: Props) {
+  const embeddedChromeMode: "viewport" | "panel" =
+    embedded && embeddedChrome === "panel" ? "panel" : "viewport";
+  const fixedViewportTopBar = embedded && embeddedChromeMode === "viewport";
+
   const sessionId = useId().replace(/:/g, "");
   const [open, setOpen] = useState(embedded ? true : false);
   const [input, setInput] = useState("");
@@ -327,6 +337,19 @@ export function ChatWidget({
     [apiBase, apiKey, loading, messages, sessionId, wineryLabel]
   );
 
+  /** Agent demo / host pages can trigger the same send pipeline as the composer (e.g. left-rail discovery card). */
+  useEffect(() => {
+    const handler = (ev: Event) => {
+      const text = (ev as CustomEvent<{ text?: string }>).detail?.text;
+      if (typeof text !== "string") return;
+      const trimmed = text.trim();
+      if (!trimmed) return;
+      void sendMessage(trimmed);
+    };
+    window.addEventListener("crushpad-embed-send-message", handler);
+    return () => window.removeEventListener("crushpad-embed-send-message", handler);
+  }, [sendMessage]);
+
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
 
   /** Detect if the response suggests the bot couldn't answer */
@@ -446,7 +469,105 @@ export function ChatWidget({
     </span>
   );
 
-  const embeddedPageHeader = embedded ? (
+  const embeddedHeaderContent = (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        minWidth: 0,
+        flexWrap: "nowrap",
+      }}
+    >
+      {headerCrestImageUrl ? (
+        <>
+          <img
+            src={headerCrestImageUrl}
+            alt=""
+            style={{
+              height: 34,
+              width: 34,
+              objectFit: "contain",
+              flexShrink: 0,
+            }}
+          />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              flexWrap: "wrap",
+              columnGap: 12,
+              rowGap: 2,
+              minWidth: 0,
+            }}
+          >
+            <span
+              style={{
+                fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                fontSize: 13,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: headerTone.winerySerifMuted,
+                textTransform: "uppercase",
+              }}
+            >
+              {wineryLabel}
+            </span>
+            {wineAgentTitle}
+          </div>
+        </>
+      ) : (
+        <>
+          {headerLogoUrl ? (
+            <img
+              src={headerLogoUrl}
+              alt=""
+              style={{
+                height: 30,
+                width: "auto",
+                maxWidth: 152,
+                objectFit: "contain",
+                flexShrink: 0,
+              }}
+            />
+          ) : null}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              flexWrap: "wrap",
+              columnGap: 8,
+              rowGap: 2,
+              minWidth: 0,
+            }}
+          >
+            {(headerLockup === "full" || !headerLogoUrl) && (
+              <>
+                <span
+                  style={{
+                    fontFamily: "'DM Sans', system-ui, sans-serif",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    letterSpacing: "0.11em",
+                    color: headerTone.winery,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {wineryLabel}
+                </span>
+                <span style={{ color: headerTone.sep, fontSize: 10, userSelect: "none" }} aria-hidden>
+                  ·
+                </span>
+              </>
+            )}
+            {wineAgentTitle}
+          </div>
+        </>
+      )}
+    </div>
+  );
+
+  const embeddedPageHeader = embedded && fixedViewportTopBar ? (
     <header
       style={{
         position: "fixed",
@@ -463,101 +584,7 @@ export function ChatWidget({
         boxSizing: "border-box",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 14,
-          minWidth: 0,
-          flexWrap: "nowrap",
-        }}
-      >
-        {headerCrestImageUrl ? (
-          <>
-            <img
-              src={headerCrestImageUrl}
-              alt=""
-              style={{
-                height: 34,
-                width: 34,
-                objectFit: "contain",
-                flexShrink: 0,
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                flexWrap: "wrap",
-                columnGap: 12,
-                rowGap: 2,
-                minWidth: 0,
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  letterSpacing: "0.1em",
-                  color: headerTone.winerySerifMuted,
-                  textTransform: "uppercase",
-                }}
-              >
-                {wineryLabel}
-              </span>
-              {wineAgentTitle}
-            </div>
-          </>
-        ) : (
-          <>
-            {headerLogoUrl ? (
-              <img
-                src={headerLogoUrl}
-                alt=""
-                style={{
-                  height: 30,
-                  width: "auto",
-                  maxWidth: 152,
-                  objectFit: "contain",
-                  flexShrink: 0,
-                }}
-              />
-            ) : null}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "baseline",
-                flexWrap: "wrap",
-                columnGap: 8,
-                rowGap: 2,
-                minWidth: 0,
-              }}
-            >
-              {(headerLockup === "full" || !headerLogoUrl) && (
-                <>
-                  <span
-                    style={{
-                      fontFamily: "'DM Sans', system-ui, sans-serif",
-                      fontSize: 12,
-                      fontWeight: 600,
-                      letterSpacing: "0.11em",
-                      color: headerTone.winery,
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    {wineryLabel}
-                  </span>
-                  <span style={{ color: headerTone.sep, fontSize: 10, userSelect: "none" }} aria-hidden>
-                    ·
-                  </span>
-                </>
-              )}
-              {wineAgentTitle}
-            </div>
-          </>
-        )}
-      </div>
+      {embeddedHeaderContent}
     </header>
   ) : null;
 
@@ -578,8 +605,10 @@ export function ChatWidget({
         overflow: "hidden",
         boxSizing: "border-box",
         ...(embedded
-          ? { paddingTop: EMBEDDED_TOP_BAR_PX }
-          : { position: "fixed" as const, bottom: 96, right: 24, zIndex: 99999 }),
+          ? fixedViewportTopBar
+            ? { paddingTop: EMBEDDED_TOP_BAR_PX }
+            : {}
+          : { position: "fixed" as const, bottom: 96, left: 24, zIndex: 99999 }),
       }}
     >
       {landingEmbedded ? (
@@ -892,7 +921,7 @@ export function ChatWidget({
         style={{
           position: "fixed",
           bottom: 24,
-          right: 24,
+          left: 24,
           width: 56,
           height: 56,
           borderRadius: "50%",

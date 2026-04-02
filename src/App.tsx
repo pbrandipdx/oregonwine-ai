@@ -1,6 +1,9 @@
-import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useMemo } from "react";
-import { HomePage } from "./pages/HomePage";
+import { BookDemoPage } from "./pages/BookDemoPage";
+import { HowItWorksPage } from "./pages/HowItWorksPage";
+import { WidgetDemoPage } from "./pages/WidgetDemoPage";
+import { AgentDemoPage } from "./pages/AgentDemoPage";
 import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
@@ -11,17 +14,12 @@ import {
   inferWinerySlugFromPath,
   navConfigForSlug,
 } from "./lib/wineries";
-import {
-  WineryDirectoryProvider,
-  useWineryBySlug,
-  useWineryDirectory,
-} from "./contexts/WineryDirectoryContext";
+import { WineryDirectoryProvider, useWineryBySlug } from "./contexts/WineryDirectoryContext";
 
 const base = import.meta.env.BASE_URL;
 
 function AppNav() {
   const location = useLocation();
-  const navigate = useNavigate();
   const activeSlug = useMemo(
     () => inferWinerySlugFromPath(location.pathname),
     [location.pathname]
@@ -33,13 +31,17 @@ function AppNav() {
     return navConfigForSlug(activeSlug, label);
   }, [activeSlug, meta]);
 
+  const onHowItWorks = location.pathname === "/" || location.pathname === "";
+  const onWidgetDemo = location.pathname === "/widget-demo";
+  const onAgentDemo = location.pathname === "/agent-demo";
+  const demoPartnerQuery = activeSlug === "rex-hill" ? "?partner=rex-hill" : "";
+
   return (
     <nav className="nav">
       <div className="nav-start">
         <Link className="brand" to="/">
           Crushpad.ai
         </Link>
-        <NavWinerySelect />
       </div>
       <div className="nav-end">
         {winery && (
@@ -50,62 +52,54 @@ function AppNav() {
           </div>
         )}
         <div className="nav-links">
+          {onHowItWorks ? (
+            <span className="nav-link-here">How it works</span>
+          ) : (
+            <Link className="nav-link-overview" to="/">
+              How it works
+            </Link>
+          )}
           <Link to="/admin">Admin</Link>
-          <a
-            href={`${base}widget-test.html${activeSlug === "rex-hill" ? "?partner=rex-hill" : ""}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Widget demo
-          </a>
+          {onWidgetDemo ? (
+            <span className="nav-link-here">Chatbot demo</span>
+          ) : (
+            <Link to={`/widget-demo${demoPartnerQuery}`}>Chatbot demo</Link>
+          )}
+          {onAgentDemo ? (
+            <span className="nav-link-here">Agent demo</span>
+          ) : (
+            <Link to={`/agent-demo${demoPartnerQuery}`}>Agent demo</Link>
+          )}
         </div>
       </div>
     </nav>
   );
 }
 
-function NavWinerySelect() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { wineries, loading } = useWineryDirectory();
-  const activeSlug = useMemo(
-    () => inferWinerySlugFromPath(location.pathname),
-    [location.pathname]
-  );
-
-  return (
-    <label className="nav-winery-label">
-      <span className="nav-winery-cue">Winery</span>
-      <select
-        className="nav-winery-select"
-        aria-label="Choose winery"
-        disabled={loading || wineries.length === 0}
-        value={activeSlug ?? ""}
-        onChange={(e) => {
-          const slug = e.target.value;
-          if (!slug) return;
-          const row = wineries.find((w) => w.slug === slug);
-          navigate(navConfigForSlug(slug, row?.name ?? slug).partnerPath);
-        }}
-      >
-        <option value="">{loading ? "Loading…" : "Choose…"}</option>
-        {wineries.map((w) => (
-          <option key={w.id} value={w.slug}>
-            {w.name}
-          </option>
-        ))}
-      </select>
-    </label>
-  );
-}
-
 function AppRoutesInner() {
+  const location = useLocation();
+  const isHowItWorksLanding = location.pathname === "/" || location.pathname === "";
+  const isBookDemo = location.pathname === "/book-demo";
+  const isDemoShell =
+    location.pathname === "/widget-demo" || location.pathname === "/agent-demo";
   return (
     <div className="app">
       <AppNav />
-      <main className="main">
+      <main
+        className={
+          isHowItWorksLanding || isBookDemo
+            ? "main main--landing"
+            : isDemoShell
+              ? "main main--widget-demo"
+              : "main"
+        }
+      >
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HowItWorksPage />} />
+          <Route path="/book-demo" element={<BookDemoPage />} />
+          <Route path="/widget-demo" element={<WidgetDemoPage />} />
+          <Route path="/agent-demo" element={<AgentDemoPage />} />
+          <Route path="/partners" element={<Navigate to="/" replace />} />
           <Route path="/directory" element={<Navigate to="/" replace />} />
           <Route path="/rex-hill" element={<RexHillPartnerPage />} />
           <Route path="/rex-hill/research" element={<RexHillResearchPage />} />

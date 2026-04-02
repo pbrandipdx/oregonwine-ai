@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
 
 type Winery = { id: string; name: string; slug: string };
@@ -48,11 +48,37 @@ function rowToFact(row: WineryFactRow): Fact {
 }
 type Gap = {
   id: string;
+  winery_id: string;
   user_message: string;
   was_deflected: boolean;
   feedback_rating: number | null;
   created_at: string;
 };
+
+function normSlug(slug: string): string {
+  return String(slug).trim().toLowerCase();
+}
+
+/** Slug-only hint (e.g. gap rows before winery list loads). */
+function isChehalemSlug(slug: string): boolean {
+  const s = normSlug(slug);
+  return s === "chehalem" || s.startsWith("chehalem-") || s.startsWith("chehalem_");
+}
+
+/** Row-aware: DB slug may not be exactly `chehalem` (legacy rows, typos). */
+function isChehalemWinery(w: Pick<Winery, "slug" | "name">): boolean {
+  if (isChehalemSlug(w.slug)) return true;
+  return /^chehalem/i.test(String(w.name).trim());
+}
+
+function isSoterSlug(slug: string): boolean {
+  return normSlug(slug) === "soter";
+}
+
+/** Not listed in the winery dropdown unless opened via an unanswered question (Soter only). */
+function isHiddenFromAdminWinerySelect(w: Winery): boolean {
+  return isChehalemWinery(w) || isSoterSlug(w.slug);
+}
 
 const CATEGORIES = [
   "general",
@@ -68,7 +94,7 @@ const CATEGORIES = [
 ];
 
 export function AdminPage() {
-  const [wineries, setWineries] = useState<Winery[]>([]);
+  const [allWineries, setAllWineries] = useState<Winery[]>([]);
   const [selectedWinery, setSelectedWinery] = useState<string>("");
   const [facts, setFacts] = useState<Fact[]>([]);
   const [gaps, setGaps] = useState<Gap[]>([]);
@@ -85,12 +111,59 @@ export function AdminPage() {
       .select("id, name, slug")
       .order("name")
       .then(({ data }) => {
-        if (data) {
-          setWineries(data);
-          if (data.length > 0) setSelectedWinery(data[0].id);
-        }
+        if (!data) return;
+        setAllWineries(data);
+        const visible = data.filter((w) => !isHiddenFromAdminWinerySelect(w));
+        setSelectedWinery((prev) => {
+          const m = data.find((w) => w.id === prev);
+          if (m && isChehalemWinery(m)) return visible[0]?.id ?? "";
+          if (prev && m && visible.some((w) => w.id === prev)) return prev;
+          if (prev && m && isSoterSlug(m.slug)) return prev;
+          return visible[0]?.id ?? "";
+        });
       });
   }, []);
+
+  useEffect(() => {
+    const m = allWineries.find((w) => w.id === selectedWinery);
+    if (!m || !isChehalemWinery(m)) return;
+    const visible = allWineries.filter((w) => !isHiddenFromAdminWinerySelect(w));
+    setSelectedWinery(visible[0]?.id ?? "");
+  }, [allWineries, selectedWinery]);
+
+  const wineryNameById = useMemo(
+    () => Object.fromEntries(allWineries.map((w) => [w.id, w.name] as const)),
+    [allWineries]
+  );
+
+  const winerySlugById = useMemo(
+    () => Object.fromEntries(allWineries.map((w) => [w.id, w.slug] as const)),
+    [allWineries]
+  );
+
+  const visibleGaps = useMemo(
+    () =>
+      gaps.filter((g) => {
+        const w = allWineries.find((x) => x.id === g.winery_id);
+        if (w) return !isChehalemWinery(w);
+        const slug = winerySlugById[g.winery_id];
+        return slug != null && !isChehalemSlug(slug);
+      }),
+    [gaps, winerySlugById, allWineries]
+  );
+
+  const winerySelectOptions = useMemo(() => {
+    const visible = allWineries.filter((w) => !isHiddenFromAdminWinerySelect(w));
+    const selected = allWineries.find((w) => w.id === selectedWinery);
+    if (
+      selected &&
+      isSoterSlug(selected.slug) &&
+      !visible.some((w) => w.id === selected.id)
+    ) {
+      return [...visible, selected];
+    }
+    return visible;
+  }, [allWineries, selectedWinery]);
 
   const loadFacts = useCallback(async () => {
     if (!supabase || !selectedWinery) return;
@@ -111,19 +184,26 @@ export function AdminPage() {
   }, [selectedWinery]);
 
   const loadGaps = useCallback(async () => {
-    if (!supabase || !selectedWinery) return;
-    const { data } = await supabase
+    if (!supabase) return;
+    const { data, error } = await supabase
       .from("chat_gaps")
       .select("*")
-      .eq("winery_id", selectedWinery)
-      .limit(20);
+      .order("created_at", { ascending: false })
+      .limit(75);
+    if (error) {
+      setGaps([]);
+      return;
+    }
     setGaps((data as Gap[]) ?? []);
-  }, [selectedWinery]);
+  }, []);
 
   useEffect(() => {
     loadFacts();
+  }, [loadFacts]);
+
+  useEffect(() => {
     loadGaps();
-  }, [loadFacts, loadGaps]);
+  }, [loadGaps]);
 
   const addFact = async () => {
     if (!supabase || !newFact.trim() || !selectedWinery) return;
@@ -144,6 +224,7 @@ export function AdminPage() {
       setMessage("Fact added!");
       setNewFact("");
       loadFacts();
+      loadGaps();
     }
     setSaving(false);
   };
@@ -173,31 +254,33 @@ export function AdminPage() {
 
   if (!supabase) {
     return (
-      <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
+      <div className="admin-page">
         <h1>Winery Admin</h1>
-        <p style={{ color: "#b00020" }}>{supabaseEnvHint()}</p>
+        <p className="admin-message admin-message--err">{supabaseEnvHint()}</p>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
+    <div className="admin-page">
       <h1>Winery Admin</h1>
-      <p style={{ color: "#666", marginBottom: 24 }}>
+      <p className="admin-intro">
         Add facts to teach the chatbot, review unanswered questions, and sync to
         the knowledge base.
       </p>
 
-      <label style={{ fontWeight: 600 }}>
+      <label className="admin-field-label">
         Winery:{" "}
         <select
+          className="admin-select"
           value={selectedWinery}
           onChange={(e) => setSelectedWinery(e.target.value)}
-          style={{ padding: "6px 12px", borderRadius: 6, border: "1px solid #ccc", marginLeft: 8 }}
+          style={{ padding: "6px 12px", borderRadius: 6, marginLeft: 8 }}
         >
-          {wineries.map((w) => (
+          {winerySelectOptions.map((w) => (
             <option key={w.id} value={w.id}>
               {w.name}
+              {isSoterSlug(w.slug) ? " (partner)" : ""}
             </option>
           ))}
         </select>
@@ -206,15 +289,16 @@ export function AdminPage() {
       {/* Add Fact Section */}
       <section style={{ marginTop: 32 }}>
         <h2>Add a Fact</h2>
-        <p style={{ color: "#666", fontSize: 14 }}>
+        <p className="admin-section-hint">
           Add info the chatbot should know — events, policy changes, new wines,
           seasonal hours, etc.
         </p>
         <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
           <select
+            className="admin-select"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
-            style={{ padding: "8px 12px", borderRadius: 8, border: "1px solid #ccc" }}
+            style={{ padding: "8px 12px", borderRadius: 8 }}
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>
@@ -224,6 +308,7 @@ export function AdminPage() {
           </select>
         </div>
         <textarea
+          className="admin-textarea"
           value={newFact}
           onChange={(e) => setNewFact(e.target.value)}
           placeholder="e.g. Rex Hill is hosting a harvest dinner on October 15, 2026. Tickets are $150/person and include a 5-course meal paired with library wines."
@@ -232,45 +317,32 @@ export function AdminPage() {
             width: "100%",
             padding: 12,
             borderRadius: 8,
-            border: "1px solid #ccc",
             fontSize: 14,
             resize: "vertical",
             boxSizing: "border-box",
           }}
         />
-        <div style={{ display: "flex", gap: 12, marginTop: 8, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 12, marginTop: 8, alignItems: "center", flexWrap: "wrap" }}>
           <button
+            type="button"
+            className="admin-btn-wine"
             onClick={addFact}
             disabled={saving || !newFact.trim()}
-            style={{
-              padding: "8px 20px",
-              borderRadius: 8,
-              border: "none",
-              background: "#722F37",
-              color: "#fff",
-              cursor: saving ? "wait" : "pointer",
-              fontWeight: 600,
-            }}
           >
             {saving ? "Saving..." : "Add Fact"}
           </button>
           <button
+            type="button"
+            className="admin-btn-wine-outline"
             onClick={syncFacts}
             disabled={syncing}
-            style={{
-              padding: "8px 20px",
-              borderRadius: 8,
-              border: "1px solid #722F37",
-              background: "#fff",
-              color: "#722F37",
-              cursor: syncing ? "wait" : "pointer",
-              fontWeight: 600,
-            }}
           >
             {syncing ? "Syncing..." : "Sync to Chatbot"}
           </button>
           {message && (
-            <span style={{ color: message.startsWith("Error") ? "#b00020" : "#2e7d32", fontSize: 14 }}>
+            <span
+              className={`admin-message ${/error/i.test(message) ? "admin-message--err" : "admin-message--ok"}`}
+            >
               {message}
             </span>
           )}
@@ -280,62 +352,25 @@ export function AdminPage() {
       {/* Existing Facts */}
       <section style={{ marginTop: 32 }}>
         <h2>Current Facts ({facts.length})</h2>
-        {facts.length === 0 && <p style={{ color: "#999" }}>No facts added yet.</p>}
+        {facts.length === 0 && <p className="admin-empty">No facts added yet.</p>}
         {facts.map((f) => (
           <div
             key={f.id}
-            style={{
-              padding: 12,
-              marginBottom: 8,
-              borderRadius: 8,
-              border: "1px solid #e0e0e0",
-              background: f.active ? "#fff" : "#f5f5f5",
-              opacity: f.active ? 1 : 0.6,
-            }}
+            className={`admin-card${f.active ? "" : " admin-card--inactive"}`}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
               <div style={{ flex: 1 }}>
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "2px 8px",
-                    borderRadius: 4,
-                    background: "#f0e4ef",
-                    fontSize: 11,
-                    fontWeight: 600,
-                    marginBottom: 4,
-                  }}
-                >
-                  {f.category}
-                </span>
+                <span className="admin-chip">{f.category}</span>
                 {f.synced_to_chunks && (
-                  <span
-                    style={{
-                      display: "inline-block",
-                      padding: "2px 8px",
-                      borderRadius: 4,
-                      background: "#e8f5e9",
-                      fontSize: 11,
-                      fontWeight: 600,
-                      marginLeft: 6,
-                    }}
-                  >
-                    synced
-                  </span>
+                  <span className="admin-chip admin-chip--synced">synced</span>
                 )}
-                <p style={{ margin: "4px 0 0", fontSize: 14 }}>{f.fact_text}</p>
+                <p className="admin-card-text">{f.fact_text}</p>
               </div>
               <button
+                type="button"
+                className="admin-btn-outline"
                 onClick={() => toggleFact(f.id, !f.active)}
-                style={{
-                  padding: "4px 10px",
-                  borderRadius: 6,
-                  border: "1px solid #ccc",
-                  background: "#fff",
-                  cursor: "pointer",
-                  fontSize: 12,
-                  marginLeft: 12,
-                }}
+                style={{ marginLeft: 12, flexShrink: 0 }}
               >
                 {f.active ? "Disable" : "Enable"}
               </button>
@@ -347,47 +382,35 @@ export function AdminPage() {
       {/* Gap Analysis: Unanswered Questions */}
       <section style={{ marginTop: 32 }}>
         <h2>Unanswered Questions</h2>
-        <p style={{ color: "#666", fontSize: 14 }}>
-          Questions the chatbot couldn't answer or that got a thumbs-down. Use
-          these to add missing facts above.
+        <p className="admin-section-hint">
+          Recent questions from partners <strong>managed in this admin</strong> that
+          the chatbot couldn’t answer or that got a thumbs-down. Choosing &ldquo;Add
+          fact&rdquo; selects that winery (including Soter if it isn’t in the default
+          list).
         </p>
-        {gaps.length === 0 && <p style={{ color: "#999" }}>No gaps found yet — great!</p>}
-        {gaps.map((g) => (
-          <div
-            key={g.id}
-            style={{
-              padding: 10,
-              marginBottom: 6,
-              borderRadius: 6,
-              border: "1px solid #e0e0e0",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+        {visibleGaps.length === 0 && <p className="admin-empty">No gaps found yet — great!</p>}
+        {visibleGaps.map((g) => (
+          <div key={g.id} className="admin-gap-row">
             <div>
-              <span style={{ fontSize: 14 }}>{g.user_message}</span>
-              <div style={{ fontSize: 11, color: "#999", marginTop: 2 }}>
+              <span className="admin-chip" style={{ marginRight: 6 }}>
+                {wineryNameById[g.winery_id] ?? "Unknown winery"}
+              </span>
+              <span className="admin-gap-msg">{g.user_message}</span>
+              <div className="admin-gap-meta">
                 {new Date(g.created_at).toLocaleDateString()}{" "}
                 {g.was_deflected && <span style={{ color: "#e65100" }}>deflected</span>}
                 {g.feedback_rating === -1 && <span style={{ color: "#b00020" }}> thumbs down</span>}
               </div>
             </div>
             <button
+              type="button"
+              className="admin-btn-wine-outline"
               onClick={() => {
+                setSelectedWinery(g.winery_id);
                 setNewFact(`[Answering: "${g.user_message}"] `);
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              style={{
-                padding: "4px 10px",
-                borderRadius: 6,
-                border: "1px solid #722F37",
-                background: "#fff",
-                color: "#722F37",
-                cursor: "pointer",
-                fontSize: 12,
-                whiteSpace: "nowrap",
-              }}
+              style={{ fontSize: 12, padding: "4px 10px", whiteSpace: "nowrap" }}
             >
               Add fact
             </button>

@@ -325,6 +325,6 @@ Technology will commoditize. What won't:
 
 ## Live URLs
 - GitHub Pages: https://pbrandipdx.github.io/crushpad-ai/
-- Sales pitch: https://pbrandipdx.github.io/crushpad-ai/sales-pitch.html
+- How it works (detail page): https://pbrandipdx.github.io/crushpad-ai/overview.html — `sales-pitch.html` redirects here
 - Widget mockup: https://pbrandipdx.github.io/crushpad-ai/widget-mockup-v2.html
 - Repo: https://github.com/pbrandipdx/crushpad-ai
