@@ -1,0 +1,190 @@
+/* Book a demo — matches How it works palette (.hiw parent) */
+
+.bdemo-page {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  color: var(--text);
+}
+
+.bdemo-hero {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 2.75rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.bdemo-hero-inner {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.bdemo-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.65rem;
+}
+
+.bdemo-hero p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.bdemo-main {
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 2.25rem 1.5rem 3.5rem;
+}
+
+.bdemo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.75rem 1.5rem 2rem;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+}
+
+.bdemo-field {
+  margin-bottom: 1.1rem;
+}
+
+.bdemo-field:last-of-type {
+  margin-bottom: 0;
+}
+
+.bdemo-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.4rem;
+}
+
+.bdemo-field .bdemo-optional {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+
+.bdemo-field input,
+.bdemo-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.7rem 0.85rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.bdemo-field input:focus,
+.bdemo-field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+.bdemo-field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.bdemo-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bdemo-actions {
+  margin-top: 1.35rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.bdemo-submit {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.bdemo-submit:hover:not(:disabled) {
+  background: transparent;
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.bdemo-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.bdemo-back {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.bdemo-back:hover {
+  color: var(--accent);
+}
+
+.bdemo-msg {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 4px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.bdemo-msg--ok {
+  background: rgba(125, 205, 160, 0.12);
+  border: 1px solid rgba(125, 205, 160, 0.35);
+  color: var(--ok);
+}
+
+.bdemo-msg--err {
+  background: rgba(224, 85, 85, 0.12);
+  border: 1px solid rgba(224, 85, 85, 0.35);
+  color: var(--bad);
+}
+
+.bdemo-msg--warn {
+  background: rgba(212, 168, 83, 0.1);
+  border: 1px solid rgba(212, 168, 83, 0.35);
+  color: var(--warn);
+}
+
+@media (max-width: 480px) {
+  .bdemo-card {
+    padding: 1.35rem 1.1rem 1.6rem;
+  }
+}

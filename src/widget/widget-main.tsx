@@ -24,7 +24,7 @@ if (!el) {
   root.render(
     <ChatWidget
       apiKey={el.dataset.key || ""}
-      themeColor={el.dataset.color || "#722F37"}
+      themeColor={el.dataset.color || "#c47a84"}
       apiBase={apiBase.replace(/\/$/, "")}
       wineryLabel={el.dataset.winery || "this winery"}
       wineryUrl={wineryUrl}

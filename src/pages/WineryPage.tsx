@@ -213,14 +213,9 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
 
       {winery.slug === "rex-hill" && (
         <p style={{ marginTop: "1rem" }}>
-          <a
-            className="btn"
-            href={`${import.meta.env.BASE_URL}widget-test.html?partner=rex-hill`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Try the Rex Hill chat demo
-          </a>
+          <Link className="btn" to="/widget-demo?partner=rex-hill">
+            Try the Rex Hill chat
+          </Link>
         </p>
       )}
     </article>

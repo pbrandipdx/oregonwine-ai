@@ -4,40 +4,51 @@
     <meta charset="UTF-8" />
     <title>Crushpad.ai — Wine Agent (demo)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap"
-      rel="stylesheet"
+    <meta
+      name="description"
+      content="Redirecting to the in-app chatbot demo — use the site navigation to explore other pages."
     />
     <style>
-      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-      html, body {
-        min-height: 100%;
-        min-height: 100dvh;
-      }
-
       body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-        background: #0d0d0d;
+        margin: 0;
+        min-height: 100dvh;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* Slightly more bottom padding shifts the flex center upward (optical center). */
-        padding: clamp(16px, 5vh, 40px) 24px clamp(28px, 14vh, 140px);
-        color: #ececec;
+        background: #080808;
+        color: #a8a39e;
+        font-family: system-ui, sans-serif;
+        padding: 1.5rem;
+        text-align: center;
       }
-
-      #widget-root {
-        width: 100%;
-        max-width: 820px;
-        height: min(680px, calc(100dvh - 48px));
+      a {
+        color: #c47a84;
       }
     </style>
+    <script>
+      (function () {
+        var p = location.pathname;
+        var i = p.lastIndexOf("widget-test.html");
+        if (i < 0) return;
+        var prefix = p.slice(0, i).replace(/\/$/, "");
+        location.replace(prefix + "/widget-demo" + location.search + location.hash);
+      })();
+    </script>
   </head>
   <body>
-    <div id="widget-root"></div>
-    <script type="module" src="/src/widget-test-entry.tsx"></script>
+    <p>
+      Opening the chatbot demo in the main app…
+      <a id="cont" href="#">Continue</a>
+    </p>
+    <script>
+      (function () {
+        var p = location.pathname;
+        var i = p.lastIndexOf("widget-test.html");
+        var prefix = i >= 0 ? p.slice(0, i).replace(/\/$/, "") : "";
+        var target = prefix + "/widget-demo" + location.search + location.hash;
+        var a = document.getElementById("cont");
+        if (a) a.setAttribute("href", target);
+      })();
+    </script>
   </body>
 </html>
