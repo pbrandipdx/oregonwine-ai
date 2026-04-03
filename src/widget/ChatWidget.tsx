@@ -663,7 +663,7 @@ export function ChatWidget({
                     height: headerCrestImageUrl ? 56 : 40,
                     width: "auto",
                     objectFit: "contain",
-                    marginBottom: 14,
+                    marginBottom: 6,
                     opacity: 0.85,
                   }}
                 />
