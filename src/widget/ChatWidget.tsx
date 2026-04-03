@@ -663,11 +663,14 @@ export function ChatWidget({
                     height: headerCrestImageUrl ? 56 : 40,
                     width: "auto",
                     objectFit: "contain",
-                    marginBottom: 16,
+                    marginBottom: 14,
                     opacity: 0.85,
                   }}
                 />
               )}
+              <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
+                {wineryLabel} Wine Agent
+              </div>
               <h2
                 style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
