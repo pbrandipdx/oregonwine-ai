@@ -851,83 +851,88 @@ export function ChatWidget({
               )}
             </div>
 
-            {/* CTA buttons + feedback after assistant messages */}
+            {/* CTA buttons after assistant messages */}
             {m.role === "assistant" && m.logId && (
-              <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                {wineryUrl &&
-                  /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
-                  <a
-                    href={`${wineryUrl.replace(/\/$/, "")}${bookingPath}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      display: "inline-block",
-                      padding: "5px 12px",
-                      borderRadius: 8,
-                      background: c.surface,
-                      color: c.accent,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      border: `1px solid ${c.border}`,
-                    }}
-                  >
-                    Book a tasting
-                  </a>
-                )}
-                {wineryUrl &&
-                  /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
-                  <a
-                    href={`${wineryUrl.replace(/\/$/, "")}${clubPath}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      display: "inline-block",
-                      padding: "5px 12px",
-                      borderRadius: 8,
-                      background: c.surface,
-                      color: c.accent,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      border: `1px solid ${c.border}`,
-                    }}
-                  >
-                    Explore wine clubs
-                  </a>
-                )}
+              <>
+                {/* Action CTAs */}
+                <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+                  {wineryUrl &&
+                    /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
+                    <a
+                      href={`${wineryUrl.replace(/\/$/, "")}${bookingPath}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: "inline-block",
+                        padding: "5px 12px",
+                        borderRadius: 8,
+                        background: c.surface,
+                        color: c.accent,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        border: `1px solid ${c.border}`,
+                      }}
+                    >
+                      Book a tasting
+                    </a>
+                  )}
+                  {wineryUrl &&
+                    /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
+                    <a
+                      href={`${wineryUrl.replace(/\/$/, "")}${clubPath}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        display: "inline-block",
+                        padding: "5px 12px",
+                        borderRadius: 8,
+                        background: c.surface,
+                        color: c.accent,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        border: `1px solid ${c.border}`,
+                      }}
+                    >
+                      Explore wine clubs
+                    </a>
+                  )}
 
-                {wineryPhone &&
-                  isDeflected(plainForTriggers(m.text)) && (
-                  <a
-                    href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
-                    style={{
-                      display: "inline-block",
-                      padding: "5px 12px",
-                      borderRadius: 8,
-                      background: c.surface,
-                      color: c.textMuted,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      textDecoration: "none",
-                      border: `1px solid ${c.border}`,
-                    }}
-                  >
-                    Talk to the team
-                  </a>
-                )}
+                  {wineryPhone &&
+                    isDeflected(plainForTriggers(m.text)) && (
+                    <a
+                      href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
+                      style={{
+                        display: "inline-block",
+                        padding: "5px 12px",
+                        borderRadius: 8,
+                        background: c.surface,
+                        color: c.textMuted,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        textDecoration: "none",
+                        border: `1px solid ${c.border}`,
+                      }}
+                    >
+                      Talk to the team
+                    </a>
+                  )}
+                </div>
 
-                {/* Feedback bubble */}
+                {/* Feedback bubble — own row under each response */}
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
                     gap: 6,
-                    marginLeft: "auto",
+                    marginTop: 6,
+                    marginLeft: 2,
                     background: c.surface,
                     border: `1px solid ${c.border}`,
                     borderRadius: 10,
                     padding: "4px 10px",
+                    alignSelf: "flex-start",
                   }}
                 >
                   <span style={{
@@ -988,7 +993,7 @@ export function ChatWidget({
                     ↓
                   </button>
                 </div>
-              </div>
+              </>
             )}
           </div>
         ))}
