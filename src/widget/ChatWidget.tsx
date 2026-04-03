@@ -493,7 +493,7 @@ export function ChatWidget({
       style={{
         display: "flex",
         alignItems: "center",
-        gap: 14,
+        gap: 8,
         minWidth: 0,
         flexWrap: "nowrap",
       }}
@@ -504,36 +504,25 @@ export function ChatWidget({
             src={headerCrestImageUrl}
             alt=""
             style={{
-              height: 34,
-              width: 34,
+              height: 28,
+              width: 28,
               objectFit: "contain",
               flexShrink: 0,
             }}
           />
-          <div
+          <span
             style={{
-              display: "flex",
-              alignItems: "baseline",
-              flexWrap: "wrap",
-              columnGap: 12,
-              rowGap: 2,
-              minWidth: 0,
+              fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+              fontSize: 13,
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              color: headerTone.winerySerifMuted,
+              textTransform: "uppercase",
             }}
           >
-            <span
-              style={{
-                fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-                fontSize: 13,
-                fontWeight: 600,
-                letterSpacing: "0.1em",
-                color: headerTone.winerySerifMuted,
-                textTransform: "uppercase",
-              }}
-            >
-              {wineryLabel}
-            </span>
-            {wineAgentTitle}
-          </div>
+            {wineryLabel}
+          </span>
+          {wineAgentTitle}
         </>
       ) : (
         <>
