@@ -168,8 +168,8 @@ Deno.serve(async (req) => {
     });
   }
 
-  const maxChunks = parseInt(Deno.env.get("MAX_CHUNKS_PER_QUERY") ?? "5", 10);
-  const maxOut = parseInt(Deno.env.get("MAX_OUTPUT_TOKENS") ?? "600", 10);
+  const maxChunks = parseInt(Deno.env.get("MAX_CHUNKS_PER_QUERY") ?? "8", 10);
+  const maxOut = parseInt(Deno.env.get("MAX_OUTPUT_TOKENS") ?? "800", 10);
   const chatModel = Deno.env.get("LLM_CHAT_MODEL") ?? "claude-haiku-4-5-20251001";
   const embedModel = Deno.env.get("EMBEDDING_MODEL") ?? "text-embedding-3-small";
 
@@ -303,6 +303,7 @@ USER QUESTION: ${message}`;
     stream = await anthropic.messages.stream({
       model: chatModel,
       max_tokens: maxOut,
+      temperature: 0.3,
       system: SYSTEM_PROMPT,
       messages: claudeMessages,
     });
@@ -341,6 +342,24 @@ USER QUESTION: ${message}`;
         controller.enqueue(enc.encode("\n[Error: stream interrupted]"));
       }
 
+      // URL grounding check: detect hallucinated URLs not in retrieved context
+      const trustedUrls = new Set<string>();
+      if (winery?.website) trustedUrls.add(winery.website.replace(/\/$/, ""));
+      for (const ch of chunks) {
+        if (ch.source_url) trustedUrls.add(ch.source_url.replace(/\/$/, ""));
+        // Also extract URLs mentioned inside chunk text
+        const urlsInChunk = ch.chunk_text.match(/https?:\/\/[^\s)\]>,]+/g) ?? [];
+        for (const u of urlsInChunk) trustedUrls.add(u.replace(/\/$/, ""));
+      }
+      // Find URLs in response that aren't in trusted set
+      const responseUrls = fullResponse.match(/https?:\/\/[^\s)\]>,]+/g) ?? [];
+      const hallucinatedUrls = responseUrls.filter(
+        (u) => !trustedUrls.has(u.replace(/\/$/, ""))
+      );
+      if (hallucinatedUrls.length > 0) {
+        console.warn("Hallucinated URLs detected:", hallucinatedUrls);
+      }
+
       const lower = fullResponse.toLowerCase();
       const deflectedPhrases = [
         "don't have",
@@ -369,7 +388,7 @@ USER QUESTION: ${message}`;
         assistant_response: fullResponse,
         retrieved_chunk_ids: chunks.map((c) => c.id),
         retrieval_scores: scores,
-        was_deflected: deflected,
+        was_deflected: deflected || hallucinatedUrls.length > 0,
         prompt_version: PROMPT_VERSION,
         latency_ms: latency,
       }).select("id").single();
