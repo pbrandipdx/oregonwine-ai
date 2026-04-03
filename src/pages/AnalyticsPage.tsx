@@ -319,31 +319,33 @@ export function AnalyticsPage() {
   const sessionDisplay = Math.max(totals.sessions, totals.distinctSessionsFromLogs);
 
   return (
-    <div style={{ maxWidth: 960, margin: "0 auto", padding: 20 }}>
-      <h1>Chat Analytics</h1>
-      <p style={{ marginBottom: 8 }}>
+    <div style={{ maxWidth: 960, margin: "0 auto", padding: "24px 20px", color: "#eceae8" }}>
+      <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "2.2rem", fontWeight: 700, marginBottom: 8 }}>Chat Analytics</h1>
+      <p style={{ marginBottom: 8, fontSize: 16 }}>
         <strong>{wineryMeta.name}</strong>{" "}
-        <span style={{ color: "#666" }}>({wineryMeta.slug})</span>
+        <span style={{ color: "#a8a39e" }}>({wineryMeta.slug})</span>
       </p>
-      <p style={{ color: "#666", fontSize: 14, marginBottom: 16 }}>
-        Data from <code>chat_logs</code> for this winery only (last {LOOKBACK_DAYS} days, up to{" "}
-        {MAX_ROWS.toLocaleString()} messages). Sessions also checks <code>chat_sessions</code> when populated.
+      <p style={{ color: "#a8a39e", fontSize: 15, marginBottom: 16 }}>
+        Data from <code style={{ background: "#1a1a1a", padding: "2px 6px", borderRadius: 3, fontSize: 14 }}>chat_logs</code> for this winery only (last {LOOKBACK_DAYS} days, up to{" "}
+        {MAX_ROWS.toLocaleString()} messages). Sessions also checks <code style={{ background: "#1a1a1a", padding: "2px 6px", borderRadius: 3, fontSize: 14 }}>chat_sessions</code> when populated.
       </p>
 
       {loadError && (
         <div
           style={{
-            padding: 12,
+            padding: 14,
             marginBottom: 16,
-            background: "#ffebee",
-            borderRadius: 8,
-            color: "#b00020",
+            background: "rgba(224, 85, 85, 0.15)",
+            borderRadius: 6,
+            border: "1px solid rgba(224, 85, 85, 0.3)",
+            color: "#f08080",
+            fontSize: 15,
           }}
         >
           {loadError}
         </div>
       )}
-      {loading && <p style={{ color: "#666" }}>Loading…</p>}
+      {loading && <p style={{ color: "#a8a39e", fontSize: 16 }}>Loading…</p>}
 
       <div
         style={{
@@ -354,78 +356,78 @@ export function AnalyticsPage() {
         }}
       >
         {[
-          { label: "Total Messages", value: totals.messages, color: "#1565c0" },
+          { label: "Total Messages", value: totals.messages, color: "#6db3f2" },
           {
-            label: "Sessions (max of table / logs)",
+            label: "Sessions",
             value: sessionDisplay,
-            color: "#6a1b9a",
+            color: "#c47a84",
           },
           {
             label: "Deflection Rate",
             value: `${deflectionRate}%`,
-            color: deflectionRate > 20 ? "#e65100" : "#2e7d32",
+            color: deflectionRate > 20 ? "#f0a050" : "#7dcda0",
           },
           {
             label: "Satisfaction",
             value: satisfactionRate !== null ? `${satisfactionRate}%` : "N/A",
-            color: "#2e7d32",
+            color: "#7dcda0",
           },
-          { label: "Thumbs Up", value: totals.thumbsUp, color: "#2e7d32" },
-          { label: "Thumbs Down", value: totals.thumbsDown, color: "#b00020" },
+          { label: "Thumbs Up", value: totals.thumbsUp, color: "#7dcda0" },
+          { label: "Thumbs Down", value: totals.thumbsDown, color: "#e05555" },
           {
             label: "Avg Latency",
             value: `${totals.avgLatency}ms`,
-            color: totals.avgLatency > 5000 ? "#e65100" : "#1565c0",
+            color: totals.avgLatency > 5000 ? "#f0a050" : "#6db3f2",
           },
         ].map((card) => (
           <div
             key={card.label}
             style={{
-              padding: 16,
-              borderRadius: 12,
-              background: "#fff",
-              border: "1px solid #e0e0e0",
+              padding: 18,
+              borderRadius: 6,
+              background: "#141414",
+              border: "1px solid #2a2a2a",
               textAlign: "center",
             }}
           >
-            <div style={{ fontSize: 28, fontWeight: 700, color: card.color }}>{card.value}</div>
-            <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>{card.label}</div>
+            <div style={{ fontSize: 32, fontWeight: 700, color: card.color, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>{card.value}</div>
+            <div style={{ fontSize: 13, color: "#a8a39e", marginTop: 6, fontFamily: "'Space Mono', monospace", textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>{card.label}</div>
           </div>
         ))}
       </div>
 
-      <section style={{ marginTop: 32 }}>
-        <h2>Daily breakdown</h2>
-        <p style={{ color: "#666", fontSize: 14 }}>
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.6rem", fontWeight: 700 }}>Daily breakdown</h2>
+        <p style={{ color: "#a8a39e", fontSize: 15 }}>
           Aggregated from message timestamps (UTC date). Empty days are omitted.
         </p>
-        {stats.length === 0 && !loading && <p style={{ color: "#999" }}>No chat logs for this winery in range.</p>}
+        {stats.length === 0 && !loading && <p style={{ color: "#6b6560", fontSize: 15 }}>No chat logs for this winery in range.</p>}
         {stats.length > 0 && (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14, minWidth: 520 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15, minWidth: 520 }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #ddd" }}>
-                  <th style={{ textAlign: "left", padding: 8 }}>Date (UTC)</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>Messages</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>Deflected</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>+1</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>-1</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>Avg ms</th>
+                <tr style={{ borderBottom: "2px solid #3a3a3a" }}>
+                  <th style={{ textAlign: "left", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Date (UTC)</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Messages</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Deflected</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>+1</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>-1</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Avg ms</th>
                 </tr>
               </thead>
               <tbody>
                 {stats.map((s) => (
-                  <tr key={s.day} style={{ borderBottom: "1px solid #eee" }}>
-                    <td style={{ padding: 8 }}>{s.day}</td>
-                    <td style={{ textAlign: "right", padding: 8 }}>{s.total_messages}</td>
-                    <td style={{ textAlign: "right", padding: 8, color: s.deflected > 0 ? "#e65100" : "inherit" }}>
+                  <tr key={s.day} style={{ borderBottom: "1px solid #2a2a2a" }}>
+                    <td style={{ padding: 10, color: "#eceae8" }}>{s.day}</td>
+                    <td style={{ textAlign: "right", padding: 10, color: "#eceae8" }}>{s.total_messages}</td>
+                    <td style={{ textAlign: "right", padding: 10, color: s.deflected > 0 ? "#f0a050" : "#a8a39e" }}>
                       {s.deflected}
                     </td>
-                    <td style={{ textAlign: "right", padding: 8, color: "#2e7d32" }}>{s.thumbs_up}</td>
-                    <td style={{ textAlign: "right", padding: 8, color: s.thumbs_down > 0 ? "#b00020" : "inherit" }}>
+                    <td style={{ textAlign: "right", padding: 10, color: "#7dcda0" }}>{s.thumbs_up}</td>
+                    <td style={{ textAlign: "right", padding: 10, color: s.thumbs_down > 0 ? "#e05555" : "#a8a39e" }}>
                       {s.thumbs_down}
                     </td>
-                    <td style={{ textAlign: "right", padding: 8 }}>{s.avg_latency_ms}</td>
+                    <td style={{ textAlign: "right", padding: 10, color: "#a8a39e" }}>{s.avg_latency_ms}</td>
                   </tr>
                 ))}
               </tbody>
@@ -434,35 +436,38 @@ export function AnalyticsPage() {
         )}
       </section>
 
-      <section style={{ marginTop: 32 }}>
-        <h2>Most asked prompts</h2>
-        <p style={{ color: "#666", fontSize: 14 }}>
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.6rem", fontWeight: 700 }}>Most asked prompts</h2>
+        <p style={{ color: "#a8a39e", fontSize: 15 }}>
           Normalized by exact message text (after trim / lowercasing). Expanded prompts count separately from
           chip labels.
         </p>
-        {topQuestions.length === 0 && !loading && <p style={{ color: "#999" }}>No prompts in range.</p>}
+        {topQuestions.length === 0 && !loading && <p style={{ color: "#6b6560", fontSize: 15 }}>No prompts in range.</p>}
         {topQuestions.map((q, i) => (
           <div
             key={i}
             style={{
               display: "flex",
               justifyContent: "space-between",
-              gap: 12,
-              padding: "8px 0",
-              borderBottom: "1px solid #eee",
-              fontSize: 14,
+              alignItems: "flex-start",
+              gap: 16,
+              padding: "12px 0",
+              borderBottom: "1px solid #2a2a2a",
+              fontSize: 15,
             }}
           >
-            <span style={{ wordBreak: "break-word" }}>{q.user_message || "—"}</span>
+            <span style={{ wordBreak: "break-word", color: "#eceae8" }}>{q.user_message || "—"}</span>
             <span
               style={{
-                background: "#f0e4ef",
+                background: "rgba(196, 122, 132, 0.2)",
+                color: "#c47a84",
                 borderRadius: 10,
-                padding: "2px 10px",
-                fontSize: 12,
-                fontWeight: 600,
+                padding: "4px 12px",
+                fontSize: 14,
+                fontWeight: 700,
                 whiteSpace: "nowrap",
                 flexShrink: 0,
+                fontFamily: "'Space Mono', monospace",
               }}
             >
               {q.cnt}×
@@ -471,39 +476,39 @@ export function AnalyticsPage() {
         ))}
       </section>
 
-      <section style={{ marginTop: 32 }}>
-        <h2>Recent messages</h2>
-        <p style={{ color: "#666", fontSize: 14 }}>Latest 100 turns (prompt version & feedback when present).</p>
-        {recentLogs.length === 0 && !loading && <p style={{ color: "#999" }}>No rows.</p>}
+      <section style={{ marginTop: 40 }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "1.6rem", fontWeight: 700 }}>Recent messages</h2>
+        <p style={{ color: "#a8a39e", fontSize: 15 }}>Latest 100 turns (prompt version & feedback when present).</p>
+        {recentLogs.length === 0 && !loading && <p style={{ color: "#6b6560", fontSize: 15 }}>No rows.</p>}
         {recentLogs.length > 0 && (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13, minWidth: 640 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 15, minWidth: 640 }}>
               <thead>
-                <tr style={{ borderBottom: "2px solid #ddd" }}>
-                  <th style={{ textAlign: "left", padding: 8 }}>When (UTC)</th>
-                  <th style={{ textAlign: "left", padding: 8 }}>User</th>
-                  <th style={{ textAlign: "center", padding: 8 }}>Defl.</th>
-                  <th style={{ textAlign: "right", padding: 8 }}>ms</th>
-                  <th style={{ textAlign: "center", padding: 8 }}>±</th>
-                  <th style={{ textAlign: "left", padding: 8 }}>Prompt ver.</th>
+                <tr style={{ borderBottom: "2px solid #3a3a3a" }}>
+                  <th style={{ textAlign: "left", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>When (UTC)</th>
+                  <th style={{ textAlign: "left", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>User</th>
+                  <th style={{ textAlign: "center", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Defl.</th>
+                  <th style={{ textAlign: "right", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>ms</th>
+                  <th style={{ textAlign: "center", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>±</th>
+                  <th style={{ textAlign: "left", padding: 10, color: "#eceae8", fontFamily: "'Space Mono', monospace", fontSize: 12, textTransform: "uppercase" as const, letterSpacing: "0.06em" }}>Prompt ver.</th>
                 </tr>
               </thead>
               <tbody>
                 {recentLogs.map((r, i) => (
-                  <tr key={`${r.created_at}-${i}`} style={{ borderBottom: "1px solid #f0f0f0" }}>
-                    <td style={{ padding: 8, whiteSpace: "nowrap" }}>
+                  <tr key={`${r.created_at}-${i}`} style={{ borderBottom: "1px solid #2a2a2a" }}>
+                    <td style={{ padding: 10, whiteSpace: "nowrap", color: "#a8a39e" }}>
                       {r.created_at ? new Date(r.created_at).toISOString().replace("T", " ").slice(0, 19) : "—"}
                     </td>
-                    <td style={{ padding: 8, maxWidth: 320, wordBreak: "break-word" }}>
+                    <td style={{ padding: 10, maxWidth: 320, wordBreak: "break-word", color: "#eceae8" }}>
                       {(r.user_message ?? "").slice(0, 200)}
                       {(r.user_message?.length ?? 0) > 200 ? "…" : ""}
                     </td>
-                    <td style={{ textAlign: "center", padding: 8 }}>{r.was_deflected ? "Yes" : ""}</td>
-                    <td style={{ textAlign: "right", padding: 8 }}>{r.latency_ms ?? "—"}</td>
-                    <td style={{ textAlign: "center", padding: 8 }}>
+                    <td style={{ textAlign: "center", padding: 10, color: "#a8a39e" }}>{r.was_deflected ? "Yes" : ""}</td>
+                    <td style={{ textAlign: "right", padding: 10, color: "#a8a39e" }}>{r.latency_ms ?? "—"}</td>
+                    <td style={{ textAlign: "center", padding: 10, color: r.feedback_rating === 1 ? "#7dcda0" : r.feedback_rating === -1 ? "#e05555" : "#a8a39e" }}>
                       {r.feedback_rating === 1 ? "+1" : r.feedback_rating === -1 ? "−1" : ""}
                     </td>
-                    <td style={{ padding: 8 }}>{r.prompt_version ?? "—"}</td>
+                    <td style={{ padding: 10, color: "#6b6560" }}>{r.prompt_version ?? "—"}</td>
                   </tr>
                 ))}
               </tbody>
