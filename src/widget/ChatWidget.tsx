@@ -655,6 +655,19 @@ export function ChatWidget({
             }}
           >
             <div style={{ textAlign: "center", padding: "0 24px", width: "100%", boxSizing: "border-box" }}>
+              {(headerCrestImageUrl || headerLogoUrl) && (
+                <img
+                  src={headerCrestImageUrl || headerLogoUrl}
+                  alt=""
+                  style={{
+                    height: headerCrestImageUrl ? 56 : 40,
+                    width: "auto",
+                    objectFit: "contain",
+                    marginBottom: 16,
+                    opacity: 0.85,
+                  }}
+                />
+              )}
               <h2
                 style={{
                   fontFamily: "'Playfair Display', Georgia, serif",
