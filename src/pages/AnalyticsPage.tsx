@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
+import { inferWinerySlugFromPath } from "../lib/wineries";
 
 type WineryMeta = { id: string; name: string; slug: string };
 
@@ -77,7 +78,9 @@ function aggregateByDay(rows: ChatLogRow[]): DayStat[] {
 
 export function AnalyticsPage() {
   const { slug: slugParam } = useParams<{ slug?: string }>();
-  const slug = slugParam?.trim() || undefined;
+  const location = useLocation();
+  // Support both /analytics/:slug (legacy) and /:slug/analytics (canonical)
+  const slug = slugParam?.trim() || inferWinerySlugFromPath(location.pathname) || undefined;
   const [wineryMeta, setWineryMeta] = useState<WineryMeta | null>(null);
   const [wineryErr, setWineryErr] = useState<string | null>(null);
   const [wineryLoading, setWineryLoading] = useState(false);

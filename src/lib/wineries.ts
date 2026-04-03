@@ -2,8 +2,9 @@ export type WineryNavConfig = {
   slug: string;
   label: string;
   partnerPath: string;
-  /** Only set when a research route exists in the app */
+  demoPath: string;
   researchPath: string | null;
+  analyticsPath: string;
 };
 
 /** Optional curated copy keyed by slug (merged with DB rows on home). */
@@ -13,19 +14,8 @@ export type WineryCardOverride = {
   blurb?: string;
 };
 
-/** Slugs that use /{slug} instead of /w/{slug} for the partner hub. */
-const PRETTY_PARTNER_PATH: Record<string, string> = {
-  "rex-hill": "/rex-hill",
-  chehalem: "/chehalem",
-  soter: "/soter",
-};
-
 /** Slugs with a built-in research page. */
-const RESEARCH_PATH: Record<string, string> = {
-  "rex-hill": "/rex-hill/research",
-  chehalem: "/chehalem/research",
-  soter: "/soter/research",
-};
+const SLUGS_WITH_RESEARCH = new Set(["rex-hill", "chehalem", "soter"]);
 
 export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
   "rex-hill": {
@@ -48,20 +38,14 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
   },
 };
 
-export function partnerPathForSlug(slug: string): string {
-  return PRETTY_PARTNER_PATH[slug] ?? `/w/${slug}`;
-}
-
-export function researchPathForSlug(slug: string): string | null {
-  return RESEARCH_PATH[slug] ?? null;
-}
-
 export function navConfigForSlug(slug: string, displayName: string): WineryNavConfig {
   return {
     slug,
     label: displayName,
-    partnerPath: partnerPathForSlug(slug),
-    researchPath: researchPathForSlug(slug),
+    partnerPath: `/${slug}`,
+    demoPath: `/${slug}/demo`,
+    researchPath: SLUGS_WITH_RESEARCH.has(slug) ? `/${slug}/research` : null,
+    analyticsPath: `/${slug}/analytics`,
   };
 }
 
@@ -74,29 +58,39 @@ export function getWineryNavConfig(
 
 /**
  * Infer winery slug from the URL without requiring a preloaded winery list.
+ * Matches: /{slug}, /{slug}/demo, /{slug}/research, /{slug}/analytics
+ * Also matches legacy paths for backwards compat detection.
  */
 export function inferWinerySlugFromPath(pathname: string): string | null {
   const p = pathname.replace(/\/$/, "") || "/";
 
-  let m = /^\/w\/([^/]+)$/.exec(p);
+  // New canonical: /{slug}/demo, /{slug}/research, /{slug}/analytics
+  let m = /^\/([^/]+)\/(demo|research|analytics)$/.exec(p);
   if (m) return m[1];
 
+  // /{slug} — partner page (but skip known non-winery routes)
+  const SKIP = new Set([
+    "", "how-it-works", "book-demo", "widget-demo", "agent-demo",
+    "admin", "analytics", "partners", "directory", "w", "research",
+  ]);
+  m = /^\/([^/]+)$/.exec(p);
+  if (m && !SKIP.has(m[1])) return m[1];
+
+  // Legacy: /w/{slug}
+  m = /^\/w\/([^/]+)$/.exec(p);
+  if (m) return m[1];
+
+  // Legacy: /analytics/{slug}
   m = /^\/analytics\/([^/]+)$/.exec(p);
   if (m) return m[1];
 
+  // Legacy: /research/{slug}
   m = /^\/research\/([^/]+)$/.exec(p);
   if (m) return m[1];
 
-  // /widget-demo-rexhill → rex-hill, /widget-demo-soter → soter, etc.
+  // Legacy: /widget-demo-rexhill → rex-hill
   m = /^\/widget-demo-([^/]+)$/.exec(p);
   if (m) return m[1].replace(/^rexhill$/, "rex-hill");
-
-  for (const [slug, path] of Object.entries(PRETTY_PARTNER_PATH)) {
-    if (p === path) return slug;
-  }
-  for (const [slug, path] of Object.entries(RESEARCH_PATH)) {
-    if (p === path) return slug;
-  }
 
   return null;
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useWineryDirectory } from "../contexts/WineryDirectoryContext";
-import { partnerPathForSlug, WINERY_CARD_OVERRIDES } from "../lib/wineries";
+import { WINERY_CARD_OVERRIDES } from "../lib/wineries";
 
 function regionLine(w: {
   slug: string;
@@ -97,7 +97,7 @@ export function PartnerHubPage() {
             <ul className="card-grid home-partner-grid">
               {wineries.map((w) => (
                 <li key={w.id}>
-                  <Link className="card" to={partnerPathForSlug(w.slug)}>
+                  <Link className="card" to={`/${w.slug}`}>
                     <h2>{titleFor(w)}</h2>
                     <p className="card-region">{regionLine(w)}</p>
                     <p className="card-desc">{blurbFor(w)}</p>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
 import { useMemo } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
 import { HomePage } from "./pages/HomePage";
@@ -20,6 +20,12 @@ import { WineryDirectoryProvider, useWineryBySlug } from "./contexts/WineryDirec
 
 const base = import.meta.env.BASE_URL;
 
+/** Redirect helper: redirects /:slug param to a new path */
+function RedirectToSlugSub({ sub }: { sub: string }) {
+  const { slug } = useParams<{ slug: string }>();
+  return <Navigate to={`/${slug}/${sub}`} replace />;
+}
+
 function AppNav() {
   const location = useLocation();
   const activeSlug = useMemo(
@@ -33,11 +39,9 @@ function AppNav() {
     return navConfigForSlug(activeSlug, label);
   }, [activeSlug, meta]);
 
-  const onHome = location.pathname === "/" || location.pathname === "";
   const onHowItWorks = location.pathname === "/how-it-works";
   const onWidgetDemo = location.pathname === "/widget-demo";
   const onAgentDemo = location.pathname === "/agent-demo";
-  const demoPartnerQuery = activeSlug === "rex-hill" ? "?partner=rex-hill" : "";
 
   return (
     <nav className="nav">
@@ -51,8 +55,9 @@ function AppNav() {
           <div className="nav-winery-pages" aria-label={`${winery.label} pages`}>
             <Link to="/admin">Admin</Link>
             <Link to={winery.partnerPath}>Partner</Link>
+            <Link to={winery.demoPath}>Demo</Link>
             {winery.researchPath && <Link to={winery.researchPath}>Research</Link>}
-            <Link to={`/analytics/${winery.slug}`}>Analytics</Link>
+            <Link to={winery.analyticsPath}>Analytics</Link>
           </div>
         )}
         <div className="nav-links">
@@ -66,12 +71,12 @@ function AppNav() {
           {onWidgetDemo ? (
             <span className="nav-link-here">Chatbot demo</span>
           ) : (
-            <Link to={`/widget-demo${demoPartnerQuery}`}>Chatbot demo</Link>
+            <Link to="/widget-demo">Chatbot demo</Link>
           )}
           {onAgentDemo ? (
             <span className="nav-link-here">Agent demo</span>
           ) : (
-            <Link to={`/agent-demo${demoPartnerQuery}`}>Agent demo</Link>
+            <Link to="/agent-demo">Agent demo</Link>
           )}
         </div>
       </div>
@@ -86,6 +91,7 @@ function AppRoutesInner() {
   const isBookDemo = location.pathname === "/book-demo";
   const isDemoShell =
     location.pathname === "/widget-demo" ||
+    location.pathname.endsWith("/demo") ||
     location.pathname.startsWith("/widget-demo-") ||
     location.pathname === "/agent-demo";
   return (
@@ -101,27 +107,39 @@ function AppRoutesInner() {
         }
       >
         <Routes>
+          {/* ── Public pages ─────────────────────────────────── */}
           <Route path="/" element={<HomePage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/book-demo" element={<BookDemoPage />} />
           <Route path="/widget-demo" element={<WidgetDemoPage />} />
-          <Route path="/widget-demo-rexhill" element={<WidgetDemoRexHillPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
-          <Route path="/partners" element={<Navigate to="/" replace />} />
-          <Route path="/directory" element={<Navigate to="/" replace />} />
+          <Route path="/admin" element={<AdminPage />} />
+
+          {/* ── Winery pages: /{slug}, /{slug}/demo, /{slug}/research, /{slug}/analytics ── */}
           <Route path="/rex-hill" element={<RexHillPartnerPage />} />
+          <Route path="/rex-hill/demo" element={<WidgetDemoRexHillPage />} />
           <Route path="/rex-hill/research" element={<RexHillResearchPage />} />
+          <Route path="/rex-hill/analytics" element={<AnalyticsPage />} />
+
           <Route path="/chehalem" element={<ChehalemPartnerPage />} />
           <Route path="/chehalem/research" element={<ChehalemResearchPage />} />
+          <Route path="/chehalem/analytics" element={<AnalyticsPage />} />
+
           <Route path="/soter" element={<SoterPartnerPage />} />
           <Route path="/soter/research" element={<SoterResearchPage />} />
-          <Route path="/research/rex-hill" element={<RexHillResearchPage />} />
-          <Route path="/research/chehalem" element={<ChehalemResearchPage />} />
-          <Route path="/research/soter" element={<SoterResearchPage />} />
+          <Route path="/soter/analytics" element={<AnalyticsPage />} />
+
+          {/* Dynamic fallback for new wineries */}
           <Route path="/w/:slug" element={<WineryPage />} />
-          <Route path="/admin" element={<AdminPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/analytics/:slug" element={<AnalyticsPage />} />
+
+          {/* ── Legacy redirects (old URLs → new canonical) ── */}
+          <Route path="/widget-demo-rexhill" element={<Navigate to="/rex-hill/demo" replace />} />
+          <Route path="/analytics/:slug" element={<RedirectToSlugSub sub="analytics" />} />
+          <Route path="/research/:slug" element={<RedirectToSlugSub sub="research" />} />
+          <Route path="/partners" element={<Navigate to="/" replace />} />
+          <Route path="/directory" element={<Navigate to="/" replace />} />
+          <Route path="/analytics" element={<Navigate to="/" replace />} />
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
