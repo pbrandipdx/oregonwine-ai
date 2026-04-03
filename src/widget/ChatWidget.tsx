@@ -204,6 +204,7 @@ export function ChatWidget({
   const [open, setOpen] = useState(embedded ? true : false);
   const [input, setInput] = useState("");
   const [showLanding, setShowLanding] = useState(true);
+  const [landingExiting, setLandingExiting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -297,7 +298,13 @@ export function ChatWidget({
       }
       setInput("");
       setError(null);
-      setShowLanding(false);
+      if (showLanding) {
+        setLandingExiting(true);
+        setTimeout(() => {
+          setShowLanding(false);
+          setLandingExiting(false);
+        }, 400);
+      }
 
       // Reset textarea height
       if (textareaRef.current) {
@@ -631,6 +638,9 @@ export function ChatWidget({
             padding: "clamp(12px, 3vh, 28px) 0 clamp(32px, 9vh, 100px)",
             overflowY: "auto",
             width: "100%",
+            transition: "opacity 0.35s ease, transform 0.4s ease",
+            opacity: landingExiting ? 0 : 1,
+            transform: landingExiting ? "translateY(-30px) scale(0.95)" : "translateY(0) scale(1)",
           }}
         >
           <div
@@ -720,6 +730,13 @@ export function ChatWidget({
         <>
           {/* Sticky logo lockup bar */}
           {!showLanding && (
+            <>
+            <style>{`
+              @keyframes ow-bar-enter {
+                from { opacity: 0; transform: translateY(-8px); }
+                to { opacity: 1; transform: translateY(0); }
+              }
+            `}</style>
             <div style={{
               display: "flex",
               alignItems: "center",
@@ -728,6 +745,7 @@ export function ChatWidget({
               padding: "10px 16px",
               borderBottom: `1px solid ${c.border}`,
               flexShrink: 0,
+              animation: "ow-bar-enter 0.5s ease both",
             }}>
               {headerCrestImageUrl && (
                 <img
@@ -757,6 +775,7 @@ export function ChatWidget({
                 Wine Agent
               </span>
             </div>
+            </>
           )}
 
           {/* Messages / Landing area */}
@@ -769,6 +788,7 @@ export function ChatWidget({
               fontSize: 14,
               lineHeight: 1.6,
               color: c.text,
+              ...(!showLanding ? { animation: "ow-bar-enter 0.5s ease 0.1s both" } : {}),
               display: "flex",
               flexDirection: "column",
               ...(showLanding && !embedded ? { justifyContent: "center", alignItems: "center" } : {}),
