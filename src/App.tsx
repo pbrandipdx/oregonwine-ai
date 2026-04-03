@@ -58,7 +58,7 @@ function AppNav() {
           {onHowItWorks ? (
             <span className="nav-link-here">How it works</span>
           ) : (
-            <Link className="nav-link-overview" to="/how-it-works">
+            <Link to="/how-it-works">
               How it works
             </Link>
           )}
