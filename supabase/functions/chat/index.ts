@@ -31,7 +31,9 @@ RULES:
 FORMATTING (every reply):
 - Use Markdown: ## for short section titles, bullet lists for options or pairings, **bold** for wine names and key terms.
 - Keep paragraphs to 2–4 sentences; prefer scannable structure over one long block.
-- ALWAYS make URLs clickable: use [link text](https://...) markdown format. Never leave a bare URL as plain text. ONLY use URLs that appear exactly in the verified context — never guess, construct, or infer URLs. If a URL is not in the context, do not link it.
+- ALWAYS make URLs clickable: use [link text](https://...) markdown format. Never leave a bare URL as plain text.
+- CRITICAL URL RULE: You are given a "VALID URLs" list in every query. You may ONLY use URLs from that exact list. NEVER construct, modify, shorten, or combine URL parts to create a new URL. If the URL you want to use is not on the list character-for-character, DO NOT link it — just mention the topic without a link. This is a hard constraint, not a guideline.
+- When multiple valid URLs cover the same topic, prefer the most specific page URL over a generic listing/index page URL.
 - ALWAYS make phone numbers clickable: use [(503) 538-0666](tel:5035380666) format so mobile users can tap to call.
 - After winery-specific facts, add a final line: *Source: [url from context] · Last verified [date from context]* when the context includes a URL and date.
 - Chunks starting with "[Wine education" or "[General pairing education" are reference material — cite their Source URL, never present as winery-specific.`;
@@ -168,7 +170,7 @@ Deno.serve(async (req) => {
     });
   }
 
-  const maxChunks = parseInt(Deno.env.get("MAX_CHUNKS_PER_QUERY") ?? "8", 10);
+  const maxChunks = parseInt(Deno.env.get("MAX_CHUNKS_PER_QUERY") ?? "12", 10);
   const maxOut = parseInt(Deno.env.get("MAX_OUTPUT_TOKENS") ?? "800", 10);
   const chatModel = Deno.env.get("LLM_CHAT_MODEL") ?? "claude-haiku-4-5-20251001";
   const embedModel = Deno.env.get("EMBEDDING_MODEL") ?? "text-embedding-3-small";
@@ -216,7 +218,7 @@ Deno.serve(async (req) => {
   const { data: k, error: kwErr } = await supabase.rpc("search_chunks_keyword", {
     winery_id_filter: account.winery_id,
     search_query: message,
-    match_limit: 5,
+    match_limit: 8,
   });
   if (kwErr) console.error("Keyword search failed:", kwErr.message);
 
@@ -260,8 +262,19 @@ Deno.serve(async (req) => {
           })
           .join("\n\n---\n\n");
 
+  // Build explicit URL inventory so the LLM sees exactly which URLs are valid
+  const urlInventory = new Set<string>();
+  if (winery?.website) urlInventory.add(winery.website);
+  for (const ch of chunks) {
+    if (ch.source_url) urlInventory.add(ch.source_url);
+  }
+  const urlList = Array.from(urlInventory).sort().map((u) => `  - ${u}`).join("\n");
+
   const userPrompt = `Winery: ${winery?.name ?? "Unknown"}
 Address: ${winery?.address ?? ""} | Phone: ${winery?.phone ?? ""} | Website: ${winery?.website ?? ""}
+
+VALID URLs (you may ONLY link to these exact URLs — never construct, modify, or guess URLs):
+${urlList}
 
 VERIFIED CONTEXT:
 ${context}
