@@ -110,12 +110,12 @@ const INTEGRATION_STAGES: {
 }[] = [
   {
     stage: "Stage 1 — Chatbot",
-    timeline: "Now",
+    timeline: "Live",
     description:
-      "RAG-powered chat widget answers visitor questions 24/7 using content scraped from rexhill.com. Embedded via a single script tag — no changes to WordPress, WP Engine, or any existing infrastructure.",
+      "RAG-powered chat widget answers visitor questions 24/7 using content crawled from rexhill.com. Includes tasting options, hours, wine club details, recipes, and food pairings. Embedded via a single script tag — no changes to WordPress, WP Engine, or any existing infrastructure.",
     theirStack: "WordPress + WP Engine + Cloudflare",
     ourIntegration:
-      "Zero-touch. Widget loads from our CDN. A <script> tag in their theme header or via a WP plugin is the only change. Cloudflare passes it through. No server-side modifications.",
+      "Zero-touch. Widget loads from our CDN. A <script> tag in their theme header or via a WP plugin is the only change. Cloudflare passes it through. No server-side modifications. Already proven with live demo at crushpad.ai/rex-hill/demo.",
   },
   {
     stage: "Stage 2 — Contextual Assistant",
@@ -151,8 +151,8 @@ const INTEGRATION_STAGES: {
 export function RexHillResearchPage() {
   return (
     <article className="research-page">
-      <Link className="back" to="/">
-        ← Home
+      <Link className="back" to="/rex-hill">
+        ← Rex Hill
       </Link>
 
       {/* Header */}
@@ -286,16 +286,16 @@ export function RexHillResearchPage() {
         <h2>ROI at a Glance</h2>
         <div className="roi-grid">
           <div className="roi-card">
-            <div className="roi-value">$299</div>
-            <div className="roi-label">Monthly cost</div>
+            <div className="roi-value">24–48h</div>
+            <div className="roi-label">Setup to live on their site</div>
           </div>
           <div className="roi-card">
-            <div className="roi-value">~$6.75</div>
+            <div className="roi-value">~$7</div>
             <div className="roi-label">Our API cost per winery/month</div>
           </div>
           <div className="roi-card">
             <div className="roi-value">1</div>
-            <div className="roi-label">Club signup every 6 weeks to break even</div>
+            <div className="roi-label">Extra club signup/month to break even</div>
           </div>
           <div className="roi-card">
             <div className="roi-value">$0</div>
@@ -307,23 +307,27 @@ export function RexHillResearchPage() {
       {/* CTA */}
       <section className="panel" style={{ textAlign: "center", padding: "2rem" }}>
         <h2 style={{ marginBottom: "0.75rem" }}>See it in action</h2>
-        <p style={{ maxWidth: "32rem", margin: "0 auto 1.25rem" }}>
-          The Rex Hill agent is live. Ask it anything a visitor would ask — hours, tasting
-          experiences, wine clubs, directions — and see how it responds in their voice.
+        <p style={{ maxWidth: "36rem", margin: "0 auto 1.25rem" }}>
+          The Rex Hill agent is live with real visitor interactions. Ask it anything — hours, tasting
+          experiences, wine clubs, recipes, directions — and see how it responds. Then check the
+          analytics dashboard to see what visitors are actually asking.
         </p>
         <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link className="btn" to="/widget-demo?partner=rex-hill">
+          <Link className="btn" to="/rex-hill/demo">
             Try it live
           </Link>
           <Link className="btn btn-ghost" to="/rex-hill">
             Rex Hill partner page
           </Link>
+          <Link className="btn btn-ghost" to="/rex-hill/analytics">
+            View analytics
+          </Link>
         </div>
       </section>
 
       <p className="muted small" style={{ textAlign: "center", marginTop: "1rem" }}>
-        Research conducted March 2026. DNS records, source HTML, and infrastructure lookups verified
-        directly — not sourced from third-party profiler databases.
+        Research conducted March–April 2026. DNS records, source HTML, and infrastructure lookups
+        verified directly — not sourced from third-party profiler databases.
       </p>
     </article>
   );
