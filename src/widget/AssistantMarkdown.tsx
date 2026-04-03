@@ -53,14 +53,10 @@ export function AssistantMarkdown({ text, accentColor, headingColor, textColor }
         components={{
           a: ({ href, children }: { href?: string; children?: ReactNode }) => {
             const isTel = href?.startsWith("tel:");
-            return (
-              <a
-                href={href}
-                target={isTel ? "_self" : "_blank"}
-                rel={isTel ? undefined : "noreferrer"}
-              >
-                {children}
-              </a>
+            return isTel ? (
+              <a href={href}>{children}</a>
+            ) : (
+              <a href={href} target="_blank" rel="noreferrer">{children}</a>
             );
           },
         }}
