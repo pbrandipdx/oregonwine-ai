@@ -55,13 +55,6 @@ function AppNav() {
           </div>
         )}
         <div className="nav-links">
-          {onHome ? (
-            <span className="nav-link-here">Home</span>
-          ) : (
-            <Link className="nav-link-overview" to="/">
-              Home
-            </Link>
-          )}
           {onHowItWorks ? (
             <span className="nav-link-here">How it works</span>
           ) : (
