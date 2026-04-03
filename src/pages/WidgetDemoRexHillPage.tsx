@@ -1,18 +1,18 @@
 import { useEffect } from "react";
-import { WidgetDemoEmbed } from "../widget/WidgetDemoEmbed";
+import { WidgetDemoRexHillEmbed } from "../widget/WidgetDemoEmbed";
 
-/** Generic Crushpad.ai demo — general wine knowledge, no winery-specific data. */
-export function WidgetDemoPage() {
+/** Rex Hill branded demo — winery-specific knowledge + wine education. */
+export function WidgetDemoRexHillPage() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "Crushpad.ai — Wine Agent (demo)";
+    document.title = "REX HILL — Wine Agent";
     return () => { document.title = prev; };
   }, []);
 
   return (
     <div className="widget-demo-page" data-demo-variant="chatbot">
       <div className="widget-demo-frame">
-        <WidgetDemoEmbed />
+        <WidgetDemoRexHillEmbed />
       </div>
     </div>
   );

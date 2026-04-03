@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
 import { WidgetDemoPage } from "./pages/WidgetDemoPage";
+import { WidgetDemoRexHillPage } from "./pages/WidgetDemoRexHillPage";
 import { AgentDemoPage } from "./pages/AgentDemoPage";
 import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
@@ -81,7 +82,9 @@ function AppRoutesInner() {
   const isHowItWorksLanding = location.pathname === "/" || location.pathname === "";
   const isBookDemo = location.pathname === "/book-demo";
   const isDemoShell =
-    location.pathname === "/widget-demo" || location.pathname === "/agent-demo";
+    location.pathname === "/widget-demo" ||
+    location.pathname.startsWith("/widget-demo-") ||
+    location.pathname === "/agent-demo";
   return (
     <div className="app">
       <AppNav />
@@ -98,6 +101,7 @@ function AppRoutesInner() {
           <Route path="/" element={<HowItWorksPage />} />
           <Route path="/book-demo" element={<BookDemoPage />} />
           <Route path="/widget-demo" element={<WidgetDemoPage />} />
+          <Route path="/widget-demo-rexhill" element={<WidgetDemoRexHillPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
           <Route path="/partners" element={<Navigate to="/" replace />} />
           <Route path="/directory" element={<Navigate to="/" replace />} />
