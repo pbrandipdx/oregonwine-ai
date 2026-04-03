@@ -109,10 +109,13 @@ Deno.serve(async (req) => {
       delta = rating - previousRating; // e.g., switching from +1 to -1 = -2
     }
     if (delta !== 0) {
-      await supabase.rpc("adjust_chunk_feedback", {
+      const { error: rpcErr } = await supabase.rpc("adjust_chunk_feedback", {
         p_chunk_ids: chunkIds,
         p_delta: delta,
       });
+      if (rpcErr) {
+        console.error("adjust_chunk_feedback failed:", rpcErr.message);
+      }
     }
   }
 
