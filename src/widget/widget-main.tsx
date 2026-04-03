@@ -1,34 +1,31 @@
 import { createRoot } from "react-dom/client";
 import { ChatWidget } from "./ChatWidget";
 
-const scripts = document.querySelectorAll<HTMLScriptElement>("script[data-key]");
+const scripts = document.querySelectorAll<HTMLScriptElement>("script[data-crushpad-key]");
 const el = scripts[scripts.length - 1];
 if (!el) {
-  console.error("[Crushpad.ai] No widget script tag with data-key found.");
+  console.error("[Crushpad.ai] No widget script tag with data-crushpad-key found.");
 } else {
   const mount = document.createElement("div");
   mount.id = "crushpad-widget-root";
   el.insertAdjacentElement("afterend", mount);
-  const apiBase =
-    el.dataset.apiBase?.replace(/\/$/, "") ||
-    import.meta.env.VITE_SUPABASE_FUNCTIONS_URL?.replace(/\/$/, "") ||
-    "";
-  const root = createRoot(mount);
-  const wineryUrl = el.hasAttribute("data-winery-url")
-      ? el.dataset.wineryUrl?.trim() || undefined
-      : "https://rexhill.com";
-  const wineryPhone = el.hasAttribute("data-winery-phone")
-      ? el.dataset.wineryPhone?.trim() || undefined
-      : "(503) 538-0666";
 
+  const apiBase =
+    el.dataset.crushpadApi?.replace(/\/$/, "") ||
+    "https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1";
+
+  const root = createRoot(mount);
   root.render(
     <ChatWidget
-      apiKey={el.dataset.key || ""}
-      themeColor={el.dataset.color || "#c47a84"}
-      apiBase={apiBase.replace(/\/$/, "")}
-      wineryLabel={el.dataset.winery || "this winery"}
-      wineryUrl={wineryUrl}
-      wineryPhone={wineryPhone}
+      apiKey={el.dataset.crushpadKey || ""}
+      apiBase={apiBase}
+      themeColor={el.dataset.crushpadColor || "#c47a84"}
+      wineryLabel={el.dataset.crushpadWinery || ""}
+      wineryUrl={el.dataset.crushpadUrl || undefined}
+      wineryPhone={el.dataset.crushpadPhone || undefined}
+      headerCrestImageUrl={el.dataset.crushpadCrest || undefined}
+      bookingPath={el.dataset.crushpadBookingPath || "/experiences/"}
+      clubPath={el.dataset.crushpadClubPath || "/clubs/"}
     />
   );
 }

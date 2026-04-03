@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:widget": "vite build --config vite.widget.config.ts",
+    "build:widget": "BUILD_TARGET=widget vite build",
     "preview": "vite preview",
     "design:headers": "python3 -m http.server 8765 --directory local --bind 127.0.0.1",
     "embed": "tsx scripts/embed.ts",
