@@ -755,6 +755,47 @@ export function ChatWidget({
               </div>
             )}
 
+        {/* Logo lockup at top of conversation */}
+        {!showLanding && messages.length > 0 && (
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "8px 0 20px",
+            gap: 4,
+          }}>
+            {headerCrestImageUrl && (
+              <img
+                src={headerCrestImageUrl}
+                alt=""
+                style={{ height: 32, width: 32, objectFit: "contain", opacity: 0.6 }}
+              />
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span style={{
+                fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: headerTone.winerySerifMuted,
+                textTransform: "uppercase" as const,
+              }}>
+                {wineryLabel}
+              </span>
+              <span style={{
+                fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                fontSize: 13,
+                fontWeight: 500,
+                fontStyle: "italic",
+                color: headerTone.agent,
+                letterSpacing: "0.02em",
+              }}>
+                Wine Agent
+              </span>
+            </div>
+          </div>
+        )}
+
         {/* Conversation messages */}
         {!showLanding && messages.map((m, i) => (
           <div
