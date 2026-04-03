@@ -1,6 +1,7 @@
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useMemo } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
+import { HomePage } from "./pages/HomePage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
 import { WidgetDemoPage } from "./pages/WidgetDemoPage";
 import { WidgetDemoRexHillPage } from "./pages/WidgetDemoRexHillPage";
@@ -32,7 +33,8 @@ function AppNav() {
     return navConfigForSlug(activeSlug, label);
   }, [activeSlug, meta]);
 
-  const onHowItWorks = location.pathname === "/" || location.pathname === "";
+  const onHome = location.pathname === "/" || location.pathname === "";
+  const onHowItWorks = location.pathname === "/how-it-works";
   const onWidgetDemo = location.pathname === "/widget-demo";
   const onAgentDemo = location.pathname === "/agent-demo";
   const demoPartnerQuery = activeSlug === "rex-hill" ? "?partner=rex-hill" : "";
@@ -53,10 +55,17 @@ function AppNav() {
           </div>
         )}
         <div className="nav-links">
+          {onHome ? (
+            <span className="nav-link-here">Home</span>
+          ) : (
+            <Link className="nav-link-overview" to="/">
+              Home
+            </Link>
+          )}
           {onHowItWorks ? (
             <span className="nav-link-here">How it works</span>
           ) : (
-            <Link className="nav-link-overview" to="/">
+            <Link className="nav-link-overview" to="/how-it-works">
               How it works
             </Link>
           )}
@@ -79,7 +88,8 @@ function AppNav() {
 
 function AppRoutesInner() {
   const location = useLocation();
-  const isHowItWorksLanding = location.pathname === "/" || location.pathname === "";
+  const isHomeLanding = location.pathname === "/" || location.pathname === "";
+  const isHowItWorksLanding = location.pathname === "/how-it-works";
   const isBookDemo = location.pathname === "/book-demo";
   const isDemoShell =
     location.pathname === "/widget-demo" ||
@@ -90,7 +100,7 @@ function AppRoutesInner() {
       <AppNav />
       <main
         className={
-          isHowItWorksLanding || isBookDemo
+          isHomeLanding || isHowItWorksLanding || isBookDemo
             ? "main main--landing"
             : isDemoShell
               ? "main main--widget-demo"
@@ -98,7 +108,8 @@ function AppRoutesInner() {
         }
       >
         <Routes>
-          <Route path="/" element={<HowItWorksPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/book-demo" element={<BookDemoPage />} />
           <Route path="/widget-demo" element={<WidgetDemoPage />} />
           <Route path="/widget-demo-rexhill" element={<WidgetDemoRexHillPage />} />

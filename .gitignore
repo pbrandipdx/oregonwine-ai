@@ -8,3 +8,4 @@ data/pairing-allowlist.json
 vite.config.ts.timestamp-*.mjs
 supabase/.branches
 supabase/.temp
+.vercel

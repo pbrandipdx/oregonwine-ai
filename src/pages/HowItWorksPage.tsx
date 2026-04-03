@@ -292,6 +292,7 @@ export function HowItWorksPage() {
           </div>
         </div>
 
+        {/* Pricing section hidden for now
         <div className="section">
           <h2>Simple, Transparent Pricing</h2>
           <p className="subtitle">No setup fees. No contracts. Just results.</p>
@@ -329,6 +330,7 @@ export function HowItWorksPage() {
             </p>
           </div>
         </div>
+        */}
 
         <div className="cta-section">
           <h2>Give Your Visitors the Experience They Expect</h2>
@@ -354,7 +356,7 @@ export function HowItWorksPage() {
       </div>
 
       <footer className="page-footer">
-        © 2026 <a href="https://pbrandipdx.github.io/crushpad-ai/">Crushpad.ai</a> — AI-powered wine concierge for
+        © 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for
         Oregon wineries
       </footer>
     </div>
