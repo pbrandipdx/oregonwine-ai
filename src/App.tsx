@@ -62,7 +62,7 @@ function AppNav() {
               How it works
             </Link>
           )}
-          <Link to="/admin">Admin</Link>
+          {winery && <Link to="/admin">Admin</Link>}
           {onWidgetDemo ? (
             <span className="nav-link-here">Chatbot demo</span>
           ) : (

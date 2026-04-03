@@ -87,6 +87,10 @@ export function inferWinerySlugFromPath(pathname: string): string | null {
   m = /^\/research\/([^/]+)$/.exec(p);
   if (m) return m[1];
 
+  // /widget-demo-rexhill → rex-hill, /widget-demo-soter → soter, etc.
+  m = /^\/widget-demo-([^/]+)$/.exec(p);
+  if (m) return m[1].replace(/^rexhill$/, "rex-hill");
+
   for (const [slug, path] of Object.entries(PRETTY_PARTNER_PATH)) {
     if (p === path) return slug;
   }
