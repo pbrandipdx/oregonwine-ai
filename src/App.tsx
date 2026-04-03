@@ -49,6 +49,7 @@ function AppNav() {
       <div className="nav-end">
         {winery && (
           <div className="nav-winery-pages" aria-label={`${winery.label} pages`}>
+            <Link to="/admin">Admin</Link>
             <Link to={winery.partnerPath}>Partner</Link>
             {winery.researchPath && <Link to={winery.researchPath}>Research</Link>}
             <Link to={`/analytics/${winery.slug}`}>Analytics</Link>
@@ -62,7 +63,6 @@ function AppNav() {
               How it works
             </Link>
           )}
-          {winery && <Link to="/admin">Admin</Link>}
           {onWidgetDemo ? (
             <span className="nav-link-here">Chatbot demo</span>
           ) : (
