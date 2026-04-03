@@ -856,52 +856,69 @@ export function ChatWidget({
                   </a>
                 )}
 
-                <div style={{ display: "flex", gap: 2, marginLeft: "auto" }}>
+                {/* Feedback bubble */}
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginLeft: "auto",
+                    background: c.surface,
+                    border: `1px solid ${c.border}`,
+                    borderRadius: 12,
+                    padding: "5px 10px",
+                  }}
+                >
+                  <span style={{ fontSize: 11, color: c.textMuted, whiteSpace: "nowrap" }}>
+                    {m.feedback ? (m.feedback === 1 ? "Thanks! 🍷" : "We\u2019ll improve") : "Helpful?"}
+                  </span>
                   <button
                     type="button"
                     onClick={() => sendFeedback(m.logId!, 1, i)}
-                    title="Helpful"
+                    title="Yes, this was helpful"
                     style={{
-                      background: m.feedback === 1 ? c.surface : "transparent",
-                      border: `1px solid ${m.feedback === 1 ? c.border : "transparent"}`,
-                      borderRadius: 6,
+                      background: m.feedback === 1 ? "rgba(125, 205, 160, 0.15)" : "transparent",
+                      border: `1px solid ${m.feedback === 1 ? "rgba(125, 205, 160, 0.4)" : c.border}`,
+                      borderRadius: 8,
                       cursor: "pointer",
-                      opacity: m.feedback === 1 ? 1 : 0.35,
-                      fontSize: 13,
-                      padding: "2px 6px",
-                      transition: "opacity 0.15s",
+                      fontSize: 15,
+                      padding: "3px 8px",
+                      transition: "all 0.15s",
+                      opacity: m.feedback === -1 ? 0.3 : 1,
+                      lineHeight: 1,
                     }}
                     onMouseEnter={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
+                      if (!m.feedback) (e.target as HTMLElement).style.background = "rgba(125, 205, 160, 0.1)";
                     }}
                     onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
+                      if (!m.feedback) (e.target as HTMLElement).style.background = "transparent";
                     }}
                   >
-                    {"\u25b2"}
+                    🍷
                   </button>
                   <button
                     type="button"
                     onClick={() => sendFeedback(m.logId!, -1, i)}
-                    title="Not helpful"
+                    title="No, this wasn't helpful"
                     style={{
-                      background: m.feedback === -1 ? c.surface : "transparent",
-                      border: `1px solid ${m.feedback === -1 ? c.border : "transparent"}`,
-                      borderRadius: 6,
+                      background: m.feedback === -1 ? "rgba(224, 85, 85, 0.15)" : "transparent",
+                      border: `1px solid ${m.feedback === -1 ? "rgba(224, 85, 85, 0.4)" : c.border}`,
+                      borderRadius: 8,
                       cursor: "pointer",
-                      opacity: m.feedback === -1 ? 1 : 0.35,
-                      fontSize: 13,
-                      padding: "2px 6px",
-                      transition: "opacity 0.15s",
+                      fontSize: 15,
+                      padding: "3px 8px",
+                      transition: "all 0.15s",
+                      opacity: m.feedback === 1 ? 0.3 : 1,
+                      lineHeight: 1,
                     }}
                     onMouseEnter={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.7";
+                      if (!m.feedback) (e.target as HTMLElement).style.background = "rgba(224, 85, 85, 0.1)";
                     }}
                     onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.35";
+                      if (!m.feedback) (e.target as HTMLElement).style.background = "transparent";
                     }}
                   >
-                    {"\u25bc"}
+                    🍶
                   </button>
                 </div>
               </div>
