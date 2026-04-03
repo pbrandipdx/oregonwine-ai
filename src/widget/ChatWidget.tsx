@@ -735,7 +735,7 @@ export function ChatWidget({
               flex: 1,
               minHeight: 0,
               overflowY: "auto",
-              padding: "24px 20px 12px",
+              padding: "24px 20px 24px",
               fontSize: 14,
               lineHeight: 1.6,
               color: c.text,
@@ -932,7 +932,7 @@ export function ChatWidget({
       </div>
 
       {/* Input area */}
-      <div style={{ padding: "0 16px 16px", flex: "0 0 auto" }}>
+      <div style={{ padding: "12px 16px 16px", flex: "0 0 auto", borderTop: `1px solid ${c.border}` }}>
         {/* Quick replies: stay visible under the thread after answers */}
         {!showLanding && !loading && (
           <div style={{ marginBottom: 12 }}>
