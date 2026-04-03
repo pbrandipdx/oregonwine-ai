@@ -842,158 +842,154 @@ export function ChatWidget({
               {m.role === "user" ? (
                 m.text
               ) : (
-                <AssistantMarkdown
-                  text={m.text}
-                  accentColor={c.accent}
-                  headingColor={c.text}
-                  textColor="#d5d5d5"
-                />
+                <>
+                  <AssistantMarkdown
+                    text={m.text}
+                    accentColor={c.accent}
+                    headingColor={c.text}
+                    textColor="#d5d5d5"
+                  />
+                  {/* Feedback inside bubble, under source line */}
+                  {m.logId && (
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 6,
+                        marginTop: 10,
+                        paddingTop: 8,
+                        borderTop: `1px solid ${c.border}`,
+                      }}
+                    >
+                      <span style={{
+                        fontSize: 11,
+                        color: c.textMuted,
+                        whiteSpace: "nowrap",
+                        fontStyle: "italic",
+                        letterSpacing: "0.01em",
+                      }}>
+                        {m.feedback ? (m.feedback === 1 ? "Thank you" : "Noted") : "Helpful?"}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => sendFeedback(m.logId!, 1, i)}
+                        title="Yes, helpful"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "2px 4px",
+                          transition: "opacity 0.15s",
+                          opacity: m.feedback === -1 ? 0.2 : m.feedback === 1 ? 1 : 0.45,
+                          lineHeight: 1,
+                          color: m.feedback === 1 ? "#7dcda0" : c.textMuted,
+                          fontSize: 14,
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.85";
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.45";
+                        }}
+                      >
+                        ↑
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => sendFeedback(m.logId!, -1, i)}
+                        title="Not helpful"
+                        style={{
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          padding: "2px 4px",
+                          transition: "opacity 0.15s",
+                          opacity: m.feedback === 1 ? 0.2 : m.feedback === -1 ? 1 : 0.45,
+                          lineHeight: 1,
+                          color: m.feedback === -1 ? "#e05555" : c.textMuted,
+                          fontSize: 14,
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.85";
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.45";
+                        }}
+                      >
+                        ↓
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
             {/* CTA buttons after assistant messages */}
             {m.role === "assistant" && m.logId && (
-              <>
-                {/* Action CTAs */}
-                <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-                  {wineryUrl &&
-                    /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
-                    <a
-                      href={`${wineryUrl.replace(/\/$/, "")}${bookingPath}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        display: "inline-block",
-                        padding: "5px 12px",
-                        borderRadius: 8,
-                        background: c.surface,
-                        color: c.accent,
-                        fontSize: 12,
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        border: `1px solid ${c.border}`,
-                      }}
-                    >
-                      Book a tasting
-                    </a>
-                  )}
-                  {wineryUrl &&
-                    /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
-                    <a
-                      href={`${wineryUrl.replace(/\/$/, "")}${clubPath}`}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        display: "inline-block",
-                        padding: "5px 12px",
-                        borderRadius: 8,
-                        background: c.surface,
-                        color: c.accent,
-                        fontSize: 12,
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        border: `1px solid ${c.border}`,
-                      }}
-                    >
-                      Explore wine clubs
-                    </a>
-                  )}
-
-                  {wineryPhone &&
-                    isDeflected(plainForTriggers(m.text)) && (
-                    <a
-                      href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
-                      style={{
-                        display: "inline-block",
-                        padding: "5px 12px",
-                        borderRadius: 8,
-                        background: c.surface,
-                        color: c.textMuted,
-                        fontSize: 12,
-                        fontWeight: 600,
-                        textDecoration: "none",
-                        border: `1px solid ${c.border}`,
-                      }}
-                    >
-                      Talk to the team
-                    </a>
-                  )}
-                </div>
-
-                {/* Feedback bubble — own row under each response */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    marginTop: 6,
-                    marginLeft: 2,
-                    background: c.surface,
-                    border: `1px solid ${c.border}`,
-                    borderRadius: 10,
-                    padding: "4px 10px",
-                    alignSelf: "flex-start",
-                  }}
-                >
-                  <span style={{
-                    fontSize: 11,
-                    color: c.textMuted,
-                    whiteSpace: "nowrap",
-                    fontStyle: "italic",
-                    letterSpacing: "0.01em",
-                  }}>
-                    {m.feedback ? (m.feedback === 1 ? "Thank you" : "Noted") : "Helpful?"}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => sendFeedback(m.logId!, 1, i)}
-                    title="Yes, helpful"
+              <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+                {wineryUrl &&
+                  /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
+                  <a
+                    href={`${wineryUrl.replace(/\/$/, "")}${bookingPath}`}
+                    target="_blank"
+                    rel="noreferrer"
                     style={{
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: "2px 4px",
-                      transition: "opacity 0.15s",
-                      opacity: m.feedback === -1 ? 0.2 : m.feedback === 1 ? 1 : 0.45,
-                      lineHeight: 1,
-                      color: m.feedback === 1 ? "#7dcda0" : c.textMuted,
-                      fontSize: 14,
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.85";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.45";
+                      display: "inline-block",
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      background: c.surface,
+                      color: c.accent,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      border: `1px solid ${c.border}`,
                     }}
                   >
-                    ↑
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => sendFeedback(m.logId!, -1, i)}
-                    title="Not helpful"
+                    Book a tasting
+                  </a>
+                )}
+                {wineryUrl &&
+                  /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
+                  <a
+                    href={`${wineryUrl.replace(/\/$/, "")}${clubPath}`}
+                    target="_blank"
+                    rel="noreferrer"
                     style={{
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      padding: "2px 4px",
-                      transition: "opacity 0.15s",
-                      opacity: m.feedback === 1 ? 0.2 : m.feedback === -1 ? 1 : 0.45,
-                      lineHeight: 1,
-                      color: m.feedback === -1 ? "#e05555" : c.textMuted,
-                      fontSize: 14,
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.85";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!m.feedback) (e.target as HTMLElement).style.opacity = "0.45";
+                      display: "inline-block",
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      background: c.surface,
+                      color: c.accent,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      border: `1px solid ${c.border}`,
                     }}
                   >
-                    ↓
-                  </button>
-                </div>
-              </>
+                    Explore wine clubs
+                  </a>
+                )}
+
+                {wineryPhone &&
+                  isDeflected(plainForTriggers(m.text)) && (
+                  <a
+                    href={`tel:${wineryPhone.replace(/[^+\d]/g, "")}`}
+                    style={{
+                      display: "inline-block",
+                      padding: "5px 12px",
+                      borderRadius: 8,
+                      background: c.surface,
+                      color: c.textMuted,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      border: `1px solid ${c.border}`,
+                    }}
+                  >
+                    Talk to the team
+                  </a>
+                )}
+              </div>
             )}
           </div>
         ))}
