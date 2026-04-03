@@ -668,8 +668,31 @@ export function ChatWidget({
                   }}
                 />
               )}
-              <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
-                {wineryLabel} Wine Agent
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 10, marginBottom: 16 }}>
+                <span
+                  style={{
+                    fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    letterSpacing: "0.1em",
+                    color: headerTone.winerySerifMuted,
+                    textTransform: "uppercase",
+                  }}
+                >
+                  {wineryLabel}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
+                    fontSize: 16,
+                    fontWeight: 500,
+                    fontStyle: "italic",
+                    color: headerTone.agent,
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  Wine Agent
+                </span>
               </div>
               <h2
                 style={{
