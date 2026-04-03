@@ -59,6 +59,28 @@ Deno.serve(async (req) => {
     });
   }
 
+  // Fetch the existing log to check for prior feedback and get chunk IDs
+  const { data: logRow, error: logErr } = await supabase
+    .from("chat_logs")
+    .select("feedback_rating, retrieved_chunk_ids")
+    .eq("id", log_id)
+    .eq("widget_account_id", account.id)
+    .single();
+
+  if (logErr || !logRow) {
+    return new Response(JSON.stringify({ error: "Log not found" }), {
+      status: 404,
+      headers: {
+        "Content-Type": "application/json",
+        ...Object.fromEntries(Object.entries(corsHeaders(origin)) as [string, string][]),
+      },
+    });
+  }
+
+  const previousRating = logRow.feedback_rating;
+  const chunkIds = (logRow.retrieved_chunk_ids ?? []) as string[];
+
+  // Update the chat log with the new feedback
   const { error: upErr } = await supabase
     .from("chat_logs")
     .update({
@@ -76,6 +98,22 @@ Deno.serve(async (req) => {
         ...Object.fromEntries(Object.entries(corsHeaders(origin)) as [string, string][]),
       },
     });
+  }
+
+  // Real-time chunk confidence adjustment via feedback_boost.
+  // If user is changing their vote, reverse the old one first.
+  if (chunkIds.length > 0) {
+    let delta = rating; // +1 or -1
+    if (previousRating) {
+      // Changing vote: reverse old rating then apply new one
+      delta = rating - previousRating; // e.g., switching from +1 to -1 = -2
+    }
+    if (delta !== 0) {
+      await supabase.rpc("adjust_chunk_feedback", {
+        p_chunk_ids: chunkIds,
+        p_delta: delta,
+      });
+    }
   }
 
   return new Response(JSON.stringify({ ok: true }), {

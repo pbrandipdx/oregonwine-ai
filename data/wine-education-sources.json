@@ -1,0 +1,125 @@
+{
+  "_readme": "Wine education sources for sommelier-level knowledge base. All Wikipedia (CC BY-SA). Run: npm run ingest:education [--replace]",
+  "allowedHosts": [
+    "en.wikipedia.org"
+  ],
+  "domains": {
+    "regions": {
+      "chunkType": "region_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Regions",
+      "sources": [
+        { "kind": "wikipedia", "title": "Willamette Valley AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Dundee Hills AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Eola-Amity Hills AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Chehalem Mountains AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Ribbon Ridge AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Yamhill-Carlton AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Van Duzer Corridor AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Tualatin Hills AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Laurelwood District AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Lower Long Tom AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "McMinnville AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Oregon wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Umpqua Valley AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Rogue Valley AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Columbia Gorge AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Walla Walla Valley AVA", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Burgundy wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Terroir", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "American Viticultural Area", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    },
+    "varietals": {
+      "chunkType": "varietal_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Varietals",
+      "sources": [
+        { "kind": "wikipedia", "title": "Pinot noir", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Pinot gris", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Chardonnay", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Riesling", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Syrah", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Cabernet Sauvignon", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Merlot", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Gamay", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Tempranillo", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Sauvignon blanc", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Viognier", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Gewürztraminer", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Müller-Thurgau", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Pinot blanc", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Mourvèdre", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Grenache", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Marsanne", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Sangiovese", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Nebbiolo", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Zinfandel", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    },
+    "winemaking": {
+      "chunkType": "winemaking_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Winemaking",
+      "sources": [
+        { "kind": "wikipedia", "title": "Winemaking", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Fermentation in winemaking", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Malolactic fermentation", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Oak (wine)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Lees (fermentation)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Fining (wine)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Carbonic maceration", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Sparkling wine production", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Whole cluster fermentation", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Cold soaking (wine)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Biodynamic wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Organic wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Natural wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Brix", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Phenolic content in wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    },
+    "pairing": {
+      "chunkType": "pairing_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Food Pairing",
+      "sources": [
+        { "kind": "wikipedia", "title": "Wine and food pairing", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Sommelier", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Wine tasting", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Wine tasting descriptors", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Mouthfeel", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Acidity in wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Tannin", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    },
+    "service": {
+      "chunkType": "service_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Service & Storage",
+      "sources": [
+        { "kind": "wikipedia", "title": "Wine cellar", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Decanter", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Wine glass", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Aging of wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Wine fault", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Cork taint", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Serving temperature of wine", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    },
+    "viticulture": {
+      "chunkType": "viticulture_reference",
+      "confidence": 0.72,
+      "prefix": "Wine education — Viticulture",
+      "sources": [
+        { "kind": "wikipedia", "title": "Viticulture", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Phylloxera", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Rootstock", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Canopy management", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Harvest (wine)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Sustainable agriculture", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" },
+        { "kind": "wikipedia", "title": "Clone (vine)", "publisher": "Wikipedia contributors", "licenseNote": "CC BY-SA" }
+      ]
+    }
+  }
+}

@@ -14,7 +14,10 @@
     "crawl:fetch": "tsx scripts/crawl-fetch.ts",
     "smoke:chat": "tsx scripts/smoke-chat-buttons.ts",
     "deploy:supabase-remote": "bash scripts/deploy-supabase-remote.sh",
-    "ingest:pairing": "tsx scripts/ingest-pairing-allowlist.ts"
+    "ingest:pairing": "tsx scripts/ingest-pairing-allowlist.ts",
+    "ingest:education": "tsx scripts/ingest-wine-education.ts",
+    "learn": "tsx scripts/learning-pipeline.ts",
+    "learn:dry": "tsx scripts/learning-pipeline.ts --dry-run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
