@@ -12,6 +12,10 @@ import { createClient } from "@supabase/supabase-js";
 import { parse } from "node-html-parser";
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const FETCH_CHUNK_TYPE = "web_fetch";
 const MAX_CHUNK_CHARS = 1100;

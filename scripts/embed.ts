@@ -37,20 +37,35 @@ async function main() {
 
   console.log(`Embedding ${rows.length} chunk(s)…`);
 
+  let errorCount = 0;
+  let skippedCount = 0;
+
   for (let i = 0; i < rows.length; i += batchSize) {
     const slice = rows.slice(i, i + batchSize);
     const inputs = slice.map((r) => r.chunk_text);
     const res = await openai.embeddings.create({ model, input: inputs });
     for (let j = 0; j < slice.length; j++) {
       const emb = res.data[j]?.embedding;
-      if (!emb) continue;
+      if (!emb) {
+        console.warn(`  Skipped chunk ${slice[j].id} — no embedding returned`);
+        skippedCount++;
+        continue;
+      }
       const { error: upErr } = await supabase
         .from("winery_chunks")
         .update({ embedding: emb, embedding_model: model })
         .eq("id", slice[j].id);
-      if (upErr) console.error("update", slice[j].id, upErr.message);
+      if (upErr) {
+        console.error("  Update failed:", slice[j].id, upErr.message);
+        errorCount++;
+      }
     }
     console.log(`  …${Math.min(i + batchSize, rows.length)}/${rows.length}`);
+  }
+
+  if (errorCount > 0 || skippedCount > 0) {
+    console.error(`\nCompleted with issues: ${errorCount} update error(s), ${skippedCount} skipped.`);
+    process.exit(1);
   }
   console.log("Done.");
 }

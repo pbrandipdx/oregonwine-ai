@@ -15,6 +15,10 @@
 import { createClient } from "@supabase/supabase-js";
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ---------------------------------------------------------------------------
 // Config types
@@ -112,6 +116,8 @@ async function main() {
       .eq("winery_id", config.winery_id);
     if (delErr) {
       console.error("   Delete error:", delErr.message);
+      console.error("   Aborting to prevent duplicates.");
+      process.exit(1);
     } else {
       console.log("   Existing chunks deleted.\n");
     }

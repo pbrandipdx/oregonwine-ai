@@ -151,11 +151,12 @@ Deno.serve(async (req) => {
   startOfMonth.setUTCDate(1);
   startOfMonth.setUTCHours(0, 0, 0, 0);
 
-  const { count: usedThisMonth } = await supabase
+  const { count: usedThisMonth, error: usageErr } = await supabase
     .from("chat_logs")
     .select("id", { count: "exact", head: true })
     .eq("widget_account_id", account.id)
     .gte("created_at", startOfMonth.toISOString());
+  if (usageErr) console.error("Usage count query failed:", usageErr.message);
 
   const limit = account.monthly_query_limit ?? 1000;
   if (limit > 0 && (usedThisMonth ?? 0) >= limit) {
@@ -210,11 +211,12 @@ Deno.serve(async (req) => {
     }
   }
 
-  const { data: k } = await supabase.rpc("search_chunks_keyword", {
+  const { data: k, error: kwErr } = await supabase.rpc("search_chunks_keyword", {
     winery_id_filter: account.winery_id,
     search_query: message,
     match_limit: 5,
   });
+  if (kwErr) console.error("Keyword search failed:", kwErr.message);
 
   const keywordChunks: ChunkRow[] = (k ?? []).map((row: Record<string, unknown>) => ({
     id: row.id as string,
@@ -237,11 +239,12 @@ Deno.serve(async (req) => {
     .slice(0, maxChunks);
   const scores = chunks.map((c) => c.score ?? 0);
 
-  const { data: winery } = await supabase
+  const { data: winery, error: wineryErr } = await supabase
     .from("wineries")
     .select("name, address, phone, hours_json, website")
     .eq("id", account.winery_id)
     .single();
+  if (wineryErr) console.error("Winery metadata query failed:", wineryErr.message);
 
   const context =
     chunks.length === 0
@@ -356,7 +359,7 @@ USER QUESTION: ${message}`;
       const deflected = deflectedPhrases.some((p) => lower.includes(p));
 
       const latency = Date.now() - startTime;
-      const { data: logRow } = await supabase.from("chat_logs").insert({
+      const { data: logRow, error: logErr } = await supabase.from("chat_logs").insert({
         session_id: sessionId,
         widget_account_id: account.id,
         winery_id: account.winery_id,
@@ -368,17 +371,19 @@ USER QUESTION: ${message}`;
         prompt_version: PROMPT_VERSION,
         latency_ms: latency,
       }).select("id").single();
+      if (logErr) console.error("chat_log insert failed:", logErr.message);
 
       logId = logRow?.id ?? "";
 
       const refHost = parseHostname(origin);
-      await supabase.rpc("touch_chat_session", {
+      const { error: sessErr } = await supabase.rpc("touch_chat_session", {
         p_session_id: sessionId,
         p_widget_account_id: account.id,
         p_winery_id: account.winery_id,
         p_referrer_domain: refHost ?? "",
         p_prompt_version: PROMPT_VERSION,
       });
+      if (sessErr) console.error("touch_chat_session failed:", sessErr.message);
 
       // Send log_id as a trailing metadata line
       controller.enqueue(enc.encode("\n<!-- log_id:" + logId + " -->"));

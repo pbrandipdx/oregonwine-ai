@@ -33,6 +33,10 @@ type Props = {
   headerLockup?: "full" | "logo-and-agent";
   /** Winery website for booking/info links */
   wineryUrl?: string;
+  /** Path for tasting/booking page (default: /experiences/) */
+  bookingPath?: string;
+  /** Path for wine club page (default: /clubs/) */
+  clubPath?: string;
   /** Winery phone number for escalation */
   wineryPhone?: string;
 };
@@ -188,6 +192,8 @@ export function ChatWidget({
   headerCrestImageUrl,
   headerLockup = "logo-and-agent",
   wineryUrl,
+  bookingPath = "/experiences/",
+  clubPath = "/clubs/",
   wineryPhone,
 }: Props) {
   const embeddedChromeMode: "viewport" | "panel" =
@@ -203,6 +209,12 @@ export function ChatWidget({
   const [error, setError] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesRef = useRef<Message[]>([]);
+
+  // Keep ref in sync with state for stale-closure-safe access
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   // Auto-scroll on new messages
   useEffect(() => {
@@ -256,13 +268,20 @@ export function ChatWidget({
         return copy;
       });
       try {
-        await fetch(`${apiBase}/feedback`, {
+        const res = await fetch(`${apiBase}/feedback`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-api-key": apiKey },
           body: JSON.stringify({ log_id: logId, rating }),
         });
-      } catch {
-        // silent
+        if (!res.ok) throw new Error(`Feedback failed: ${res.status}`);
+      } catch (e) {
+        console.error("Feedback submission failed:", e);
+        // Revert optimistic UI update so user knows vote didn't save
+        setMessages((m) => {
+          const copy = [...m];
+          copy[msgIndex] = { ...copy[msgIndex], feedback: undefined };
+          return copy;
+        });
       }
     },
     [apiBase, apiKey]
@@ -290,7 +309,7 @@ export function ChatWidget({
       setMessages((m) => [...m, { role: "user", text: trimmed }]);
       setLoading(true);
 
-      const history = messages.map((m) => ({ role: m.role, text: m.text }));
+      const history = messagesRef.current.map((m) => ({ role: m.role, text: m.text }));
 
       try {
         const res = await fetch(`${apiBase}/chat`, {
@@ -749,7 +768,7 @@ export function ChatWidget({
                 {wineryUrl &&
                   /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
                   <a
-                    href={`${wineryUrl.replace(/\/$/, "")}/experiences/`}
+                    href={`${wineryUrl.replace(/\/$/, "")}${bookingPath}`}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -770,7 +789,7 @@ export function ChatWidget({
                 {wineryUrl &&
                   /club|member|join|shipment/i.test(plainForTriggers(m.text)) && (
                   <a
-                    href={`${wineryUrl.replace(/\/$/, "")}/clubs/`}
+                    href={`${wineryUrl.replace(/\/$/, "")}${clubPath}`}
                     target="_blank"
                     rel="noreferrer"
                     style={{
