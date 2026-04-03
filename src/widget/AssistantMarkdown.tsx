@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import type { ReactNode } from "react";
 
 type Props = {
   text: string;
@@ -7,8 +8,31 @@ type Props = {
   headingColor: string;
 };
 
-/** Renders assistant replies as Markdown (headings, lists, bold). */
+/**
+ * Auto-link raw URLs and phone numbers that aren't already inside markdown links.
+ * Runs BEFORE ReactMarkdown so the renderer sees proper [text](href) syntax.
+ */
+function autoLinkText(md: string): string {
+  // Skip content already inside markdown links [...](...) or <a> tags
+  // 1. Auto-link bare URLs (https://... or http://...)
+  md = md.replace(
+    /(?<!\]\()(?<!\()(https?:\/\/[^\s)\]>,]+)/g,
+    (url) => `[${url}](${url})`
+  );
+  // 2. Auto-link phone numbers: (503) 538-0666, 503-538-0666, +1-503-538-0666, etc.
+  md = md.replace(
+    /(?<!\[)(\+?1?[-.\s]?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})(?!\])/g,
+    (phone) => {
+      const digits = phone.replace(/[^\d+]/g, "");
+      return `[${phone}](tel:${digits})`;
+    }
+  );
+  return md;
+}
+
+/** Renders assistant replies as Markdown with auto-linked URLs and phone numbers. */
 export function AssistantMarkdown({ text, accentColor, headingColor, textColor }: Props) {
+  const linked = autoLinkText(text);
   return (
     <div className="ow-md-root">
       <style>{`
@@ -27,14 +51,21 @@ export function AssistantMarkdown({ text, accentColor, headingColor, textColor }
       `}</style>
       <ReactMarkdown
         components={{
-          a: ({ href, children }) => (
-            <a href={href} target="_blank" rel="noreferrer">
-              {children}
-            </a>
-          ),
+          a: ({ href, children }: { href?: string; children?: ReactNode }) => {
+            const isTel = href?.startsWith("tel:");
+            return (
+              <a
+                href={href}
+                target={isTel ? "_self" : "_blank"}
+                rel={isTel ? undefined : "noreferrer"}
+              >
+                {children}
+              </a>
+            );
+          },
         }}
       >
-        {text}
+        {linked}
       </ReactMarkdown>
     </div>
   );
