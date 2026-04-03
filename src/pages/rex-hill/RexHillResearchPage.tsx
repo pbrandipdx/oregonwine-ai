@@ -304,26 +304,6 @@ export function RexHillResearchPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="panel" style={{ textAlign: "center", padding: "2rem" }}>
-        <h2 style={{ marginBottom: "0.75rem" }}>See it in action</h2>
-        <p style={{ maxWidth: "36rem", margin: "0 auto 1.25rem" }}>
-          The Rex Hill agent is live with real visitor interactions. Ask it anything — hours, tasting
-          experiences, wine clubs, recipes, directions — and see how it responds. Then check the
-          analytics dashboard to see what visitors are actually asking.
-        </p>
-        <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
-          <Link className="btn" to="/rex-hill/demo">
-            Try it live
-          </Link>
-          <Link className="btn btn-ghost" to="/rex-hill">
-            Rex Hill partner page
-          </Link>
-          <Link className="btn btn-ghost" to="/rex-hill/analytics">
-            View analytics
-          </Link>
-        </div>
-      </section>
 
       <p className="muted small" style={{ textAlign: "center", marginTop: "1rem" }}>
         Research conducted March–April 2026. DNS records, source HTML, and infrastructure lookups
