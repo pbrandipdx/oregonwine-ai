@@ -53,7 +53,7 @@ function AppNav() {
       <div className="nav-end">
         {winery && (
           <div className="nav-winery-pages" aria-label={`${winery.label} pages`}>
-            <Link to="/admin">Admin</Link>
+            <Link to={`/${winery.slug}/admin`}>Admin</Link>
             <Link to={winery.partnerPath}>Partner</Link>
             <Link to={winery.demoPath}>Demo</Link>
             {winery.researchPath && <Link to={winery.researchPath}>Research</Link>}
@@ -113,6 +113,7 @@ function AppRoutesInner() {
           <Route path="/book-demo" element={<BookDemoPage />} />
           <Route path="/widget-demo" element={<WidgetDemoPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
+          {/* /admin without slug still works but won't show winery nav */}
           <Route path="/admin" element={<AdminPage />} />
 
           {/* ── Winery pages: /{slug}, /{slug}/demo, /{slug}/research, /{slug}/analytics ── */}
@@ -120,14 +121,17 @@ function AppRoutesInner() {
           <Route path="/rex-hill/demo" element={<WidgetDemoRexHillPage />} />
           <Route path="/rex-hill/research" element={<RexHillResearchPage />} />
           <Route path="/rex-hill/analytics" element={<AnalyticsPage />} />
+          <Route path="/rex-hill/admin" element={<AdminPage />} />
 
           <Route path="/chehalem" element={<ChehalemPartnerPage />} />
           <Route path="/chehalem/research" element={<ChehalemResearchPage />} />
           <Route path="/chehalem/analytics" element={<AnalyticsPage />} />
+          <Route path="/chehalem/admin" element={<AdminPage />} />
 
           <Route path="/soter" element={<SoterPartnerPage />} />
           <Route path="/soter/research" element={<SoterResearchPage />} />
           <Route path="/soter/analytics" element={<AnalyticsPage />} />
+          <Route path="/soter/admin" element={<AdminPage />} />
 
           {/* Dynamic fallback for new wineries */}
           <Route path="/w/:slug" element={<WineryPage />} />

@@ -64,8 +64,8 @@ export function getWineryNavConfig(
 export function inferWinerySlugFromPath(pathname: string): string | null {
   const p = pathname.replace(/\/$/, "") || "/";
 
-  // New canonical: /{slug}/demo, /{slug}/research, /{slug}/analytics
-  let m = /^\/([^/]+)\/(demo|research|analytics)$/.exec(p);
+  // New canonical: /{slug}/demo, /{slug}/research, /{slug}/analytics, /{slug}/admin
+  let m = /^\/([^/]+)\/(demo|research|analytics|admin)$/.exec(p);
   if (m) return m[1];
 
   // /{slug} — partner page (but skip known non-winery routes)
