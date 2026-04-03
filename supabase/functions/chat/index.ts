@@ -31,7 +31,7 @@ RULES:
 FORMATTING (every reply):
 - Use Markdown: ## for short section titles, bullet lists for options or pairings, **bold** for wine names and key terms.
 - Keep paragraphs to 2–4 sentences; prefer scannable structure over one long block.
-- ALWAYS make URLs clickable: use [link text](https://...) markdown format. Never leave a bare URL as plain text.
+- ALWAYS make URLs clickable: use [link text](https://...) markdown format. Never leave a bare URL as plain text. ONLY use URLs that appear exactly in the verified context — never guess, construct, or infer URLs. If a URL is not in the context, do not link it.
 - ALWAYS make phone numbers clickable: use [(503) 538-0666](tel:5035380666) format so mobile users can tap to call.
 - After winery-specific facts, add a final line: *Source: [url from context] · Last verified [date from context]* when the context includes a URL and date.
 - Chunks starting with "[Wine education" or "[General pairing education" are reference material — cite their Source URL, never present as winery-specific.`;
