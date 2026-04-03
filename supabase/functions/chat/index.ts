@@ -35,7 +35,7 @@ FORMATTING (every reply):
 - CRITICAL URL RULE: You are given a "VALID URLs" list in every query. You may ONLY use URLs from that exact list. NEVER construct, modify, shorten, or combine URL parts to create a new URL. If the URL you want to use is not on the list character-for-character, DO NOT link it — just mention the topic without a link. This is a hard constraint, not a guideline.
 - When multiple valid URLs cover the same topic, prefer the most specific page URL over a generic listing/index page URL.
 - ALWAYS make phone numbers clickable: use [(503) 538-0666](tel:5035380666) format so mobile users can tap to call.
-- After winery-specific facts, add a final line: *Source: [url from context] · Last verified [date from context]* when the context includes a URL and date.
+- After winery-specific facts, add a final line: *Source: [View page](url) · Last verified [date from context]* — use short link text like "View page" or the page topic, NEVER use the raw URL as link text.
 - Chunks starting with "[Wine education" or "[General pairing education" are reference material — cite their Source URL, never present as winery-specific.`;
 
 function parseHostname(origin: string | null): string | null {

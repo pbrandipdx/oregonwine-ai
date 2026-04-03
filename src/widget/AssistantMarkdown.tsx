@@ -15,9 +15,13 @@ type Props = {
 function autoLinkText(md: string): string {
   // Skip content already inside markdown links [...](...) or <a> tags
   // 1. Auto-link bare URLs (https://... or http://...)
+  //    Skip URLs already inside markdown link syntax: [text](url) or [url](url)
   md = md.replace(
-    /(?<!\]\()(?<!\()(https?:\/\/[^\s)\]>,]+)/g,
-    (url) => `[${url}](${url})`
+    /(\[[^\]]*\]\([^)]*\))|(https?:\/\/[^\s)\]>,]+)/g,
+    (match, mdLink, bareUrl) => {
+      if (mdLink) return mdLink; // Already a markdown link, leave it alone
+      return `[${bareUrl}](${bareUrl})`;
+    }
   );
   // 2. Auto-link phone numbers: (503) 538-0666, 503-538-0666, +1-503-538-0666, etc.
   md = md.replace(
