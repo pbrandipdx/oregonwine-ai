@@ -31,6 +31,7 @@ export const CROWLEY_CONTENT: CrowleyContent = {
         "Maximum 6 guests",
       ],
       highlight: true,
+      url: "https://crowleywines.com/visit/",
     },
   ],
 

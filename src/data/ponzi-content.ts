@@ -31,6 +31,7 @@ export const PONZI_CONTENT: PonziContent = {
         "Walk-ins welcome, reservations recommended",
       ],
       highlight: true,
+      url: "https://www.exploretock.com/ponzivineyards",
     },
     {
       name: "Collector's Flight",
@@ -44,6 +45,7 @@ export const PONZI_CONTENT: PonziContent = {
         "Fee waived with 3-bottle purchase",
         "Complimentary for Basalt members",
       ],
+      url: "https://www.exploretock.com/ponzivineyards",
     },
     {
       name: "Bollinger Group Tasting",
@@ -57,6 +59,7 @@ export const PONZI_CONTENT: PonziContent = {
         "$25 for Laurelwood Society members",
         "Complimentary for Basalt members",
       ],
+      url: "https://www.exploretock.com/ponzivineyards",
     },
   ],
 

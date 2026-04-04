@@ -91,8 +91,28 @@
   background: var(--accent-dim);
 }
 
+.wi-card--link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
 .wi-card--highlight {
   border-color: rgba(196, 122, 132, 0.3);
+}
+
+.wi-card-cta {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  transition: color 0.15s;
+}
+
+.wi-card--link:hover .wi-card-cta {
+  color: var(--cream);
 }
 
 .wi-card-header {

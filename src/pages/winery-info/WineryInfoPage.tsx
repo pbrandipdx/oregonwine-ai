@@ -28,23 +28,43 @@ function TastingsSection({ data }: { data: TastingOption[] }) {
   return (
     <div className="wi-section" key="tastings">
       <div className="wi-cards-grid">
-        {data.map((t) => (
-          <div
-            key={t.name}
-            className={`wi-card ${t.highlight ? "wi-card--highlight" : ""}`}
-          >
-            <div className="wi-card-header">
-              <h3 className="wi-card-name">{t.name}</h3>
-              <span className="wi-card-price">{t.price}</span>
+        {data.map((t) => {
+          const inner = (
+            <>
+              <div className="wi-card-header">
+                <h3 className="wi-card-name">{t.name}</h3>
+                <span className="wi-card-price">{t.price}</span>
+              </div>
+              <p className="wi-card-desc">{t.description}</p>
+              <ul className="wi-card-details">
+                {t.details.map((d) => (
+                  <li key={d}>{d}</li>
+                ))}
+              </ul>
+              {t.url && (
+                <span className="wi-card-cta">Book this experience &rsaquo;</span>
+              )}
+            </>
+          );
+          return t.url ? (
+            <a
+              key={t.name}
+              href={t.url}
+              target="_blank"
+              rel="noreferrer"
+              className={`wi-card wi-card--link ${t.highlight ? "wi-card--highlight" : ""}`}
+            >
+              {inner}
+            </a>
+          ) : (
+            <div
+              key={t.name}
+              className={`wi-card ${t.highlight ? "wi-card--highlight" : ""}`}
+            >
+              {inner}
             </div>
-            <p className="wi-card-desc">{t.description}</p>
-            <ul className="wi-card-details">
-              {t.details.map((d) => (
-                <li key={d}>{d}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="wi-note-box">
         <p className="wi-note-label">Reservations</p>

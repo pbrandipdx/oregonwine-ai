@@ -6,6 +6,7 @@ export interface TastingOption {
   description: string;
   details: string[];
   highlight?: boolean;
+  url?: string;
 }
 
 export interface HoursDirections {
@@ -76,6 +77,7 @@ export const REX_HILL_CONTENT: RexHillContent = {
         "Indoor or outdoor seating",
         "Complimentary for club members",
       ],
+      url: "https://rexhill.com/experiences/",
     },
     {
       name: "Library Flight",
@@ -87,6 +89,7 @@ export const REX_HILL_CONTENT: RexHillContent = {
         "Guided by a wine educator",
         "Limited availability",
       ],
+      url: "https://rexhill.com/experiences/",
     },
     {
       name: "Sensory Experience",
@@ -99,6 +102,7 @@ export const REX_HILL_CONTENT: RexHillContent = {
         "Ideal for curious wine lovers",
       ],
       highlight: true,
+      url: "https://rexhill.com/experiences/",
     },
     {
       name: "Bottles & Boards",
@@ -110,6 +114,7 @@ export const REX_HILL_CONTENT: RexHillContent = {
         "Groups of 7 or more",
         "Perfect for celebrations",
       ],
+      url: "https://rexhill.com/experiences/",
     },
     {
       name: "Cellar Tour & Tasting",
@@ -122,6 +127,7 @@ export const REX_HILL_CONTENT: RexHillContent = {
         "Small-group format",
       ],
       highlight: true,
+      url: "https://rexhill.com/experiences/",
     },
   ],
 
