@@ -17,6 +17,7 @@ import { MatchMePage } from "./pages/match-me";
 import { PlanVisitPage } from "./pages/plan-visit";
 import { ComparePage } from "./pages/compare";
 import { FeaturedWineryPage } from "./pages/featured-winery";
+import { WineryInfoPage } from "./pages/winery-info";
 import {
   CRUSHPAD_DEMO_SLUG,
   inferWinerySlugFromPath,
@@ -109,7 +110,8 @@ function AppRoutesInner() {
     location.pathname === "/match-me" ||
     location.pathname === "/plan-visit" ||
     location.pathname === "/compare" ||
-    location.pathname === "/featured-winery";
+    location.pathname === "/featured-winery" ||
+    location.pathname === "/winery-info";
   const isDemoShell =
     location.pathname === "/chatbot-demo" ||
     location.pathname.endsWith("/demo") ||
@@ -126,6 +128,7 @@ function AppRoutesInner() {
             <Route path="/plan-visit" element={<PlanVisitPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
+            <Route path="/winery-info" element={<WineryInfoPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
@@ -161,6 +164,7 @@ function AppRoutesInner() {
           <Route path="/plan-visit" element={<PlanVisitPage />} />
           <Route path="/compare" element={<ComparePage />} />
           <Route path="/featured-winery" element={<FeaturedWineryPage />} />
+          <Route path="/winery-info" element={<WineryInfoPage />} />
           {/* /admin without slug still works but won't show winery nav */}
           <Route path="/admin" element={<AdminPage />} />
 

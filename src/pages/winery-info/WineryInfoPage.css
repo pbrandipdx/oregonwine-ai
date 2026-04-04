@@ -1,0 +1,634 @@
+/* ── Winery Info Page ── */
+.wi {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.1);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Hero ── */
+.wi-hero {
+  width: 100%;
+  max-width: 800px;
+  padding: 52px 32px 0;
+  text-align: center;
+  animation: wiFadeIn 0.6s ease-out;
+}
+
+.wi-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.wi-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0;
+  color: var(--cream);
+}
+
+/* ── Sections (shared) ── */
+.wi-section {
+  width: 100%;
+  max-width: 800px;
+  padding: 40px 32px 0;
+  animation: wiFadeIn 0.6s ease-out 0.1s both;
+}
+
+.wi-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+/* ── Cards Grid (Tastings) ── */
+.wi-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.wi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.wi-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.wi-card--highlight {
+  border-color: rgba(196, 122, 132, 0.3);
+}
+
+.wi-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.wi-card-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.wi-card-price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.wi-card-desc {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+.wi-card-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wi-card-details li {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+  padding-left: 14px;
+  position: relative;
+}
+
+.wi-card-details li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.6;
+}
+
+/* ── Note Box ── */
+.wi-note-box {
+  margin-top: 28px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201, 169, 78, 0.2);
+  border-radius: 10px;
+  padding: 22px 26px;
+}
+
+.wi-note-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.wi-note-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--cream);
+  margin: 0;
+}
+
+/* ── Visit Card (Hours) ── */
+.wi-visit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+}
+
+.wi-visit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 40px;
+}
+
+.wi-visit-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wi-visit-item-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.wi-visit-item-value {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--cream-dim);
+}
+
+.wi-visit-item-value a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.wi-visit-item-value a:hover {
+  color: #d48a94;
+  text-decoration: underline;
+}
+
+.wi-visit-item--full {
+  grid-column: 1 / -1;
+}
+
+/* ── Directions ── */
+.wi-directions {
+  margin-top: 32px;
+}
+
+.wi-direction-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 12px;
+}
+
+.wi-direction-text {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+/* ── Club Tiers ── */
+.wi-tiers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.wi-tier {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 26px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.wi-tier:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.wi-tier--featured {
+  border-color: var(--accent);
+  background: linear-gradient(
+    180deg,
+    rgba(196, 122, 132, 0.06) 0%,
+    var(--surface) 40%
+  );
+}
+
+.wi-tier-badge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: var(--accent);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.wi-tier-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.wi-tier-meta {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.wi-tier-sep {
+  padding: 0 6px;
+  color: var(--border);
+}
+
+.wi-tier-discount {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 0 0 20px;
+}
+
+.wi-tier-perks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wi-tier-perks li {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--cream-dim);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.wi-tier-perks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.wi-tier--featured .wi-tier-perks li::before {
+  opacity: 0.9;
+}
+
+/* ── Philosophy Box (Pairings) ── */
+.wi-philosophy-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 26px 30px;
+  margin-bottom: 32px;
+}
+
+.wi-philosophy-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--cream-dim);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Pairing Blocks ── */
+.wi-pairing-block {
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.wi-pairing-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.wi-pairing-wine {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 14px;
+}
+
+.wi-pairing-foods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.wi-food-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3px;
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.wi-food-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.wi-pairing-note {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Recipes Grid ── */
+.wi-recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.wi-recipe-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 24px;
+  transition: border-color 0.2s;
+}
+
+.wi-recipe-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.wi-recipe-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 8px;
+  line-height: 1.2;
+}
+
+.wi-recipe-desc {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+.wi-recipe-meta {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.wi-recipe-meta-item {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--cream-dim);
+}
+
+.wi-recipe-meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-right: 6px;
+}
+
+.wi-recipe-ingredients {
+  margin-bottom: 16px;
+}
+
+.wi-recipe-ing-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.wi-recipe-ing-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.wi-recipe-ing-list li {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--cream-dim);
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+}
+
+.wi-recipe-pairing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(196, 122, 132, 0.2);
+  border-radius: 8px;
+}
+
+.wi-recipe-pairing-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.wi-recipe-pairing-wine {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.wi-recipe-wine-note {
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Footer ── */
+.wi-footer {
+  margin-top: auto;
+  padding: 36px 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.wi-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ── Animation ── */
+@keyframes wiFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .wi-hero {
+    padding: 36px 20px 0;
+  }
+
+  .wi-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .wi-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wi-visit-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .wi-visit-card {
+    padding: 24px 20px;
+  }
+
+  .wi-tiers {
+    grid-template-columns: 1fr;
+  }
+
+  .wi-recipes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wi-note-box {
+    padding: 18px 20px;
+  }
+
+  .wi-philosophy-box {
+    padding: 20px;
+  }
+}

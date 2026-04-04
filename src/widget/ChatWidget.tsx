@@ -46,6 +46,8 @@ type Props = {
   wineryPhone?: string;
   /** When true, show engagement experience bubbles instead of winery quick-reply chips */
   useEngagementBubbles?: boolean;
+  /** Maps quick-reply chip labels to page routes for inline loading (like game pages) */
+  quickReplyRoutes?: Record<string, string>;
 };
 
 type Message = {
@@ -285,6 +287,7 @@ export function ChatWidget({
   clubPath = "/clubs/",
   wineryPhone,
   useEngagementBubbles,
+  quickReplyRoutes,
 }: Props) {
   const embeddedChromeMode: "viewport" | "panel" =
     embedded && embeddedChrome === "panel" ? "panel" : "viewport";
@@ -563,6 +566,26 @@ export function ChatWidget({
     setGameView(null);
     setShowLanding(true);
   }, []);
+
+  /** Quick-reply handler: loads inline page if quickReplyRoutes has a match, else sends chat */
+  const pickQuickReply = useCallback(
+    (label: string) => {
+      const route = quickReplyRoutes?.[label];
+      if (route) {
+        setGameView(route);
+        if (showLanding) {
+          setLandingExiting(true);
+          setTimeout(() => {
+            setShowLanding(false);
+            setLandingExiting(false);
+          }, 400);
+        }
+        return;
+      }
+      void sendMessage(label);
+    },
+    [quickReplyRoutes, sendMessage, showLanding],
+  );
 
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
 
@@ -901,7 +924,7 @@ export function ChatWidget({
             {!loading && (
               useEngagementBubbles
                 ? <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={48} />
-                : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={48} />
+                : <QuickReplyChips palette={quickPalette} onPick={pickQuickReply} marginTop={48} />
             )}
             <div
               style={{
@@ -1264,7 +1287,7 @@ export function ChatWidget({
             )
             : (
               <div style={{ marginBottom: 12 }}>
-                <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={0} />
+                <QuickReplyChips palette={quickPalette} onPick={pickQuickReply} marginTop={0} />
               </div>
             )
         )}
@@ -1275,7 +1298,7 @@ export function ChatWidget({
         {showLanding && !loading && !embedded && (
           useEngagementBubbles
             ? <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={14} />
-            : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={14} />
+            : <QuickReplyChips palette={quickPalette} onPick={pickQuickReply} marginTop={14} />
         )}
 
         {/* Footer */}

@@ -36,6 +36,13 @@ export function WidgetDemoRexHillEmbed() {
       bookingPath="/experiences/"
       clubPath="/clubs/"
       wineryPhone="(503) 538-0666"
+      quickReplyRoutes={{
+        "Tasting options": "/winery-info?topic=tastings&winery=rex-hill&embed=1",
+        "Hours & directions": "/winery-info?topic=hours&winery=rex-hill&embed=1",
+        "Wine club info": "/winery-info?topic=club&winery=rex-hill&embed=1",
+        "Food pairings": "/winery-info?topic=pairings&winery=rex-hill&embed=1",
+        "Recipes": "/winery-info?topic=recipes&winery=rex-hill&embed=1",
+      }}
     />
   );
 }
