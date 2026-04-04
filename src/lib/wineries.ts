@@ -15,7 +15,7 @@ export type WineryCardOverride = {
 };
 
 /** Slugs with a built-in research page. */
-const SLUGS_WITH_RESEARCH = new Set(["rex-hill", "chehalem", "soter"]);
+const SLUGS_WITH_RESEARCH = new Set(["rex-hill", "chehalem", "soter", "crowley"]);
 
 export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
   "rex-hill": {
@@ -35,6 +35,12 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
     region: "Mineral Springs Ranch · Yamhill-Carlton AVA",
     blurb:
       "Biodynamic estate Pinot Noir, Chardonnay, sparkling, and more—visit by appointment. Crushpad.ai hub for crawl, chat, and research.",
+  },
+  crowley: {
+    cardTitle: "Crowley Wines",
+    region: "Willamette Valley · McMinnville / Dundee Hills / Eola-Amity Hills",
+    blurb:
+      "Minimal-intervention Pinot Noir and Chardonnay from multiple AVAs. Live chat, blind tasting, compare, and research brief.",
   },
 };
 

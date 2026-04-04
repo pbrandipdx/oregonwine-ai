@@ -120,5 +120,46 @@ export const CROWLEY_CONTENT: CrowleyContent = {
       "At Crowley, we believe in purity of expression over stylized wines. Our minimal-intervention approach produces wines with natural freshness, lower alcohols, and bright acidity -- qualities that make them inherently food-friendly. The best pairings let the terroir speak.",
   },
 
-  recipes: [],
+  recipes: [
+    {
+      title: "Wild Mushroom & Thyme Crostini",
+      winePairing: "Willamette Valley Pinot Noir",
+      wineNote: "The earthy, forest-floor character of Crowley Pinot Noir mirrors the wild mushroom flavors perfectly.",
+      description:
+        "Sauteed chanterelles and cremini mushrooms with fresh thyme on toasted baguette rounds. A simple, elegant appetizer that celebrates Pacific Northwest foraging.",
+      serves: "4 servings",
+      time: "25 min",
+      keyIngredients: ["Chanterelle mushrooms", "Cremini mushrooms", "Fresh thyme", "Baguette", "Shallots", "Garlic"],
+    },
+    {
+      title: "Duck Breast with Tart Cherry Reduction",
+      winePairing: "Single Vineyard Pinot Noir",
+      wineNote: "The bright acidity and red fruit notes of Crowley's single vineyard Pinot complement the richness of duck.",
+      description:
+        "Pan-seared duck breast with a tart cherry and red wine reduction, served over creamy polenta.",
+      serves: "4 servings",
+      time: "45 min",
+      keyIngredients: ["Duck breast", "Tart cherries", "Pinot Noir", "Polenta", "Shallots", "Fresh rosemary"],
+    },
+    {
+      title: "Dungeness Crab Salad with Meyer Lemon",
+      winePairing: "Chardonnay",
+      wineNote: "Crowley Chardonnay's Chablis-like minerality and citrus notes are a natural Pacific Northwest pairing.",
+      description:
+        "Fresh Dungeness crab tossed with Meyer lemon vinaigrette, shaved fennel, and chives over butter lettuce.",
+      serves: "4 servings",
+      time: "20 min",
+      keyIngredients: ["Dungeness crab", "Meyer lemon", "Fennel", "Chives", "Butter lettuce", "Olive oil"],
+    },
+    {
+      title: "Steamed Mussels with White Wine & Tarragon",
+      winePairing: "Chardonnay",
+      wineNote: "The wine's lean acidity and subtle stone fruit cut through the richness of the broth beautifully.",
+      description:
+        "Penn Cove mussels steamed in Crowley Chardonnay with shallots, garlic, fresh tarragon, and a splash of cream. Serve with crusty bread to soak up the broth.",
+      serves: "4 servings",
+      time: "30 min",
+      keyIngredients: ["Penn Cove mussels", "Chardonnay", "Shallots", "Garlic", "Fresh tarragon", "Heavy cream"],
+    },
+  ],
 };

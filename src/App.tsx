@@ -13,6 +13,7 @@ import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
+import { CrowleyPartnerPage, CrowleyResearchPage } from "./pages/crowley";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
 import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
@@ -188,7 +189,9 @@ function AppRoutesInner() {
           <Route path="/rex-hill/analytics" element={<AnalyticsPage />} />
           <Route path="/rex-hill/admin" element={<AdminPage />} />
 
+          <Route path="/crowley" element={<CrowleyPartnerPage />} />
           <Route path="/crowley/demo" element={<WidgetDemoCrowleyPage />} />
+          <Route path="/crowley/research" element={<CrowleyResearchPage />} />
           <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
           <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
           <Route path="/crowley/analytics" element={<AnalyticsPage />} />
