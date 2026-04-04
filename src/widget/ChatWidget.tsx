@@ -167,12 +167,16 @@ function QuickReplyChips({
           .qr-scroll-track {
             scroll-snap-type: x mandatory;
           }
-          .qr-scroll-track > button {
+          .qr-scroll-track > button.qr-chip {
             scroll-snap-align: start;
-            flex: 0 0 calc(50% - 4px) !important;
+            flex-grow: 0 !important;
+            flex-shrink: 0 !important;
+            flex-basis: calc(50% - 4px) !important;
+            width: calc(50% - 4px) !important;
+            min-width: 0 !important;
             max-width: calc(50% - 4px) !important;
             justify-content: center !important;
-            overflow: hidden;
+            overflow: hidden !important;
             text-overflow: ellipsis;
           }
         }
@@ -208,6 +212,7 @@ function QuickReplyChips({
           <button
             key={q}
             type="button"
+            className="qr-chip"
             onClick={() => onPick(q)}
             style={{
               display: "flex",
