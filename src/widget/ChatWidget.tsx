@@ -93,7 +93,7 @@ function QuickReplyChips({
   marginTop: number;
 }) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+    <div style={{ display: "flex", flexWrap: "nowrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto" }}>
       {QUICK_REPLY_LABELS.map((q) => (
         <button
           key={q}
@@ -103,7 +103,7 @@ function QuickReplyChips({
             display: "flex",
             alignItems: "center",
             gap: 7,
-            padding: "9px 16px",
+            padding: "9px 14px",
             borderRadius: 12,
             border: `1px solid ${p.border}`,
             background: p.surface,
