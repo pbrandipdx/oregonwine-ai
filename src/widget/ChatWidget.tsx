@@ -650,12 +650,13 @@ export function ChatWidget({
   const wineAgentTitle = (
     <span
       style={{
-        fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-        fontSize: 16,
-        fontWeight: 500,
-        fontStyle: "italic",
-        color: headerTone.agent,
-        letterSpacing: "0.02em",
+        fontFamily: "'Space Mono', ui-monospace, monospace",
+        fontSize: 11,
+        fontWeight: 600,
+        fontStyle: "normal",
+        color: "#c47a84",
+        letterSpacing: "0.08em",
+        textTransform: "uppercase" as const,
       }}
     >
       Wine Agent
@@ -849,12 +850,13 @@ export function ChatWidget({
                 </span>
                 <span
                   style={{
-                    fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-                    fontSize: 16,
-                    fontWeight: 500,
-                    fontStyle: "italic",
-                    color: headerTone.agent,
-                    letterSpacing: "0.02em",
+                    fontFamily: "'Space Mono', ui-monospace, monospace",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    fontStyle: "normal",
+                    color: "#c47a84",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase" as const,
                   }}
                 >
                   Wine Agent
@@ -934,12 +936,13 @@ export function ChatWidget({
                 {wineryLabel}
               </span>
               <span style={{
-                fontFamily: "'Crimson Pro', Georgia, 'Times New Roman', serif",
-                fontSize: 13,
-                fontWeight: 500,
-                fontStyle: "italic",
-                color: headerTone.agent,
-                letterSpacing: "0.02em",
+                fontFamily: "'Space Mono', ui-monospace, monospace",
+                fontSize: 10,
+                fontWeight: 600,
+                fontStyle: "normal",
+                color: "#c47a84",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase" as const,
               }}>
                 Wine Agent
               </span>
@@ -967,7 +970,7 @@ export function ChatWidget({
             {showLanding && (
               <div style={{ textAlign: "center", maxWidth: "100%" }}>
                 <div style={{ color: c.textMuted, fontSize: 13, fontWeight: 500, marginBottom: 16, letterSpacing: "0.03em" }}>
-                  {wineryLabel} Wine Agent
+                  {wineryLabel} <span style={{ fontFamily: "'Space Mono', ui-monospace, monospace", fontSize: 10, fontWeight: 600, color: "#c47a84", letterSpacing: "0.08em", textTransform: "uppercase" as const }}>Wine Agent</span>
                 </div>
                 <h2
                   style={{
