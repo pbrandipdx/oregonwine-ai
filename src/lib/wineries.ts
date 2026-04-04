@@ -22,7 +22,7 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
     cardTitle: "REX HILL Winery & Vineyards",
     region: "Laurelwood District · Willamette Valley",
     blurb:
-      "Proof-of-concept partner—verified crawl, live widget, and technical research brief. Pinot Noir, Chardonnay, and méthode traditionnelle sparkling.",
+      "Proof-of-concept partner—verified crawl, live chat, and technical research brief. Pinot Noir, Chardonnay, and méthode traditionnelle sparkling.",
   },
   chehalem: {
     cardTitle: "Chehalem Winery",
@@ -34,11 +34,26 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
     cardTitle: "Soter Vineyards",
     region: "Mineral Springs Ranch · Yamhill-Carlton AVA",
     blurb:
-      "Biodynamic estate Pinot Noir, Chardonnay, sparkling, and more—visit by appointment. Crushpad.ai hub for crawl, widget, and research.",
+      "Biodynamic estate Pinot Noir, Chardonnay, sparkling, and more—visit by appointment. Crushpad.ai hub for crawl, chat, and research.",
   },
 };
 
+/** Sentinel slug returned by inferWinerySlugFromPath for /chatbot-demo hub. */
+export const CRUSHPAD_DEMO_SLUG = "__crushpad_demo__";
+
 export function navConfigForSlug(slug: string, displayName: string): WineryNavConfig {
+  // Special case: the generic Crushpad.ai demo hub lives at /chatbot-demo/*
+  if (slug === CRUSHPAD_DEMO_SLUG) {
+    return {
+      slug: CRUSHPAD_DEMO_SLUG,
+      label: "Crushpad.ai Demo",
+      partnerPath: "/chatbot-demo",
+      demoPath: "/chatbot-demo",
+      researchPath: null,
+      analyticsPath: "/chatbot-demo/analytics",
+    };
+  }
+
   return {
     slug,
     label: displayName,
@@ -64,13 +79,18 @@ export function getWineryNavConfig(
 export function inferWinerySlugFromPath(pathname: string): string | null {
   const p = pathname.replace(/\/$/, "") || "/";
 
+  // Chat demo hub: /chatbot-demo, /chatbot-demo/analytics, /chatbot-demo/admin
+  if (p === "/chatbot-demo" || /^\/chatbot-demo\/(analytics|admin)$/.test(p)) {
+    return CRUSHPAD_DEMO_SLUG;
+  }
+
   // New canonical: /{slug}/demo, /{slug}/research, /{slug}/analytics, /{slug}/admin
   let m = /^\/([^/]+)\/(demo|research|analytics|admin)$/.exec(p);
   if (m) return m[1];
 
   // /{slug} — partner page (but skip known non-winery routes)
   const SKIP = new Set([
-    "", "how-it-works", "book-demo", "widget-demo", "agent-demo",
+    "", "how-it-works", "book-demo", "widget-demo", "chat-demo", "chatbot-demo", "agent-demo",
     "admin", "analytics", "partners", "directory", "w", "research",
   ]);
   m = /^\/([^/]+)$/.exec(p);

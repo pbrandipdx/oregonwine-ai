@@ -93,7 +93,7 @@ function QuickReplyChips({
   marginTop: number;
 }) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop }}>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
       {QUICK_REPLY_LABELS.map((q) => (
         <button
           key={q}
@@ -926,7 +926,7 @@ export function ChatWidget({
 
             {/* CTA buttons after assistant messages */}
             {m.role === "assistant" && m.logId && (
-              <div style={{ marginTop: 6, marginLeft: 2, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
+              <div style={{ marginTop: 6, marginLeft: 0, display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
                 {wineryUrl &&
                   /tasting|experience|reserv|book/i.test(plainForTriggers(m.text)) && (
                   <a

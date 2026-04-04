@@ -313,7 +313,7 @@ export function HowItWorksPage() {
             <Link className="hero-cta" to="/book-demo">
               Book a demo
             </Link>
-            <Link className="hero-cta ghost" to="/widget-demo">
+            <Link className="hero-cta ghost" to="/chatbot-demo">
               Try it live
             </Link>
           </div>
@@ -338,7 +338,7 @@ export function HowItWorksPage() {
             <Link className="hero-cta" to="/book-demo">
               Book a demo
             </Link>
-            <Link className="hero-cta ghost" to="/widget-demo">
+            <Link className="hero-cta ghost" to="/chatbot-demo">
               Try it live
             </Link>
           </div>

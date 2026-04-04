@@ -13,6 +13,7 @@ import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
 import {
+  CRUSHPAD_DEMO_SLUG,
   inferWinerySlugFromPath,
   navConfigForSlug,
 } from "./lib/wineries";
@@ -40,7 +41,7 @@ function AppNav() {
   }, [activeSlug, meta]);
 
   const onHowItWorks = location.pathname === "/how-it-works";
-  const onWidgetDemo = location.pathname === "/widget-demo";
+  const onChatDemo = location.pathname === "/chatbot-demo";
   const onAgentDemo = location.pathname === "/agent-demo";
 
   return (
@@ -51,11 +52,18 @@ function AppNav() {
         </Link>
       </div>
       <div className="nav-end">
-        {winery && (
+        {winery && winery.slug === CRUSHPAD_DEMO_SLUG && (
+          <div className="nav-winery-pages" aria-label="Crushpad.ai demo pages">
+            <Link to="/chatbot-demo/admin">Admin</Link>
+            <Link to="/chatbot-demo">Chat</Link>
+            <Link to="/chatbot-demo/analytics">Analytics</Link>
+          </div>
+        )}
+        {winery && winery.slug !== CRUSHPAD_DEMO_SLUG && (
           <div className="nav-winery-pages" aria-label={`${winery.label} pages`}>
             <Link to={`/${winery.slug}/admin`}>Admin</Link>
             <Link to={winery.partnerPath}>Partner</Link>
-            <Link to={winery.demoPath}>Demo</Link>
+            <Link to={winery.demoPath}>Chat</Link>
             {winery.researchPath && <Link to={winery.researchPath}>Research</Link>}
             <Link to={winery.analyticsPath}>Analytics</Link>
           </div>
@@ -68,10 +76,10 @@ function AppNav() {
               How it works
             </Link>
           )}
-          {onWidgetDemo ? (
+          {onChatDemo ? (
             <span className="nav-link-here">Chatbot demo</span>
           ) : (
-            <Link to="/widget-demo">Chatbot demo</Link>
+            <Link to="/chatbot-demo">Chatbot demo</Link>
           )}
           {onAgentDemo ? (
             <span className="nav-link-here">Agent demo</span>
@@ -90,9 +98,8 @@ function AppRoutesInner() {
   const isHowItWorksLanding = location.pathname === "/how-it-works";
   const isBookDemo = location.pathname === "/book-demo";
   const isDemoShell =
-    location.pathname === "/widget-demo" ||
+    location.pathname === "/chatbot-demo" ||
     location.pathname.endsWith("/demo") ||
-    location.pathname.startsWith("/widget-demo-") ||
     location.pathname === "/agent-demo";
   return (
     <div className="app">
@@ -111,7 +118,9 @@ function AppRoutesInner() {
           <Route path="/" element={<HomePage />} />
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/book-demo" element={<BookDemoPage />} />
-          <Route path="/widget-demo" element={<WidgetDemoPage />} />
+          <Route path="/chatbot-demo" element={<WidgetDemoPage />} />
+          <Route path="/chatbot-demo/analytics" element={<AnalyticsPage />} />
+          <Route path="/chatbot-demo/admin" element={<AdminPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
           {/* /admin without slug still works but won't show winery nav */}
           <Route path="/admin" element={<AdminPage />} />
@@ -137,6 +146,8 @@ function AppRoutesInner() {
           <Route path="/w/:slug" element={<WineryPage />} />
 
           {/* ── Legacy redirects (old URLs → new canonical) ── */}
+          <Route path="/widget-demo" element={<Navigate to="/chatbot-demo" replace />} />
+          <Route path="/chat-demo" element={<Navigate to="/chatbot-demo" replace />} />
           <Route path="/widget-demo-rexhill" element={<Navigate to="/rex-hill/demo" replace />} />
           <Route path="/analytics/:slug" element={<RedirectToSlugSub sub="analytics" />} />
           <Route path="/research/:slug" element={<RedirectToSlugSub sub="research" />} />

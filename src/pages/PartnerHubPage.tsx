@@ -49,7 +49,7 @@ export function PartnerHubPage() {
             </Link>
             <Link
               className="landing-cta landing-cta-ghost landing-cta-ghost--minimal"
-              to="/widget-demo"
+              to="/chatbot-demo"
             >
               Try it live
             </Link>

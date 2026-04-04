@@ -35,6 +35,9 @@ npx supabase db push
 echo "→ Deploying chat function …"
 npx supabase functions deploy chat --no-verify-jwt
 
+echo "→ Deploying notify-demo function …"
+npx supabase functions deploy notify-demo --no-verify-jwt
+
 if [[ -f .env ]]; then
   set -a
   # shellcheck disable=SC1091

@@ -84,6 +84,25 @@ export function BookDemoPage() {
       return;
     }
 
+    // Fire-and-forget email notification to founder
+    const fnBase = (import.meta.env.VITE_SUPABASE_FUNCTIONS_URL ?? "").trim() ||
+      (import.meta.env.VITE_SUPABASE_URL ?? "").trim().replace(/\/$/, "") + "/functions/v1";
+    if (fnBase) {
+      fetch(`${fnBase}/notify-demo`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          full_name: name,
+          email: em,
+          winery_or_org: org,
+          phone: phone.trim() || undefined,
+          role_title: roleTitle.trim() || undefined,
+          message: message.trim() || undefined,
+          source_path: `${location.pathname}${location.search || ""}` || undefined,
+        }),
+      }).catch(() => {}); // best-effort — DB insert already succeeded
+    }
+
     setDone(true);
     setFullName("");
     setEmail("");

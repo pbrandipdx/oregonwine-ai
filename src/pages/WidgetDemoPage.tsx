@@ -5,7 +5,7 @@ import { WidgetDemoEmbed } from "../widget/WidgetDemoEmbed";
 export function WidgetDemoPage() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "Crushpad.ai — Wine Agent (demo)";
+    document.title = "Crushpad.ai — Chatbot Demo";
     return () => { document.title = prev; };
   }, []);
 

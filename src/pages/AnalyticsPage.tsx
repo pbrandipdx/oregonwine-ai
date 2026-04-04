@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
-import { inferWinerySlugFromPath } from "../lib/wineries";
+import { CRUSHPAD_DEMO_SLUG, inferWinerySlugFromPath } from "../lib/wineries";
 
 type WineryMeta = { id: string; name: string; slug: string };
 
@@ -80,7 +80,9 @@ export function AnalyticsPage() {
   const { slug: slugParam } = useParams<{ slug?: string }>();
   const location = useLocation();
   // Support both /analytics/:slug (legacy) and /:slug/analytics (canonical)
-  const slug = slugParam?.trim() || inferWinerySlugFromPath(location.pathname) || undefined;
+  const rawSlug = slugParam?.trim() || inferWinerySlugFromPath(location.pathname) || undefined;
+  // Map the internal sentinel to the actual DB slug for the generic demo
+  const slug = rawSlug === CRUSHPAD_DEMO_SLUG ? "crushpad-demo" : rawSlug;
   const [wineryMeta, setWineryMeta] = useState<WineryMeta | null>(null);
   const [wineryErr, setWineryErr] = useState<string | null>(null);
   const [wineryLoading, setWineryLoading] = useState(false);
