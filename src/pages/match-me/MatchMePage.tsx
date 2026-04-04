@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { WINERIES, QUESTIONS, type WineryMatch } from "../../data/match-me-wineries";
+import { WINERIES, getRandomQuestions, type WineryMatch, type QuizQuestion } from "../../data/match-me-wineries";
 import "./MatchMePage.css";
 
 type Phase = "home" | "quiz" | "result";
@@ -13,12 +13,14 @@ export function MatchMePage() {
   }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [questionIdx, setQuestionIdx] = useState(0);
   const [scores, setScores] = useState<Record<string, number>>({});
   const [result, setResult] = useState<WineryMatch | null>(null);
   const [copied, setCopied] = useState(false);
 
   const start = useCallback(() => {
+    setQuestions(getRandomQuestions(4));
     setPhase("quiz");
     setQuestionIdx(0);
     setScores({});
@@ -34,7 +36,7 @@ export function MatchMePage() {
       }
       setScores(next);
 
-      if (questionIdx < QUESTIONS.length - 1) {
+      if (questionIdx < questions.length - 1) {
         setQuestionIdx((i) => i + 1);
       } else {
         // Find winner
@@ -51,7 +53,7 @@ export function MatchMePage() {
         setPhase("result");
       }
     },
-    [scores, questionIdx]
+    [scores, questionIdx, questions]
   );
 
   const share = useCallback(() => {
@@ -69,7 +71,7 @@ export function MatchMePage() {
     });
   }, [result]);
 
-  const question = QUESTIONS[questionIdx];
+  const question = questions[questionIdx];
 
   return (
     <div className="mm">
@@ -94,14 +96,14 @@ export function MatchMePage() {
       {phase === "quiz" && question && (
         <div className="mm-question" key={question.id}>
           <div className="mm-progress">
-            {QUESTIONS.map((_, i) => (
+            {questions.map((_, i) => (
               <div
                 key={i}
                 className={`mm-pip ${i < questionIdx ? "mm-pip--filled" : ""} ${i === questionIdx ? "mm-pip--current" : ""}`}
               />
             ))}
           </div>
-          <p className="mm-q-count">Question {questionIdx + 1} of {QUESTIONS.length}</p>
+          <p className="mm-q-count">Question {questionIdx + 1} of {questions.length}</p>
           <h2 className="mm-q-text">{question.question}</h2>
           <div className="mm-options">
             {question.options.map((opt, i) => (

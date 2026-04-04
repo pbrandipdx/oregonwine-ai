@@ -877,7 +877,7 @@ export function ChatWidget({
             <div style={{ width: "100%", padding: "0 16px", marginTop: 22, boxSizing: "border-box" }}>{inputCardEl}</div>
             {!loading && (
               useEngagementBubbles
-                ? !activeMode && <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={48} />
+                ? <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={48} />
                 : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={48} />
             )}
             <div
@@ -1179,7 +1179,7 @@ export function ChatWidget({
         {/* Quick replies / engagement bubbles: stay visible under the thread after answers */}
         {!showLanding && !loading && (
           useEngagementBubbles
-            ? !activeMode && (
+            ? (
               <div style={{ marginBottom: 12 }}>
                 <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={0} />
               </div>
@@ -1196,7 +1196,7 @@ export function ChatWidget({
         {/* Quick replies / engagement bubbles (floating widget landing only — embedded landing uses column above) */}
         {showLanding && !loading && !embedded && (
           useEngagementBubbles
-            ? !activeMode && <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={14} />
+            ? <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={14} />
             : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={14} />
         )}
 
