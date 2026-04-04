@@ -133,7 +133,7 @@ export function HowItWorksPage() {
 
         <div className="section">
           <h2>Built for How Wineries Actually Work</h2>
-          <p className="subtitle">Every Oregon winery has different needs. Here&apos;s how Crushpad.ai fits yours.</p>
+          <p className="subtitle">Every winery has different needs. Here&apos;s how Crushpad.ai fits yours.</p>
           <div className="use-cases">
             <div className="use-case">
               <h4>Tasting Rooms</h4>
@@ -189,7 +189,7 @@ export function HowItWorksPage() {
                 <td className="cross">✗ No data</td>
               </tr>
               <tr>
-                <td>Oregon wine &amp; AVA expertise</td>
+                <td>Wine region &amp; AVA expertise</td>
                 <td className="check">✓ Built-in</td>
                 <td className="cross">✗ None</td>
               </tr>
@@ -328,7 +328,7 @@ export function HowItWorksPage() {
 
       <footer className="page-footer">
         © 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for
-        Oregon wineries
+        wineries
       </footer>
     </div>
   );

@@ -11,7 +11,7 @@ function regionLine(w: {
   const ov = WINERY_CARD_OVERRIDES[w.slug]?.region;
   if (ov) return ov;
   const parts = [w.ava, [w.city, w.state].filter(Boolean).join(", ")].filter(Boolean);
-  return parts.length > 0 ? parts.join(" · ") : "Willamette Valley, Oregon";
+  return parts.length > 0 ? parts.join(" · ") : "Willamette Valley";
 }
 
 function blurbFor(w: { slug: string; name: string; description: string | null }): string {

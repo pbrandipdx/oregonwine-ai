@@ -7,7 +7,7 @@ export function HomePage() {
     <div className="hiw">
       <section className="hero">
         <div className="hero-inner">
-          <p className="hero-badge">Built for Oregon wineries &amp; tasting rooms</p>
+          <p className="hero-badge">Built for wineries &amp; tasting rooms</p>
           <h1>Your 24/7 wine concierge that drives visits &amp; revenue</h1>
           <p>
             Crushpad.ai gives every winery an AI-powered chatbot trained on <em>your</em> wines, hours, and
@@ -36,7 +36,7 @@ export function HomePage() {
 
       <footer className="page-footer">
         © 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for
-        Oregon wineries
+        wineries
       </footer>
     </div>
   );

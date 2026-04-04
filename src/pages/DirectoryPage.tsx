@@ -70,7 +70,7 @@ export function DirectoryPage() {
             <Link className="card" to={`/w/${w.slug}`}>
               <h2>{w.name}</h2>
               <p className="muted">
-                {[w.city, w.ava].filter(Boolean).join(" · ") || "Oregon"}
+                {[w.city, w.ava].filter(Boolean).join(" · ") || "Willamette Valley"}
               </p>
               {w.description && <p className="card-desc">{w.description}</p>}
               {(w.tasting_fee_min != null || w.tasting_fee_max != null) && (
