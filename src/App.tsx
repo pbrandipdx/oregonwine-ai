@@ -17,6 +17,7 @@ import { CrowleyPartnerPage, CrowleyResearchPage } from "./pages/crowley";
 import { PonziPartnerPage, PonziResearchPage } from "./pages/ponzi";
 import { WidgetDemoPonziPage } from "./pages/WidgetDemoPonziPage";
 import { PonziBlindTasting, PonziMatchMe } from "./pages/ponzi-games";
+import { WineryPortfolioPage } from "./pages/WineryPortfolioPage";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
 import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
@@ -178,6 +179,7 @@ function AppRoutesInner() {
           <Route path="/chatbot-demo/analytics" element={<AnalyticsPage />} />
           <Route path="/chatbot-demo/admin" element={<AdminPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
+          <Route path="/winery" element={<WineryPortfolioPage />} />
           <Route path="/blind-tasting" element={<BlindTastingPage />} />
           <Route path="/match-me" element={<MatchMePage />} />
           <Route path="/plan-visit" element={<PlanVisitPage />} />

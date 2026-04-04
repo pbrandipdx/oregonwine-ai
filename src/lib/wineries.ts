@@ -103,7 +103,7 @@ export function inferWinerySlugFromPath(pathname: string): string | null {
   // /{slug} — partner page (but skip known non-winery routes)
   const SKIP = new Set([
     "", "how-it-works", "book-demo", "widget-demo", "chat-demo", "chatbot-demo", "agent-demo",
-    "admin", "analytics", "partners", "directory", "w", "research",
+    "admin", "analytics", "partners", "directory", "w", "research", "winery",
   ]);
   m = /^\/([^/]+)$/.exec(p);
   if (m && !SKIP.has(m[1])) return m[1];
