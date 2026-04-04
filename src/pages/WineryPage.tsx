@@ -218,6 +218,13 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
           </Link>
         </p>
       )}
+      {winery.slug === "crowley" && (
+        <p style={{ marginTop: "1rem" }}>
+          <Link className="btn" to="/crowley/demo">
+            Try the Crowley Wines chat
+          </Link>
+        </p>
+      )}
     </article>
   );
 }
