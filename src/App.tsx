@@ -5,6 +5,7 @@ import { HomePage } from "./pages/HomePage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
 import { WidgetDemoPage } from "./pages/WidgetDemoPage";
 import { WidgetDemoRexHillPage } from "./pages/WidgetDemoRexHillPage";
+import { WidgetDemoCrowleyPage } from "./pages/WidgetDemoCrowleyPage";
 import { AgentDemoPage } from "./pages/AgentDemoPage";
 import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
@@ -15,6 +16,7 @@ import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
 import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
+import { CrowleyBlindTasting, CrowleyMatchMe } from "./pages/crowley-games";
 import { PlanVisitPage } from "./pages/plan-visit";
 import { ComparePage } from "./pages/compare";
 import { FeaturedWineryPage } from "./pages/featured-winery";
@@ -111,6 +113,8 @@ function AppRoutesInner() {
     location.pathname === "/match-me" ||
     location.pathname === "/rex-hill/blind-tasting" ||
     location.pathname === "/rex-hill/match-me" ||
+    location.pathname === "/crowley/blind-tasting" ||
+    location.pathname === "/crowley/match-me" ||
     location.pathname === "/plan-visit" ||
     location.pathname === "/compare" ||
     location.pathname === "/featured-winery" ||
@@ -130,6 +134,8 @@ function AppRoutesInner() {
             <Route path="/match-me" element={<MatchMePage />} />
             <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
             <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
+            <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
+            <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
             <Route path="/plan-visit" element={<PlanVisitPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
@@ -181,6 +187,12 @@ function AppRoutesInner() {
           <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
           <Route path="/rex-hill/analytics" element={<AnalyticsPage />} />
           <Route path="/rex-hill/admin" element={<AdminPage />} />
+
+          <Route path="/crowley/demo" element={<WidgetDemoCrowleyPage />} />
+          <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
+          <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
+          <Route path="/crowley/analytics" element={<AnalyticsPage />} />
+          <Route path="/crowley/admin" element={<AdminPage />} />
 
           <Route path="/chehalem" element={<ChehalemPartnerPage />} />
           <Route path="/chehalem/research" element={<ChehalemResearchPage />} />

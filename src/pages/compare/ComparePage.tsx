@@ -11,28 +11,51 @@ import {
   RH_CATEGORIES,
   RH_COMPARISONS,
 } from "../../data/rex-hill-compare-data";
+import {
+  CW_CATEGORIES,
+  CW_COMPARISONS,
+} from "../../data/crowley-compare-data";
 import "./ComparePage.css";
 
 type Phase = "category" | "matchup" | "result";
+
+const WINERY_CONFIG: Record<string, { categories: CategoryOption[]; comparisons: Comparison[]; badge: string; subtitle: string; title: string; backPath: string; backLabel: string }> = {
+  "rex-hill": {
+    categories: RH_CATEGORIES,
+    comparisons: RH_COMPARISONS,
+    badge: "REX HILL \u00b7 Wine Agent",
+    subtitle: "Explore Rex Hill\u2019s vineyards, wines, and experiences side by side.",
+    title: "Compare \u2014 Rex Hill",
+    backPath: "/rex-hill/demo",
+    backLabel: "Back to Rex Hill",
+  },
+  crowley: {
+    categories: CW_CATEGORIES,
+    comparisons: CW_COMPARISONS,
+    badge: "CROWLEY WINES \u00b7 Wine Agent",
+    subtitle: "Explore Crowley\u2019s vineyards, wines, and winemaking side by side.",
+    title: "Compare \u2014 Crowley Wines",
+    backPath: "/crowley/demo",
+    backLabel: "Back to Crowley Wines",
+  },
+};
 
 export function ComparePage() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
   const wineryParam = searchParams.get("winery");
-  const isRexHill = wineryParam === "rex-hill";
+  const config = wineryParam ? WINERY_CONFIG[wineryParam] : null;
 
-  const categories: CategoryOption[] = isRexHill ? RH_CATEGORIES : CATEGORIES;
-  const comparisons: Comparison[] = isRexHill ? RH_COMPARISONS : COMPARISONS;
-  const badge = isRexHill ? "REX HILL \u00b7 Wine Agent" : "Crushpad.ai \u00b7 Wine Agent";
-  const subtitle = isRexHill
-    ? "Explore Rex Hill\u2019s vineyards, wines, and experiences side by side."
-    : "Pick a category. We\u2019ll handle the argument.";
+  const categories: CategoryOption[] = config?.categories ?? CATEGORIES;
+  const comparisons: Comparison[] = config?.comparisons ?? COMPARISONS;
+  const badge = config?.badge ?? "Crushpad.ai \u00b7 Wine Agent";
+  const subtitle = config?.subtitle ?? "Pick a category. We\u2019ll handle the argument.";
 
   useEffect(() => {
     const prev = document.title;
-    document.title = isRexHill ? "Compare \u2014 Rex Hill" : "Compare \u2014 Crushpad.ai";
+    document.title = config?.title ?? "Compare \u2014 Crushpad.ai";
     return () => { document.title = prev; };
-  }, [isRexHill]);
+  }, [config]);
 
   const [phase, setPhase] = useState<Phase>("category");
   const [category, setCategory] = useState<CompareCategory | null>(null);
@@ -74,13 +97,13 @@ export function ComparePage() {
       "",
       result.verdict,
       "",
-      isRexHill ? "Explore more at rexhill.com" : "Compare more at crushpad.ai/compare",
+      config ? `Explore more at ${config.backLabel.replace("Back to ", "")}` : "Compare more at crushpad.ai/compare",
     ].join("\n");
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
-  }, [result, isRexHill]);
+  }, [result, config]);
 
   const matchups = category
     ? comparisons.filter((c) => c.category === category)
@@ -206,8 +229,8 @@ export function ComparePage() {
 
       {!isEmbed && (
         <footer className="cmp-footer">
-          <Link to={isRexHill ? "/rex-hill/demo" : "/chatbot-demo"} style={{ color: "inherit", textDecoration: "none" }}>
-            &larr; {isRexHill ? "Back to Rex Hill" : "Back to Crushpad.ai"}
+          <Link to={config?.backPath ?? "/chatbot-demo"} style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; {config?.backLabel ?? "Back to Crushpad.ai"}
           </Link>
         </footer>
       )}

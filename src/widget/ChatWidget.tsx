@@ -156,7 +156,7 @@ function QuickReplyChips({
     el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   };
 
-  const arrowBtn = (dir: "left" | "right", enabled: boolean): React.CSSProperties => ({
+  const arrowBtn = (_dir: "left" | "right", enabled: boolean): React.CSSProperties => ({
     width: 28,
     height: 28,
     borderRadius: "50%",

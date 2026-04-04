@@ -20,6 +20,35 @@ export function WidgetDemoEmbed() {
   );
 }
 
+/** Crowley Wines branded demo — answers Crowley-specific questions. */
+export function WidgetDemoCrowleyEmbed() {
+  const crowleyKey = import.meta.env.VITE_WIDGET_CROWLEY_KEY || "wk_test_crowley";
+  return (
+    <ChatWidget
+      apiKey={crowleyKey}
+      apiBase={apiBase}
+      themeColor="#c47a84"
+      wineryLabel="CROWLEY WINES"
+      embedded
+      embeddedChrome="panel"
+      headerLockup="full"
+      wineryUrl="https://crowleywines.com"
+      bookingPath="/visit/"
+      clubPath="/wine-clubs/"
+      wineryPhone="(503) 272-1369"
+      quickReplyRoutes={{
+        "Blind Tasting": "/crowley/blind-tasting?embed=1",
+        "Match Me": "/crowley/match-me?embed=1",
+        Compare: "/compare?winery=crowley&embed=1",
+        "Tasting options": "/winery-info?topic=tastings&winery=crowley&embed=1",
+        "Hours & directions": "/winery-info?topic=hours&winery=crowley&embed=1",
+        "Wine club info": "/winery-info?topic=club&winery=crowley&embed=1",
+        "Food pairings": "/winery-info?topic=pairings&winery=crowley&embed=1",
+      }}
+    />
+  );
+}
+
 /** Rex Hill branded demo — answers Rex Hill-specific questions. */
 export function WidgetDemoRexHillEmbed() {
   const rexHillKey = import.meta.env.VITE_WIDGET_TEST_KEY || "wk_test_rexhill";

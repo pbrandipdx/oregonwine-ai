@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { REX_HILL_CONTENT } from "../../data/rex-hill-content";
+import { CROWLEY_CONTENT } from "../../data/crowley-content";
 import type {
   TastingOption,
   HoursDirections,
@@ -219,8 +220,16 @@ export function WineryInfoPage() {
   const topic = (searchParams.get("topic") ?? "tastings") as Topic;
   const wineryParam = searchParams.get("winery") ?? "rex-hill";
 
-  const wineryDisplay =
-    wineryParam === "rex-hill" ? "REX HILL" : wineryParam.replace(/-/g, " ").toUpperCase();
+  const WINERY_DISPLAY: Record<string, string> = {
+    "rex-hill": "REX HILL",
+    crowley: "CROWLEY WINES",
+  };
+  const wineryDisplay = WINERY_DISPLAY[wineryParam] ?? wineryParam.replace(/-/g, " ").toUpperCase();
+
+  const WINERY_DATA: Record<string, typeof REX_HILL_CONTENT> = {
+    "rex-hill": REX_HILL_CONTENT,
+    crowley: CROWLEY_CONTENT,
+  };
 
   const title = TOPIC_TITLES[topic] ?? "Winery Info";
 
@@ -232,7 +241,7 @@ export function WineryInfoPage() {
     };
   }, [title, wineryDisplay]);
 
-  const content = REX_HILL_CONTENT;
+  const content = WINERY_DATA[wineryParam] ?? REX_HILL_CONTENT;
 
   return (
     <div className="wi">
@@ -254,10 +263,10 @@ export function WineryInfoPage() {
       {!isEmbed && (
         <footer className="wi-footer">
           <Link
-            to="/rex-hill/demo"
+            to={`/${wineryParam}/demo`}
             style={{ color: "inherit", textDecoration: "none" }}
           >
-            &larr; Back to Rex Hill
+            &larr; Back to {wineryDisplay}
           </Link>
         </footer>
       )}
