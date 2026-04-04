@@ -2,6 +2,7 @@
 export const QUICK_REPLY_LABELS = [
   "Blind Tasting",
   "Match Me",
+  "Compare",
   "Tasting options",
   "Hours & directions",
   "Wine club info",
@@ -22,6 +23,8 @@ export function messageForChatApi(shortLabel: string, wineryLabel: string): stri
       return `Play the Rex Hill blind tasting game`;
     case "Match Me":
       return `Find your perfect ${wineryLabel} tasting experience`;
+    case "Compare":
+      return `Compare two Willamette Valley wineries or wines side by side`;
     case "Tasting options":
       return `What tasting flights, fees, and reservation options does ${wineryLabel} offer?`;
     case "Hours & directions":

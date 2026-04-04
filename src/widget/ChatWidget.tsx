@@ -70,6 +70,11 @@ const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
     </svg>
   ),
+  Compare: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
+    </svg>
+  ),
   "Tasting options": (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 22h8" /><path d="M12 11v11" /><path d="M20 3H4l4 8h8l4-8z" />
@@ -106,46 +111,137 @@ function QuickReplyChips({
   onPick: (text: string) => void;
   marginTop: number;
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    checkScroll();
+    const el = scrollRef.current;
+    if (el) el.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      el?.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [checkScroll]);
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "left" ? -160 : 160, behavior: "smooth" });
+  };
+
+  const arrowStyle = (visible: boolean): React.CSSProperties => ({
+    position: "absolute" as const,
+    top: 0,
+    bottom: 0,
+    width: 32,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    background: "none",
+    border: "none",
+    cursor: visible ? "pointer" : "default",
+    opacity: visible ? 1 : 0,
+    pointerEvents: visible ? "auto" : "none",
+    transition: "opacity 0.2s",
+    zIndex: 2,
+    color: "#c47a84",
+    fontSize: 16,
+    fontWeight: 700,
+    fontFamily: "'Space Mono', monospace",
+    padding: 0,
+  });
+
   return (
-    <div style={{ display: "flex", flexWrap: "nowrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto" }}>
-      {QUICK_REPLY_LABELS.map((q) => (
-        <button
-          key={q}
-          type="button"
-          onClick={() => onPick(q)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 7,
-            padding: "9px 14px",
-            borderRadius: 12,
-            border: `1px solid ${p.border}`,
-            background: p.surface,
-            color: "#a09496",
-            fontSize: 13,
-            fontWeight: 500,
-            cursor: "pointer",
-            fontFamily: "inherit",
-            transition: "background 0.15s, border-color 0.15s, color 0.15s",
-            whiteSpace: "nowrap",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget;
-            el.style.background = p.border;
-            el.style.borderColor = p.borderHover;
-            el.style.color = p.text;
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget;
-            el.style.background = p.surface;
-            el.style.borderColor = p.border;
-            el.style.color = "#a09496";
-          }}
-        >
-          {QUICK_REPLY_ICONS[q]}
-          {q}
-        </button>
-      ))}
+    <div style={{ position: "relative", marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+      {/* Hide scrollbar across browsers */}
+      <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
+      {/* Left fade + arrow */}
+      <button
+        type="button"
+        onClick={() => scroll("left")}
+        style={{ ...arrowStyle(canScrollLeft), left: 0 }}
+        aria-label="Scroll left"
+      >
+        <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: "rgba(17,17,17,0.9)", border: "1px solid rgba(196,122,132,0.3)" }}>&lsaquo;</span>
+      </button>
+
+      {/* Scrollable chip track */}
+      <div
+        ref={scrollRef}
+        style={{
+          display: "flex",
+          gap: 8,
+          overflowX: "auto",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          paddingLeft: 4,
+          paddingRight: 4,
+          paddingTop: 2,
+          paddingBottom: 2,
+          WebkitOverflowScrolling: "touch",
+        }}
+        className="qr-scroll-track"
+      >
+        {QUICK_REPLY_LABELS.map((q) => (
+          <button
+            key={q}
+            type="button"
+            onClick={() => onPick(q)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 7,
+              padding: "9px 14px",
+              borderRadius: 12,
+              border: `1px solid ${p.border}`,
+              background: p.surface,
+              color: "#a09496",
+              fontSize: 13,
+              fontWeight: 500,
+              cursor: "pointer",
+              fontFamily: "inherit",
+              transition: "background 0.15s, border-color 0.15s, color 0.15s",
+              whiteSpace: "nowrap",
+              flexShrink: 0,
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget;
+              el.style.background = p.border;
+              el.style.borderColor = p.borderHover;
+              el.style.color = p.text;
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget;
+              el.style.background = p.surface;
+              el.style.borderColor = p.border;
+              el.style.color = "#a09496";
+            }}
+          >
+            {QUICK_REPLY_ICONS[q]}
+            {q}
+          </button>
+        ))}
+      </div>
+
+      {/* Right fade + arrow */}
+      <button
+        type="button"
+        onClick={() => scroll("right")}
+        style={{ ...arrowStyle(canScrollRight), right: 0 }}
+        aria-label="Scroll right"
+      >
+        <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: "rgba(17,17,17,0.9)", border: "1px solid rgba(196,122,132,0.3)" }}>&rsaquo;</span>
+      </button>
     </div>
   );
 }
@@ -1012,6 +1108,8 @@ export function ChatWidget({
                 title="Game"
                 style={{
                   flex: 1,
+                  height: 0,
+                  minHeight: 0,
                   width: "100%",
                   border: "none",
                   background: "#080808",
