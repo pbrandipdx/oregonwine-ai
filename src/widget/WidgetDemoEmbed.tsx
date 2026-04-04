@@ -15,6 +15,7 @@ export function WidgetDemoEmbed() {
       embedded
       embeddedChrome="panel"
       headerLockup="full"
+      useEngagementBubbles
     />
   );
 }

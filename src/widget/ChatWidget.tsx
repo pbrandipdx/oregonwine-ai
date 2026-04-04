@@ -4,6 +4,12 @@ import {
   messageForChatApi,
   type QuickReplyLabel,
 } from "../lib/quickReplyMessages";
+import {
+  ENGAGEMENT_LABELS,
+  ENGAGEMENT_MODES,
+  engagementMessage,
+  type EngagementLabel,
+} from "../lib/engagementBubbles";
 import { AssistantMarkdown } from "./AssistantMarkdown";
 
 type Props = {
@@ -39,6 +45,8 @@ type Props = {
   clubPath?: string;
   /** Winery phone number for escalation */
   wineryPhone?: string;
+  /** When true, show engagement experience bubbles instead of winery quick-reply chips */
+  useEngagementBubbles?: boolean;
 };
 
 type Message = {
@@ -136,6 +144,93 @@ function QuickReplyChips({
   );
 }
 
+const ENGAGEMENT_ICONS: Record<EngagementLabel, JSX.Element> = {
+  "Blind Tasting": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+    </svg>
+  ),
+  "Featured Winery": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  ),
+  "Match Me": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
+    </svg>
+  ),
+  "Plan My Visit": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  ),
+  Compare: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="20" x2="18" y2="10" />
+      <line x1="12" y1="20" x2="12" y2="4" />
+      <line x1="6" y1="20" x2="6" y2="14" />
+    </svg>
+  ),
+};
+
+function EngagementBubbles({
+  palette: p,
+  onPick,
+  marginTop,
+}: {
+  palette: QuickPalette;
+  onPick: (label: EngagementLabel) => void;
+  marginTop: number;
+}) {
+  return (
+    <div style={{ display: "flex", flexWrap: "nowrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto" }}>
+      {ENGAGEMENT_LABELS.map((label) => (
+        <button
+          key={label}
+          type="button"
+          onClick={() => onPick(label)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            padding: "9px 14px",
+            borderRadius: 12,
+            border: `1px solid ${p.border}`,
+            background: p.surface,
+            color: "#a09496",
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: "pointer",
+            fontFamily: "inherit",
+            transition: "background 0.15s, border-color 0.15s, color 0.15s",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            const el = e.currentTarget;
+            el.style.background = p.border;
+            el.style.borderColor = p.borderHover;
+            el.style.color = p.text;
+          }}
+          onMouseLeave={(e) => {
+            const el = e.currentTarget;
+            el.style.background = p.surface;
+            el.style.borderColor = p.border;
+            el.style.color = "#a09496";
+          }}
+        >
+          {ENGAGEMENT_ICONS[label]}
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 /** Remove trailing log id comment streamed from /chat before display. */
 function stripTrailingLogMeta(raw: string): string {
   return raw.replace(/\n<!-- log_id:[a-f0-9-]+ -->$/i, "").trimEnd();
@@ -195,6 +290,7 @@ export function ChatWidget({
   bookingPath = "/experiences/",
   clubPath = "/clubs/",
   wineryPhone,
+  useEngagementBubbles,
 }: Props) {
   const embeddedChromeMode: "viewport" | "panel" =
     embedded && embeddedChrome === "panel" ? "panel" : "viewport";
@@ -208,6 +304,7 @@ export function ChatWidget({
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeMode, setActiveMode] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<Message[]>([]);
@@ -322,7 +419,7 @@ export function ChatWidget({
         const res = await fetch(`${apiBase}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "x-api-key": apiKey },
-          body: JSON.stringify({ message: apiMessage, session_id: sessionId, history }),
+          body: JSON.stringify({ message: apiMessage, session_id: sessionId, history, ...(activeMode ? { mode: activeMode } : {}) }),
         });
         if (!res.ok) {
           const t = await res.text();
@@ -360,7 +457,7 @@ export function ChatWidget({
         setLoading(false);
       }
     },
-    [apiBase, apiKey, loading, messages, sessionId, wineryLabel]
+    [apiBase, apiKey, loading, messages, sessionId, wineryLabel, activeMode]
   );
 
   /** Agent demo / host pages can trigger the same send pipeline as the composer (e.g. left-rail discovery card). */
@@ -375,6 +472,76 @@ export function ChatWidget({
     window.addEventListener("crushpad-embed-send-message", handler);
     return () => window.removeEventListener("crushpad-embed-send-message", handler);
   }, [sendMessage]);
+
+  const pickEngagement = useCallback(
+    (label: EngagementLabel) => {
+      const mode = ENGAGEMENT_MODES[label];
+      setActiveMode(mode);
+      // Send the engagement-specific message (the label shows as user text, but the API gets the richer prompt)
+      const apiMsg = engagementMessage(label);
+      // We need to send with the mode — set it first, then trigger sendMessage
+      // Since sendMessage reads activeMode from state, and setState is async,
+      // we'll inline the send logic here with the mode included
+      if (loading) return;
+      setInput("");
+      setError(null);
+      if (showLanding) {
+        setLandingExiting(true);
+        setTimeout(() => {
+          setShowLanding(false);
+          setLandingExiting(false);
+        }, 400);
+      }
+      if (textareaRef.current) textareaRef.current.style.height = "auto";
+      setMessages((m) => [...m, { role: "user", text: label }]);
+      setLoading(true);
+      const history = messagesRef.current.map((m) => ({ role: m.role, text: m.text }));
+      (async () => {
+        try {
+          const res = await fetch(`${apiBase}/chat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-api-key": apiKey },
+            body: JSON.stringify({ message: apiMsg, session_id: sessionId, history, mode }),
+          });
+          if (!res.ok) {
+            const t = await res.text();
+            throw new Error(t || res.statusText);
+          }
+          const reader = res.body?.getReader();
+          if (!reader) throw new Error("No response body");
+          const dec = new TextDecoder();
+          let full = "";
+          setMessages((m) => [...m, { role: "assistant", text: "" }]);
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            full += dec.decode(value, { stream: true });
+            const display = stripTrailingLogMeta(full);
+            setMessages((m) => {
+              const copy = [...m];
+              copy[copy.length - 1] = { role: "assistant", text: display };
+              return copy;
+            });
+          }
+          const logMatch = full.match(/<!-- log_id:([a-f0-9-]+) -->/);
+          const logId = logMatch?.[1];
+          const finalText = stripTrailingLogMeta(full);
+          if (logId) {
+            setMessages((m) => {
+              const copy = [...m];
+              copy[copy.length - 1] = { ...copy[copy.length - 1], logId, text: finalText };
+              return copy;
+            });
+          }
+        } catch (e) {
+          setError(e instanceof Error ? e.message : "Request failed");
+        } finally {
+          setLoading(false);
+        }
+      })();
+    },
+    [apiBase, apiKey, loading, sessionId, showLanding]
+  );
 
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
 
@@ -709,7 +876,9 @@ export function ChatWidget({
             </div>
             <div style={{ width: "100%", padding: "0 16px", marginTop: 22, boxSizing: "border-box" }}>{inputCardEl}</div>
             {!loading && (
-              <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={48} />
+              useEngagementBubbles
+                ? !activeMode && <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={48} />
+                : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={48} />
             )}
             <div
               style={{
@@ -1007,18 +1176,28 @@ export function ChatWidget({
 
       {/* Input area */}
       <div style={{ padding: "12px 16px 16px", flex: "0 0 auto", borderTop: `1px solid ${c.border}` }}>
-        {/* Quick replies: stay visible under the thread after answers */}
+        {/* Quick replies / engagement bubbles: stay visible under the thread after answers */}
         {!showLanding && !loading && (
-          <div style={{ marginBottom: 12 }}>
-            <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={0} />
-          </div>
+          useEngagementBubbles
+            ? !activeMode && (
+              <div style={{ marginBottom: 12 }}>
+                <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={0} />
+              </div>
+            )
+            : (
+              <div style={{ marginBottom: 12 }}>
+                <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={0} />
+              </div>
+            )
         )}
 
         {inputCardEl}
 
-        {/* Quick replies (floating widget landing only — embedded landing uses column above) */}
+        {/* Quick replies / engagement bubbles (floating widget landing only — embedded landing uses column above) */}
         {showLanding && !loading && !embedded && (
-          <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={14} />
+          useEngagementBubbles
+            ? !activeMode && <EngagementBubbles palette={quickPalette} onPick={pickEngagement} marginTop={14} />
+            : <QuickReplyChips palette={quickPalette} onPick={sendMessage} marginTop={14} />
         )}
 
         {/* Footer */}
