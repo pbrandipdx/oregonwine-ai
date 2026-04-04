@@ -943,34 +943,7 @@ export function ChatWidget({
 
           {/* Inline game view */}
           {gameView && (
-            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", position: "relative" }}>
-              <button
-                type="button"
-                onClick={exitGame}
-                style={{
-                  position: "absolute",
-                  top: 12,
-                  left: 12,
-                  zIndex: 10,
-                  background: "rgba(20,20,20,0.85)",
-                  backdropFilter: "blur(8px)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#c47a84",
-                  fontFamily: "'Space Mono', ui-monospace, monospace",
-                  fontSize: 10,
-                  fontWeight: 600,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase" as const,
-                  padding: "6px 14px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  transition: "background 0.15s, color 0.15s",
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(196,122,132,0.15)"; e.currentTarget.style.color = "#eceae8"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(20,20,20,0.85)"; e.currentTarget.style.color = "#c47a84"; }}
-              >
-                ← Back
-              </button>
+            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
               <iframe
                 src={gameView}
                 title="Game"
@@ -979,9 +952,37 @@ export function ChatWidget({
                   width: "100%",
                   border: "none",
                   background: "#080808",
-                  borderRadius: "0 0 16px 16px",
                 }}
               />
+              <div style={{
+                padding: "10px 16px",
+                borderTop: `1px solid ${c.border}`,
+                display: "flex",
+                alignItems: "center",
+              }}>
+                <button
+                  type="button"
+                  onClick={exitGame}
+                  style={{
+                    background: "transparent",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    color: "#c47a84",
+                    fontFamily: "'Space Mono', ui-monospace, monospace",
+                    fontSize: 10,
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase" as const,
+                    padding: "6px 14px",
+                    borderRadius: 8,
+                    cursor: "pointer",
+                    transition: "background 0.15s, color 0.15s",
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(196,122,132,0.15)"; e.currentTarget.style.color = "#eceae8"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#c47a84"; }}
+                >
+                  ← Back
+                </button>
+              </div>
             </div>
           )}
 
