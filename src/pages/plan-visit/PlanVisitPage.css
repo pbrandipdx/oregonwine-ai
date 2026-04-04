@@ -1,0 +1,471 @@
+/* ── Plan My Visit ── */
+.pv {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.1);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Home ── */
+.pv-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.pv-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.pv-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0 0 8px;
+  color: var(--cream);
+}
+
+.pv-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  max-width: 400px;
+}
+
+.pv-start-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pv-start-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.pv-home-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── Question Screen ── */
+.pv-question {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pvFadeIn 0.35s ease-out;
+}
+
+@keyframes pvFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pv-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.pv-pip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.pv-pip--filled {
+  background: var(--accent);
+}
+
+.pv-pip--current {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.pv-q-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.pv-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.pv-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.pv-option {
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  padding: 18px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.pv-option:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-dim);
+}
+
+/* ── Result Screen ── */
+.pv-result {
+  width: 100%;
+  max-width: 620px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: pvFadeIn 0.5s ease-out;
+}
+
+.pv-result-header {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 36px;
+}
+
+.pv-result-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.pv-result-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+.pv-result-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Timeline ── */
+.pv-timeline {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.pv-stop,
+.pv-lunch {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.pv-stop-time-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 72px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.pv-stop-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+
+.pv-stop-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--accent);
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.pv-stop-line {
+  width: 2px;
+  flex-grow: 1;
+  background: var(--border);
+  min-height: 20px;
+}
+
+.pv-stop-content,
+.pv-lunch-content {
+  flex: 1;
+  padding-bottom: 28px;
+}
+
+.pv-stop-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 2px;
+  line-height: 1.2;
+}
+
+.pv-stop-ava {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 10px;
+}
+
+.pv-stop-why {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0 0 10px;
+}
+
+.pv-stop-tip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.pv-tip-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-right: 4px;
+}
+
+/* ── Lunch card ── */
+.pv-lunch-dot {
+  background: var(--gold);
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
+.pv-lunch-time {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.pv-lunch-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+}
+
+.pv-lunch-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.pv-lunch-desc {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0 0 10px;
+}
+
+/* ── Day Tips ── */
+.pv-day-tips {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 28px 20px;
+  margin-bottom: 28px;
+}
+
+.pv-day-tips-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 16px;
+}
+
+.pv-day-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pv-day-tips-list li {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  padding-left: 20px;
+}
+
+.pv-day-tips-list li::before {
+  content: "\2022";
+  color: var(--accent);
+  position: absolute;
+  left: 0;
+  font-size: 16px;
+}
+
+.pv-day-tips-list li:first-child {
+  border-top: none;
+}
+
+/* ── Actions ── */
+.pv-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.pv-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pv-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.pv-retake-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pv-retake-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Footer ── */
+.pv-footer {
+  margin-top: auto;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.pv-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .pv-question { padding: 16px; }
+  .pv-result { padding: 16px; }
+  .pv-stop-time-col { width: 56px; }
+  .pv-stop-time { font-size: 10px; }
+  .pv-stop-content,
+  .pv-lunch-content { padding-bottom: 20px; }
+  .pv-lunch-content { padding: 16px 18px; margin-bottom: 20px; }
+  .pv-day-tips { padding: 20px 18px 14px; }
+  .pv-result-actions { flex-direction: column; }
+}

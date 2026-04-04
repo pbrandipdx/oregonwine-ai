@@ -14,6 +14,8 @@ import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
+import { PlanVisitPage } from "./pages/plan-visit";
+import { ComparePage } from "./pages/compare";
 import {
   CRUSHPAD_DEMO_SLUG,
   inferWinerySlugFromPath,
@@ -101,7 +103,9 @@ function AppRoutesInner() {
   const isBookDemo = location.pathname === "/book-demo";
   const isGamePage =
     location.pathname === "/blind-tasting" ||
-    location.pathname === "/match-me";
+    location.pathname === "/match-me" ||
+    location.pathname === "/plan-visit" ||
+    location.pathname === "/compare";
   const isDemoShell =
     location.pathname === "/chatbot-demo" ||
     location.pathname.endsWith("/demo") ||
@@ -131,6 +135,8 @@ function AppRoutesInner() {
           <Route path="/agent-demo" element={<AgentDemoPage />} />
           <Route path="/blind-tasting" element={<BlindTastingPage />} />
           <Route path="/match-me" element={<MatchMePage />} />
+          <Route path="/plan-visit" element={<PlanVisitPage />} />
+          <Route path="/compare" element={<ComparePage />} />
           {/* /admin without slug still works but won't show winery nav */}
           <Route path="/admin" element={<AdminPage />} />
 
