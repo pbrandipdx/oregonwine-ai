@@ -169,8 +169,11 @@ function QuickReplyChips({
           }
           .qr-scroll-track > button {
             scroll-snap-align: start;
-            min-width: calc(50% - 4px) !important;
+            flex: 0 0 calc(50% - 4px) !important;
+            max-width: calc(50% - 4px) !important;
             justify-content: center !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
         }
       `}</style>
