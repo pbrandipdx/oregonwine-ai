@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   WINES,
   GRAPE_OPTIONS,
@@ -53,6 +53,9 @@ type Phase = "home" | "playing" | "result";
 /* ── Page Component ── */
 
 export function BlindTastingPage() {
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "1";
+
   useEffect(() => {
     const prev = document.title;
     document.title = "Blind Tasting — Crushpad.ai";
@@ -322,11 +325,13 @@ export function BlindTastingPage() {
         </div>
       )}
 
-      <footer className="bt-footer">
-        <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
-          &larr; Back to Crushpad.ai
-        </Link>
-      </footer>
+      {!isEmbed && (
+        <footer className="bt-footer">
+          <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; Back to Crushpad.ai
+          </Link>
+        </footer>
+      )}
     </div>
   );
 }

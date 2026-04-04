@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useParams } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useMemo } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
 import { HomePage } from "./pages/HomePage";
@@ -98,6 +98,8 @@ function AppNav() {
 
 function AppRoutesInner() {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "1";
   const isHomeLanding = location.pathname === "/" || location.pathname === "";
   const isHowItWorksLanding = location.pathname === "/how-it-works";
   const isBookDemo = location.pathname === "/book-demo";
@@ -110,6 +112,24 @@ function AppRoutesInner() {
     location.pathname === "/chatbot-demo" ||
     location.pathname.endsWith("/demo") ||
     location.pathname === "/agent-demo";
+
+  // When embedded in an iframe (?embed=1), hide nav and remove padding
+  if (isEmbed) {
+    return (
+      <div className="app" style={{ minHeight: "100vh" }}>
+        <main className="main main--landing" style={{ paddingTop: 0 }}>
+          <Routes>
+            <Route path="/blind-tasting" element={<BlindTastingPage />} />
+            <Route path="/match-me" element={<MatchMePage />} />
+            <Route path="/plan-visit" element={<PlanVisitPage />} />
+            <Route path="/compare" element={<ComparePage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <AppNav />

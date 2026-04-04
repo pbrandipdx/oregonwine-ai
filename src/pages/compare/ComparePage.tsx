@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   CATEGORIES,
   COMPARISONS,
@@ -11,6 +11,9 @@ import "./ComparePage.css";
 type Phase = "category" | "matchup" | "result";
 
 export function ComparePage() {
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "1";
+
   useEffect(() => {
     const prev = document.title;
     document.title = "Compare — Crushpad.ai";
@@ -189,11 +192,13 @@ export function ComparePage() {
         </div>
       )}
 
-      <footer className="cmp-footer">
-        <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
-          &larr; Back to Crushpad.ai
-        </Link>
-      </footer>
+      {!isEmbed && (
+        <footer className="cmp-footer">
+          <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; Back to Crushpad.ai
+          </Link>
+        </footer>
+      )}
     </div>
   );
 }

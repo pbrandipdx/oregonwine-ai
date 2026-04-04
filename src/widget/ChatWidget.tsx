@@ -2,7 +2,6 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   QUICK_REPLY_LABELS,
   messageForChatApi,
-  type QuickReplyLabel,
 } from "../lib/quickReplyMessages";
 import {
   ENGAGEMENT_LABELS,
@@ -56,39 +55,6 @@ type Message = {
   feedback?: 1 | -1;
 };
 
-const QUICK_REPLY_ICONS: Record<QuickReplyLabel, JSX.Element> = {
-  "Tasting options": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
-    </svg>
-  ),
-  "Hours & directions": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <polyline points="12 6 12 12 16 14" />
-    </svg>
-  ),
-  "Wine club info": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
-    </svg>
-  ),
-  "Food pairings": (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="12 2 2 7 12 12 22 7 12 2" />
-      <polyline points="2 17 12 22 22 17" />
-      <polyline points="2 12 12 17 22 12" />
-    </svg>
-  ),
-  Recipes: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
-      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
-      <path d="M8 7h8M8 11h8M8 15h5" />
-    </svg>
-  ),
-};
-
 type QuickPalette = { border: string; surface: string; text: string; borderHover: string };
 
 function QuickReplyChips({
@@ -136,7 +102,6 @@ function QuickReplyChips({
             el.style.color = "#a09496";
           }}
         >
-          {QUICK_REPLY_ICONS[q]}
           {q}
         </button>
       ))}
@@ -305,6 +270,7 @@ export function ChatWidget({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeMode, setActiveMode] = useState<string | null>(null);
+  const [gameView, setGameView] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesRef = useRef<Message[]>([]);
@@ -473,15 +439,35 @@ export function ChatWidget({
     return () => window.removeEventListener("crushpad-embed-send-message", handler);
   }, [sendMessage]);
 
+  /** Map engagement labels to game page routes for inline loading */
+  const GAME_ROUTES: Partial<Record<EngagementLabel, string>> = {
+    "Blind Tasting": "/blind-tasting?embed=1",
+    "Match Me": "/match-me?embed=1",
+    "Plan My Visit": "/plan-visit?embed=1",
+    Compare: "/compare?embed=1",
+  };
+
   const pickEngagement = useCallback(
     (label: EngagementLabel) => {
+      const gameRoute = GAME_ROUTES[label];
+      if (gameRoute) {
+        // Load the interactive game inline instead of chat
+        setGameView(gameRoute);
+        if (showLanding) {
+          setLandingExiting(true);
+          setTimeout(() => {
+            setShowLanding(false);
+            setLandingExiting(false);
+          }, 400);
+        }
+        return;
+      }
+
+      // Featured Winery still uses the chat flow
       const mode = ENGAGEMENT_MODES[label];
       setActiveMode(mode);
-      // Send the engagement-specific message (the label shows as user text, but the API gets the richer prompt)
+      setGameView(null);
       const apiMsg = engagementMessage(label);
-      // We need to send with the mode — set it first, then trigger sendMessage
-      // Since sendMessage reads activeMode from state, and setState is async,
-      // we'll inline the send logic here with the mode included
       if (loading) return;
       setInput("");
       setError(null);
@@ -542,6 +528,11 @@ export function ChatWidget({
     },
     [apiBase, apiKey, loading, sessionId, showLanding]
   );
+
+  const exitGame = useCallback(() => {
+    setGameView(null);
+    setShowLanding(true);
+  }, []);
 
   const send = useCallback(() => sendMessage(input), [sendMessage, input]);
 
@@ -950,7 +941,52 @@ export function ChatWidget({
             </>
           )}
 
+          {/* Inline game view */}
+          {gameView && (
+            <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", position: "relative" }}>
+              <button
+                type="button"
+                onClick={exitGame}
+                style={{
+                  position: "absolute",
+                  top: 12,
+                  left: 12,
+                  zIndex: 10,
+                  background: "rgba(20,20,20,0.85)",
+                  backdropFilter: "blur(8px)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#c47a84",
+                  fontFamily: "'Space Mono', ui-monospace, monospace",
+                  fontSize: 10,
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase" as const,
+                  padding: "6px 14px",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  transition: "background 0.15s, color 0.15s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(196,122,132,0.15)"; e.currentTarget.style.color = "#eceae8"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(20,20,20,0.85)"; e.currentTarget.style.color = "#c47a84"; }}
+              >
+                ← Back
+              </button>
+              <iframe
+                src={gameView}
+                title="Game"
+                style={{
+                  flex: 1,
+                  width: "100%",
+                  border: "none",
+                  background: "#080808",
+                  borderRadius: "0 0 16px 16px",
+                }}
+              />
+            </div>
+          )}
+
           {/* Messages / Landing area */}
+          {!gameView && (
           <div
             style={{
               flex: 1,
@@ -1176,8 +1212,10 @@ export function ChatWidget({
         )}
         <div ref={bottomRef} />
       </div>
+          )}
 
-      {/* Input area */}
+      {/* Input area — hidden when inline game is active */}
+      {!gameView && (
       <div style={{ padding: "12px 16px 16px", flex: "0 0 auto", borderTop: `1px solid ${c.border}` }}>
         {/* Quick replies / engagement bubbles: stay visible under the thread after answers */}
         {!showLanding && !loading && (
@@ -1208,6 +1246,7 @@ export function ChatWidget({
           Powered by <span style={{ color: c.textMuted }}>Crushpad.ai</span>
         </div>
       </div>
+      )}
         </>
       )}
 

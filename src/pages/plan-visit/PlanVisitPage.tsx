@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   QUESTIONS,
   WINERIES,
@@ -165,6 +165,9 @@ function buildItinerary(answers: Required<Answers>): Itinerary {
 /* ── Component ── */
 
 export function PlanVisitPage() {
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "1";
+
   useEffect(() => {
     const prev = document.title;
     document.title = "Plan My Visit \u2014 Crushpad.ai";
@@ -353,11 +356,13 @@ export function PlanVisitPage() {
         </div>
       )}
 
-      <footer className="pv-footer">
-        <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
-          &larr; Back to Crushpad.ai
-        </Link>
-      </footer>
+      {!isEmbed && (
+        <footer className="pv-footer">
+          <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; Back to Crushpad.ai
+          </Link>
+        </footer>
+      )}
     </div>
   );
 }

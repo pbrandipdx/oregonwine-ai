@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { WINERIES, getRandomQuestions, type WineryMatch, type QuizQuestion } from "../../data/match-me-wineries";
 import "./MatchMePage.css";
 
 type Phase = "home" | "quiz" | "result";
 
 export function MatchMePage() {
+  const [searchParams] = useSearchParams();
+  const isEmbed = searchParams.get("embed") === "1";
+
   useEffect(() => {
     const prev = document.title;
     document.title = "Match Me — Crushpad.ai";
@@ -154,11 +157,13 @@ export function MatchMePage() {
         </div>
       )}
 
-      <footer className="mm-footer">
-        <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
-          &larr; Back to Crushpad.ai
-        </Link>
-      </footer>
+      {!isEmbed && (
+        <footer className="mm-footer">
+          <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; Back to Crushpad.ai
+          </Link>
+        </footer>
+      )}
     </div>
   );
 }
