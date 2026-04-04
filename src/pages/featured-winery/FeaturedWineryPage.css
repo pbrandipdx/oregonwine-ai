@@ -1,0 +1,474 @@
+/* ── Featured Winery Page ── */
+.fw {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.1);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Header / Hero ── */
+.fw-hero {
+  width: 100%;
+  max-width: 800px;
+  padding: 60px 32px 0;
+  text-align: center;
+  animation: fwFadeIn 0.6s ease-out;
+}
+
+.fw-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.fw-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0 0 12px;
+  color: var(--cream);
+}
+
+.fw-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.fw-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.fw-meta-sep {
+  padding: 0 8px;
+  color: var(--border);
+}
+
+/* ── Hero Image Alt (placeholder) ── */
+.fw-hero-image-alt {
+  margin: 32px auto 0;
+  max-width: 700px;
+  padding: 40px 32px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* ── Story Section ── */
+.fw-story {
+  width: 100%;
+  max-width: 700px;
+  padding: 48px 32px 0;
+  animation: fwFadeIn 0.6s ease-out 0.1s both;
+}
+
+.fw-story-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.fw-story-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.8;
+  color: var(--cream-dim);
+  margin: 0 0 20px;
+}
+
+.fw-story-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Why Visit ── */
+.fw-why-visit {
+  width: 100%;
+  max-width: 700px;
+  padding: 36px 32px 0;
+  animation: fwFadeIn 0.6s ease-out 0.2s both;
+}
+
+.fw-why-visit-box {
+  background: var(--gold-dim);
+  border: 1px solid rgba(201, 169, 78, 0.2);
+  border-radius: 10px;
+  padding: 24px 28px;
+}
+
+.fw-why-visit-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+
+.fw-why-visit-text {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--cream);
+  margin: 0;
+}
+
+/* ── Badges (soil + farming) ── */
+.fw-badges {
+  width: 100%;
+  max-width: 700px;
+  padding: 32px 32px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  animation: fwFadeIn 0.6s ease-out 0.25s both;
+}
+
+.fw-badge-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.fw-badge-pill--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── Signature Wines ── */
+.fw-wines {
+  width: 100%;
+  max-width: 800px;
+  padding: 48px 32px 0;
+  animation: fwFadeIn 0.6s ease-out 0.3s both;
+}
+
+.fw-wines-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.fw-wines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.fw-wine-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.fw-wine-card:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.fw-wine-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.fw-wine-type {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+
+.fw-wine-desc {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── Visit Info ── */
+.fw-visit {
+  width: 100%;
+  max-width: 700px;
+  padding: 48px 32px 0;
+  animation: fwFadeIn 0.6s ease-out 0.4s both;
+}
+
+.fw-visit-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.fw-visit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+}
+
+.fw-visit-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 40px;
+}
+
+.fw-visit-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fw-visit-item-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.fw-visit-item-value {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--cream-dim);
+}
+
+.fw-visit-item-value a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.fw-visit-item-value a:hover {
+  color: #d48a94;
+  text-decoration: underline;
+}
+
+/* Full-width items */
+.fw-visit-item--full {
+  grid-column: 1 / -1;
+}
+
+/* ── Founders / Winemaker detail row ── */
+.fw-detail-row {
+  width: 100%;
+  max-width: 700px;
+  padding: 32px 32px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  animation: fwFadeIn 0.6s ease-out 0.15s both;
+}
+
+.fw-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fw-detail-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+}
+
+.fw-detail-value {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--cream-dim);
+}
+
+/* ── Actions ── */
+.fw-actions {
+  width: 100%;
+  max-width: 700px;
+  padding: 48px 32px 0;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  animation: fwFadeIn 0.6s ease-out 0.5s both;
+}
+
+.fw-another-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 36px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fw-another-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.fw-visit-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.fw-visit-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ── Divider ── */
+.fw-divider {
+  width: 100%;
+  max-width: 700px;
+  height: 1px;
+  background: var(--border);
+  margin-top: 48px;
+  border: none;
+}
+
+/* ── Footer ── */
+.fw-footer {
+  margin-top: auto;
+  padding: 32px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.fw-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ── Animation ── */
+@keyframes fwFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .fw-hero {
+    padding: 40px 20px 0;
+  }
+
+  .fw-story,
+  .fw-why-visit,
+  .fw-badges,
+  .fw-wines,
+  .fw-visit,
+  .fw-actions {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .fw-detail-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .fw-visit-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .fw-wines-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fw-hero-image-alt {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 10px;
+  }
+
+  .fw-visit-card {
+    padding: 24px 20px;
+  }
+
+  .fw-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}

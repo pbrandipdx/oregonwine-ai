@@ -442,6 +442,7 @@ export function ChatWidget({
   /** Map engagement labels to game page routes for inline loading */
   const GAME_ROUTES: Partial<Record<EngagementLabel, string>> = {
     "Blind Tasting": "/blind-tasting?embed=1",
+    "Featured Winery": "/featured-winery?embed=1",
     "Match Me": "/match-me?embed=1",
     "Plan My Visit": "/plan-visit?embed=1",
     Compare: "/compare?embed=1",
@@ -463,7 +464,7 @@ export function ChatWidget({
         return;
       }
 
-      // Featured Winery still uses the chat flow
+      // Fallback: remaining labels use the chat flow
       const mode = ENGAGEMENT_MODES[label];
       setActiveMode(mode);
       setGameView(null);
