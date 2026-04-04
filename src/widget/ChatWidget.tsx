@@ -613,15 +613,10 @@ export function ChatWidget({
     (label: EngagementLabel) => {
       const gameRoute = GAME_ROUTES[label];
       if (gameRoute) {
-        // Load the interactive game inline instead of chat
+        // Load the interactive game inline immediately — no fade delay
         setGameView(gameRoute);
-        if (showLanding) {
-          setLandingExiting(true);
-          setTimeout(() => {
-            setShowLanding(false);
-            setLandingExiting(false);
-          }, 400);
-        }
+        setShowLanding(false);
+        setLandingExiting(false);
         return;
       }
 
@@ -701,14 +696,10 @@ export function ChatWidget({
     (label: string) => {
       const route = quickReplyRoutes?.[label];
       if (route) {
+        // Load designed page immediately — no fade delay
         setGameView(route);
-        if (showLanding) {
-          setLandingExiting(true);
-          setTimeout(() => {
-            setShowLanding(false);
-            setLandingExiting(false);
-          }, 400);
-        }
+        setShowLanding(false);
+        setLandingExiting(false);
         return;
       }
       void sendMessage(label);
@@ -967,7 +958,7 @@ export function ChatWidget({
           : { position: "fixed" as const, bottom: 96, left: 24, zIndex: 99999 }),
       }}
     >
-      {landingEmbedded ? (
+      {landingEmbedded && !gameView ? (
         <div
           style={{
             flex: 1,
