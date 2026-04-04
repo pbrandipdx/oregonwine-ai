@@ -160,8 +160,20 @@ function QuickReplyChips({
 
   return (
     <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", display: "flex", alignItems: "center", gap: 6 }}>
-      {/* Hide scrollbar across browsers */}
-      <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
+      {/* Hide scrollbar + mobile: show exactly 2 chips at a time */}
+      <style>{`
+        .qr-scroll-track::-webkit-scrollbar { display: none; }
+        @media (max-width: 640px) {
+          .qr-scroll-track {
+            scroll-snap-type: x mandatory;
+          }
+          .qr-scroll-track > button {
+            scroll-snap-align: start;
+            min-width: calc(50% - 4px) !important;
+            justify-content: center !important;
+          }
+        }
+      `}</style>
 
       {/* Left arrow */}
       <button

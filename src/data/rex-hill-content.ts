@@ -52,6 +52,7 @@ export interface Recipe {
   keyIngredients: string[];
   winePairing: string;
   wineNote: string;
+  url?: string;
 }
 
 export interface RexHillContent {
@@ -238,72 +239,76 @@ export const REX_HILL_CONTENT: RexHillContent = {
 
   recipes: [
     {
-      title: "Wine-Braised Short Ribs",
+      title: "Cedar Plank Salmon",
+      url: "https://rexhill.com/recipes/cedar-plank-salmon/",
       description:
-        "Slow-braised beef short ribs in a rich Pinot Noir reduction with root vegetables and fresh herbs.",
+        "Salmon on cedar with summer vegetables, finished with Saba for a sweet, deep brightness that bridges beautifully with Pinot Noir.",
       serves: "4",
-      time: "3.5 hours",
+      time: "30 minutes",
       keyIngredients: [
-        "Bone-in short ribs",
+        "Skin-on salmon fillets",
+        "Untreated cedar plank",
+        "Fresh corn and white beans",
+        "Cherry tomatoes",
+        "Saba (reduced grape must)",
+      ],
+      winePairing: "Rex Hill Sims Vineyard Pinot Noir",
+      wineNote:
+        "The Sims Vineyard Pinot's bright acidity and earthy undertones complement the cedar-kissed salmon and summer vegetables.",
+    },
+    {
+      title: "Beef & Barley Stew with Mushrooms",
+      url: "https://rexhill.com/recipes/beef-barley-stew-with-mushrooms/",
+      description:
+        "A crowd-pleaser that looks much more complicated and impressive than it actually is to prepare. Gochugaru adds a warm, subtle heat.",
+      serves: "6",
+      time: "2 hours",
+      keyIngredients: [
+        "Beef brisket",
+        "Barley and mushrooms",
+        "Fennel and carrots",
+        "Gochugaru (Korean red chili)",
         "Rex Hill Pinot Noir",
-        "Carrots and parsnips",
-        "Fresh thyme and bay leaf",
-        "Beef stock",
       ],
       winePairing: "Rex Hill Willamette Valley Pinot Noir",
       wineNote:
-        "The wine's acidity cuts through the richness of the braised beef while its earthy notes complement the root vegetables.",
+        "The Pinot's earthy complexity and soft tannins mirror the stew's depth while the wine's acidity cuts through the richness.",
     },
     {
-      title: "Pan-Seared Salmon",
+      title: "Seared Rack of Lamb",
+      url: "https://rexhill.com/recipes/seared-rack-of-lamb/",
       description:
-        "Wild-caught salmon with a crispy skin, served over lentils with a beurre blanc sauce.",
-      serves: "2",
-      time: "35 minutes",
-      keyIngredients: [
-        "Wild salmon fillets",
-        "French green lentils",
-        "Shallots and butter",
-        "Rex Hill Chardonnay",
-        "Fresh dill",
-      ],
-      winePairing: "Rex Hill Willamette Valley Chardonnay",
-      wineNote:
-        "The Chardonnay's citrus and mineral notes mirror the beurre blanc while complementing the richness of the salmon.",
-    },
-    {
-      title: "Wild Mushroom Risotto",
-      description:
-        "Creamy Arborio rice with a medley of foraged mushrooms, finished with Parmigiano-Reggiano.",
+        "Provence-inspired pastured lamb with a layered summer vegetable tian and an olive relish that brings bright, briny contrast.",
       serves: "4",
       time: "45 minutes",
       keyIngredients: [
-        "Arborio rice",
-        "Mixed wild mushrooms",
-        "Parmigiano-Reggiano",
-        "White wine",
-        "Vegetable stock",
+        "Rack of lamb",
+        "Eggplant, zucchini, and tomatoes",
+        "Green and black olives",
+        "Fresh thyme and rosemary",
+        "Basil",
       ],
-      winePairing: "Rex Hill Jacob-Hart Vineyard Pinot Noir",
+      winePairing: "Rex Hill Shea Vineyard Pinot Noir",
       wineNote:
-        "The vineyard-designate Pinot's forest-floor character and silky texture are a natural match for earthy mushrooms.",
+        "The Shea Vineyard Pinot's structure and dark fruit intensity stand up beautifully to the richness of the lamb.",
     },
     {
-      title: "Artisan Charcuterie Board",
+      title: "Kale & Taleggio Risotto",
+      url: "https://rexhill.com/recipes/kale_risotto/",
       description:
-        "A curated spread of cured meats, aged cheeses, seasonal fruit, honeycomb, and crusty bread.",
-      serves: "6-8",
-      time: "20 minutes",
+        "Rich, unctuous risotto with melted Taleggio and hearty kale -- an unbeatable side dish with grilled steak.",
+      serves: "4",
+      time: "40 minutes",
       keyIngredients: [
-        "Prosciutto and sopressata",
-        "Aged Gouda and Manchego",
-        "Seasonal fruit",
-        "Honeycomb",
-        "Marcona almonds",
+        "Arborio rice",
+        "Taleggio cheese",
+        "Kale",
+        "Dry white wine",
+        "Butter and garlic",
       ],
-      winePairing: "Rex Hill Rose of Pinot Noir",
+      winePairing: "Rex Hill Willamette Valley Pinot Noir",
       wineNote:
-        "The Rose's crisp acidity and red-fruit character bridge the gap between rich meats and tangy cheeses.",
+        "The Pinot's bright acidity and earthy notes cut through the richness of the Taleggio while complementing the kale.",
     },
   ],
 };

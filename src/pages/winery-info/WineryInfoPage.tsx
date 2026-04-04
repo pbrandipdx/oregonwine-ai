@@ -172,7 +172,15 @@ function RecipesSection({ data }: { data: Recipe[] }) {
       <div className="wi-recipes-grid">
         {data.map((r) => (
           <div key={r.title} className="wi-recipe-card">
-            <h3 className="wi-recipe-title">{r.title}</h3>
+            <h3 className="wi-recipe-title">
+              {r.url ? (
+                <a href={r.url} target="_blank" rel="noopener noreferrer" className="wi-recipe-link">
+                  {r.title}
+                </a>
+              ) : (
+                r.title
+              )}
+            </h3>
             <p className="wi-recipe-desc">{r.description}</p>
             <div className="wi-recipe-meta">
               <span className="wi-recipe-meta-item">
