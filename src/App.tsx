@@ -12,6 +12,8 @@ import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
+import { BlindTastingPage } from "./pages/blind-tasting";
+import { MatchMePage } from "./pages/match-me";
 import {
   CRUSHPAD_DEMO_SLUG,
   inferWinerySlugFromPath,
@@ -97,6 +99,9 @@ function AppRoutesInner() {
   const isHomeLanding = location.pathname === "/" || location.pathname === "";
   const isHowItWorksLanding = location.pathname === "/how-it-works";
   const isBookDemo = location.pathname === "/book-demo";
+  const isGamePage =
+    location.pathname === "/blind-tasting" ||
+    location.pathname === "/match-me";
   const isDemoShell =
     location.pathname === "/chatbot-demo" ||
     location.pathname.endsWith("/demo") ||
@@ -106,7 +111,9 @@ function AppRoutesInner() {
       <AppNav />
       <main
         className={
-          isHomeLanding || isHowItWorksLanding || isBookDemo
+          isGamePage
+            ? "main main--landing"
+            : isHomeLanding || isHowItWorksLanding || isBookDemo
             ? "main main--landing"
             : isDemoShell
               ? "main main--widget-demo"
@@ -122,6 +129,8 @@ function AppRoutesInner() {
           <Route path="/chatbot-demo/analytics" element={<AnalyticsPage />} />
           <Route path="/chatbot-demo/admin" element={<AdminPage />} />
           <Route path="/agent-demo" element={<AgentDemoPage />} />
+          <Route path="/blind-tasting" element={<BlindTastingPage />} />
+          <Route path="/match-me" element={<MatchMePage />} />
           {/* /admin without slug still works but won't show winery nav */}
           <Route path="/admin" element={<AdminPage />} />
 

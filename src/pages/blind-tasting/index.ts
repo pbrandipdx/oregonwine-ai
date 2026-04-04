@@ -1,0 +1,1 @@
+export { BlindTastingPage } from "./BlindTastingPage";
