@@ -139,41 +139,10 @@ function QuickReplyChips({
     el.scrollBy({ left: dir === "left" ? -160 : 160, behavior: "smooth" });
   };
 
-  const arrowStyle = (visible: boolean): React.CSSProperties => ({
-    position: "absolute" as const,
-    top: 0,
-    bottom: 0,
-    width: 32,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    background: "none",
-    border: "none",
-    cursor: visible ? "pointer" : "default",
-    opacity: visible ? 1 : 0,
-    pointerEvents: visible ? "auto" : "none",
-    transition: "opacity 0.2s",
-    zIndex: 2,
-    color: "#c47a84",
-    fontSize: 16,
-    fontWeight: 700,
-    fontFamily: "'Space Mono', monospace",
-    padding: 0,
-  });
-
   return (
-    <div style={{ position: "relative", marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+    <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
       {/* Hide scrollbar across browsers */}
       <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
-      {/* Left fade + arrow */}
-      <button
-        type="button"
-        onClick={() => scroll("left")}
-        style={{ ...arrowStyle(canScrollLeft), left: 0 }}
-        aria-label="Scroll left"
-      >
-        <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: "rgba(17,17,17,0.9)", border: "1px solid rgba(196,122,132,0.3)" }}>&lsaquo;</span>
-      </button>
 
       {/* Scrollable chip track */}
       <div
@@ -233,15 +202,73 @@ function QuickReplyChips({
         ))}
       </div>
 
-      {/* Right fade + arrow */}
-      <button
-        type="button"
-        onClick={() => scroll("right")}
-        style={{ ...arrowStyle(canScrollRight), right: 0 }}
-        aria-label="Scroll right"
-      >
-        <span style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: "rgba(17,17,17,0.9)", border: "1px solid rgba(196,122,132,0.3)" }}>&rsaquo;</span>
-      </button>
+      {/* Arrow navigation below the chips */}
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 12,
+        marginTop: 10,
+        opacity: (canScrollLeft || canScrollRight) ? 1 : 0,
+        transition: "opacity 0.2s",
+        pointerEvents: (canScrollLeft || canScrollRight) ? "auto" : "none",
+      }}>
+        <button
+          type="button"
+          onClick={() => scroll("left")}
+          disabled={!canScrollLeft}
+          aria-label="Scroll left"
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
+            background: canScrollLeft ? "rgba(17,17,17,0.9)" : "transparent",
+            border: `1px solid ${canScrollLeft ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
+            color: canScrollLeft ? "#c47a84" : "#333",
+            cursor: canScrollLeft ? "pointer" : "default",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 15,
+            fontWeight: 700,
+            fontFamily: "'Space Mono', monospace",
+            padding: 0,
+            transition: "all 0.2s",
+          }}
+        >&lsaquo;</button>
+
+        <span style={{
+          fontFamily: "'Space Mono', monospace",
+          fontSize: 9,
+          letterSpacing: "1.5px",
+          textTransform: "uppercase" as const,
+          color: "#555",
+        }}>scroll</span>
+
+        <button
+          type="button"
+          onClick={() => scroll("right")}
+          disabled={!canScrollRight}
+          aria-label="Scroll right"
+          style={{
+            width: 28,
+            height: 28,
+            borderRadius: "50%",
+            background: canScrollRight ? "rgba(17,17,17,0.9)" : "transparent",
+            border: `1px solid ${canScrollRight ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
+            color: canScrollRight ? "#c47a84" : "#333",
+            cursor: canScrollRight ? "pointer" : "default",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 15,
+            fontWeight: 700,
+            fontFamily: "'Space Mono', monospace",
+            padding: 0,
+            transition: "all 0.2s",
+          }}
+        >&rsaquo;</button>
+      </div>
     </div>
   );
 }
