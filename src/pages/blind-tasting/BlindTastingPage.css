@@ -25,6 +25,7 @@
   --font-mono: "Space Mono", ui-monospace, monospace;
 
   min-height: 100vh;
+  padding-bottom: 60px;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
