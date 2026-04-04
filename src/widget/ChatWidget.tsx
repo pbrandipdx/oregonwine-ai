@@ -57,6 +57,34 @@ type Message = {
 
 type QuickPalette = { border: string; surface: string; text: string; borderHover: string };
 
+const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
+  "Tasting options": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M8 22h8" /><path d="M12 11v11" /><path d="M20 3H4l4 8h8l4-8z" />
+    </svg>
+  ),
+  "Hours & directions": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
+    </svg>
+  ),
+  "Wine club info": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  ),
+  "Food pairings": (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 8h1a4 4 0 010 8h-1" /><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z" /><line x1="6" y1="1" x2="6" y2="4" /><line x1="10" y1="1" x2="10" y2="4" /><line x1="14" y1="1" x2="14" y2="4" />
+    </svg>
+  ),
+  Recipes: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+    </svg>
+  ),
+};
+
 function QuickReplyChips({
   palette: p,
   onPick,
@@ -102,6 +130,7 @@ function QuickReplyChips({
             el.style.color = "#a09496";
           }}
         >
+          {QUICK_REPLY_ICONS[q]}
           {q}
         </button>
       ))}
@@ -1039,12 +1068,18 @@ export function ChatWidget({
           >
             <div
               style={{
-                maxWidth: "90%",
-                padding: "12px 16px",
+                maxWidth: m.role === "assistant" ? "95%" : "90%",
+                padding: m.role === "assistant" ? "18px 22px" : "12px 16px",
                 borderRadius: 16,
                 ...(m.role === "user"
                   ? { borderBottomRightRadius: 4, background: c.userBubble, color: c.text }
-                  : { borderBottomLeftRadius: 4, background: c.assistantBubble, color: "#d5d5d5", border: `1px solid ${c.border}` }),
+                  : {
+                      borderBottomLeftRadius: 4,
+                      background: "linear-gradient(135deg, rgba(20,20,20,0.95), rgba(26,26,26,0.9))",
+                      color: "#d5d5d5",
+                      border: `1px solid ${c.border}`,
+                      boxShadow: "0 2px 12px rgba(0,0,0,0.15)",
+                    }),
                 whiteSpace: m.role === "user" ? "pre-wrap" : "normal",
                 wordBreak: "break-word",
               }}

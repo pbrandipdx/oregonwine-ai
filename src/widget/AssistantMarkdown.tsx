@@ -18,7 +18,7 @@ function autoLinkText(md: string): string {
   //    Skip URLs already inside markdown link syntax: [text](url) or [url](url)
   md = md.replace(
     /(\[[^\]]*\]\([^)]*\))|(https?:\/\/[^\s)\]>,]+)/g,
-    (match, mdLink, bareUrl) => {
+    (_match, mdLink, bareUrl) => {
       if (mdLink) return mdLink; // Already a markdown link, leave it alone
       return `[${bareUrl}](${bareUrl})`;
     }
@@ -40,18 +40,79 @@ export function AssistantMarkdown({ text, accentColor, headingColor, textColor }
   return (
     <div className="ow-md-root">
       <style>{`
-        .ow-md-root { font-size: 14px; line-height: 1.55; color: ${textColor}; }
-        .ow-md-root h2 { font-size: 15px; font-weight: 600; color: ${headingColor}; margin: 14px 0 8px; line-height: 1.3; }
+        .ow-md-root {
+          font-size: 14px;
+          line-height: 1.65;
+          color: ${textColor};
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 15px;
+        }
+        .ow-md-root h2 {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-size: 18px;
+          font-weight: 600;
+          color: ${headingColor};
+          margin: 20px 0 10px;
+          line-height: 1.25;
+          letter-spacing: 0.01em;
+        }
         .ow-md-root h2:first-child { margin-top: 0; }
-        .ow-md-root h3 { font-size: 14px; font-weight: 600; color: ${headingColor}; margin: 12px 0 6px; }
-        .ow-md-root p { margin: 0 0 10px; }
+        .ow-md-root h3 {
+          font-family: 'Space Mono', ui-monospace, monospace;
+          font-size: 10px;
+          font-weight: 600;
+          color: ${accentColor};
+          margin: 18px 0 8px;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .ow-md-root p { margin: 0 0 12px; }
         .ow-md-root p:last-child { margin-bottom: 0; }
-        .ow-md-root ul, .ow-md-root ol { margin: 8px 0; padding-left: 1.35em; }
-        .ow-md-root li { margin: 4px 0; }
-        .ow-md-root strong { color: ${headingColor}; font-weight: 600; }
-        .ow-md-root em { color: #9a9a9a; font-size: 13px; }
-        .ow-md-root a { color: ${accentColor}; text-decoration: underline; text-underline-offset: 2px; }
-        .ow-md-root a:hover { opacity: 0.9; }
+        .ow-md-root ul, .ow-md-root ol {
+          margin: 10px 0;
+          padding-left: 0;
+          list-style: none;
+        }
+        .ow-md-root li {
+          margin: 8px 0;
+          padding: 8px 12px;
+          background: rgba(255,255,255,0.03);
+          border-left: 2px solid ${accentColor};
+          border-radius: 0 6px 6px 0;
+          font-size: 14px;
+          line-height: 1.5;
+        }
+        .ow-md-root strong {
+          color: ${headingColor};
+          font-weight: 700;
+        }
+        .ow-md-root em {
+          color: #a8a39e;
+          font-style: italic;
+        }
+        .ow-md-root a {
+          color: ${accentColor};
+          text-decoration: none;
+          border-bottom: 1px solid rgba(196,122,132,0.3);
+          transition: border-color 0.15s;
+        }
+        .ow-md-root a:hover {
+          border-bottom-color: ${accentColor};
+        }
+        .ow-md-root hr {
+          border: none;
+          border-top: 1px solid rgba(255,255,255,0.08);
+          margin: 16px 0;
+        }
+        .ow-md-root blockquote {
+          margin: 12px 0;
+          padding: 10px 16px;
+          border-left: 3px solid ${accentColor};
+          background: rgba(196,122,132,0.06);
+          border-radius: 0 8px 8px 0;
+          font-style: italic;
+          color: #b8b3ae;
+        }
       `}</style>
       <ReactMarkdown
         components={{
