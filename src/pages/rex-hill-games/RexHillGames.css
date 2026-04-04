@@ -1,0 +1,873 @@
+/* ── Rex Hill Blind Tasting & Match Me ── */
+/* Shared CSS with .rh- prefix, same dark theme design system */
+
+.rh-bt,
+.rh-mm {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --burgundy: #3d1528;
+  --burgundy-dim: #2a0f1c;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --forest: #2d5a3e;
+  --forest-dim: #1e3d2a;
+  --slate: #3d3d44;
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.15);
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --red: #e05555;
+  --green: #7dcda0;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  padding-bottom: 60px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   BLIND TASTING
+   ═══════════════════════════════════════════ */
+
+/* ── Home Screen ── */
+.rh-bt-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rh-bt-badge,
+.rh-mm-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.rh-bt-title,
+.rh-mm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--cream);
+}
+
+.rh-bt-subtitle,
+.rh-mm-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  max-width: 400px;
+}
+
+.rh-bt-modes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.rh-bt-mode-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-mode-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.rh-bt-mode-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.rh-bt-diff-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.rh-bt-diff-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-diff-btn:hover {
+  color: var(--text-muted);
+  border-color: var(--text-dim);
+}
+
+.rh-bt-diff-btn--active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.rh-bt-start-btn,
+.rh-mm-start-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.rh-bt-start-btn:hover,
+.rh-mm-start-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.rh-bt-howto {
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.rh-bt-howto strong {
+  color: var(--text-muted);
+}
+
+/* ── Game Board ── */
+.rh-bt-board {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.rh-bt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.rh-bt-round-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.rh-bt-score-display {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rh-bt-score-num {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Progress Dots ── */
+.rh-bt-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.rh-bt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+
+.rh-bt-dot--filled {
+  background: var(--accent);
+}
+
+.rh-bt-dot--current {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── Clue Cards ── */
+.rh-bt-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.rh-bt-clue {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  border-left: 3px solid var(--border);
+  animation: rhClueIn 0.4s ease-out;
+}
+
+.rh-bt-clue:first-child { border-left-color: var(--accent); }
+.rh-bt-clue:nth-child(2) { border-left-color: var(--gold); }
+.rh-bt-clue:nth-child(3) { border-left-color: var(--forest); }
+.rh-bt-clue:nth-child(4) { border-left-color: #7a9ec4; }
+.rh-bt-clue:nth-child(5) { border-left-color: #b07acc; }
+
+.rh-bt-clue-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.rh-bt-clue-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+@keyframes rhClueIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Guess Panel ── */
+.rh-bt-guess-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.rh-bt-guess-section {
+  margin-bottom: 20px;
+}
+
+.rh-bt-guess-section:last-of-type {
+  margin-bottom: 24px;
+}
+
+.rh-bt-guess-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.rh-bt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rh-bt-chip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.rh-bt-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.rh-bt-chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.rh-bt-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.rh-bt-reveal-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-reveal-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.rh-bt-reveal-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.rh-bt-submit-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-submit-btn:hover {
+  background: #d48a94;
+}
+
+.rh-bt-submit-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ── Result Screen ── */
+.rh-bt-result {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: rhFadeUp 0.5s ease-out;
+}
+
+@keyframes rhFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rh-bt-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.rh-bt-result-answer {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+
+.rh-bt-result-sub {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+.rh-bt-result-score {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.rh-bt-result-max {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.rh-bt-result-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.rh-bt-bonus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rh-bt-bonus--correct {
+  color: var(--green);
+}
+
+.rh-bt-bonus--wrong {
+  color: var(--red);
+}
+
+.rh-bt-result-explain {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.rh-bt-result-explain h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 10px;
+}
+
+.rh-bt-result-explain p {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.rh-bt-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.rh-bt-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.rh-bt-play-again-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-bt-play-again-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Footer ── */
+.rh-bt-footer,
+.rh-mm-footer {
+  margin-top: auto;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.rh-bt-footer a,
+.rh-mm-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════
+   MATCH ME
+   ═══════════════════════════════════════════ */
+
+.rh-mm-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.rh-mm-home-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── Question Screen ── */
+.rh-mm-question {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: rhMmFadeIn 0.35s ease-out;
+}
+
+@keyframes rhMmFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.rh-mm-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.rh-mm-pip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.rh-mm-pip--filled {
+  background: var(--accent);
+}
+
+.rh-mm-pip--current {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.rh-mm-q-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.rh-mm-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.rh-mm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.rh-mm-option {
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  padding: 18px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.rh-mm-option:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-dim);
+}
+
+/* ── Result Screen ── */
+.rh-mm-result {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: rhMmFadeIn 0.5s ease-out;
+}
+
+.rh-mm-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 32px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.rh-mm-result-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.rh-mm-result-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  line-height: 1.1;
+}
+
+.rh-mm-result-price {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.rh-mm-result-tagline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 28px;
+}
+
+.rh-mm-result-personality {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 6px;
+  display: inline-block;
+  background: var(--accent-dim);
+}
+
+.rh-mm-result-desc {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--cream-dim);
+  margin: 20px 0 0;
+  text-align: left;
+}
+
+.rh-mm-why-match {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.rh-mm-why-match-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.rh-mm-why-match-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.rh-mm-wine-rec {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.rh-mm-wine-rec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.rh-mm-wine-rec-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+}
+
+.rh-mm-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.rh-mm-trait {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.rh-mm-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.rh-mm-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-mm-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.rh-mm-retake-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rh-mm-retake-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .rh-bt-board,
+  .rh-bt-result { padding: 16px; }
+  .rh-bt-clue { padding: 16px 18px; }
+  .rh-bt-guess-panel { padding: 18px; }
+  .rh-bt-result-card { padding: 24px; }
+  .rh-bt-modes { flex-direction: column; }
+  .rh-bt-actions { flex-direction: column; }
+  .rh-bt-result-actions { flex-direction: column; }
+  .rh-bt-diff-row { flex-wrap: wrap; justify-content: center; }
+
+  .rh-mm-question { padding: 16px; }
+  .rh-mm-result { padding: 16px; }
+  .rh-mm-result-card { padding: 28px 20px; }
+  .rh-mm-why-match { padding: 18px; }
+  .rh-mm-wine-rec { padding: 18px; }
+  .rh-mm-result-actions { flex-direction: column; }
+}

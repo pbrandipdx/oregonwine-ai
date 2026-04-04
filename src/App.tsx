@@ -14,6 +14,7 @@ import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
+import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
 import { PlanVisitPage } from "./pages/plan-visit";
 import { ComparePage } from "./pages/compare";
 import { FeaturedWineryPage } from "./pages/featured-winery";
@@ -108,6 +109,8 @@ function AppRoutesInner() {
   const isGamePage =
     location.pathname === "/blind-tasting" ||
     location.pathname === "/match-me" ||
+    location.pathname === "/rex-hill/blind-tasting" ||
+    location.pathname === "/rex-hill/match-me" ||
     location.pathname === "/plan-visit" ||
     location.pathname === "/compare" ||
     location.pathname === "/featured-winery" ||
@@ -125,6 +128,8 @@ function AppRoutesInner() {
           <Routes>
             <Route path="/blind-tasting" element={<BlindTastingPage />} />
             <Route path="/match-me" element={<MatchMePage />} />
+            <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
+            <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
             <Route path="/plan-visit" element={<PlanVisitPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
@@ -172,6 +177,8 @@ function AppRoutesInner() {
           <Route path="/rex-hill" element={<RexHillPartnerPage />} />
           <Route path="/rex-hill/demo" element={<WidgetDemoRexHillPage />} />
           <Route path="/rex-hill/research" element={<RexHillResearchPage />} />
+          <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
+          <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
           <Route path="/rex-hill/analytics" element={<AnalyticsPage />} />
           <Route path="/rex-hill/admin" element={<AdminPage />} />
 

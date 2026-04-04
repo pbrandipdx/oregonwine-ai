@@ -1,5 +1,7 @@
 /** Labels shown on quick-reply chips (must match `QUICK_REPLY_ICONS` keys in ChatWidget). */
 export const QUICK_REPLY_LABELS = [
+  "Blind Tasting",
+  "Match Me",
   "Tasting options",
   "Hours & directions",
   "Wine club info",
@@ -16,6 +18,10 @@ export type QuickReplyLabel = (typeof QUICK_REPLY_LABELS)[number];
  */
 export function messageForChatApi(shortLabel: string, wineryLabel: string): string {
   switch (shortLabel) {
+    case "Blind Tasting":
+      return `Play the Rex Hill blind tasting game`;
+    case "Match Me":
+      return `Find your perfect ${wineryLabel} tasting experience`;
     case "Tasting options":
       return `What tasting flights, fees, and reservation options does ${wineryLabel} offer?`;
     case "Hours & directions":
