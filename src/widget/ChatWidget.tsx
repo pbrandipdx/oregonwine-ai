@@ -114,6 +114,7 @@ function QuickReplyChips({
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [chipWidth, setChipWidth] = useState<number | null>(null);
 
   const checkScroll = useCallback(() => {
     const el = scrollRef.current;
@@ -122,21 +123,37 @@ function QuickReplyChips({
     setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
   }, []);
 
+  const measureChips = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const trackW = el.clientWidth;
+    // On narrow screens, force 2 chips: each chip = (trackWidth - gap) / 2
+    if (trackW < 500) {
+      setChipWidth(Math.floor((trackW - 8) / 2));
+    } else {
+      setChipWidth(null); // natural sizing on desktop
+    }
+  }, []);
+
   useEffect(() => {
     checkScroll();
+    measureChips();
     const el = scrollRef.current;
     if (el) el.addEventListener("scroll", checkScroll, { passive: true });
-    window.addEventListener("resize", checkScroll);
+    const onResize = () => { checkScroll(); measureChips(); };
+    window.addEventListener("resize", onResize);
     return () => {
       el?.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
+      window.removeEventListener("resize", onResize);
     };
-  }, [checkScroll]);
+  }, [checkScroll, measureChips]);
 
   const scroll = (dir: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir === "left" ? -160 : 160, behavior: "smooth" });
+    // On mobile, scroll by exactly 2 chips worth
+    const amount = chipWidth ? (chipWidth * 2 + 8) : 160;
+    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
   };
 
   const arrowBtn = (dir: "left" | "right", enabled: boolean): React.CSSProperties => ({
@@ -160,27 +177,8 @@ function QuickReplyChips({
 
   return (
     <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", display: "flex", alignItems: "center", gap: 6 }}>
-      {/* Hide scrollbar + mobile: show exactly 2 chips at a time */}
-      <style>{`
-        .qr-scroll-track::-webkit-scrollbar { display: none; }
-        @media (max-width: 640px) {
-          .qr-scroll-track {
-            scroll-snap-type: x mandatory;
-          }
-          .qr-scroll-track > button.qr-chip {
-            scroll-snap-align: start;
-            flex-grow: 0 !important;
-            flex-shrink: 0 !important;
-            flex-basis: calc(50% - 4px) !important;
-            width: calc(50% - 4px) !important;
-            min-width: 0 !important;
-            max-width: calc(50% - 4px) !important;
-            justify-content: center !important;
-            overflow: hidden !important;
-            text-overflow: ellipsis;
-          }
-        }
-      `}</style>
+      {/* Hide scrollbar */}
+      <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
 
       {/* Left arrow */}
       <button
@@ -205,6 +203,7 @@ function QuickReplyChips({
           paddingTop: 2,
           paddingBottom: 2,
           WebkitOverflowScrolling: "touch",
+          ...(chipWidth ? { scrollSnapType: "x mandatory" } : {}),
         }}
         className="qr-scroll-track"
       >
@@ -212,11 +211,11 @@ function QuickReplyChips({
           <button
             key={q}
             type="button"
-            className="qr-chip"
             onClick={() => onPick(q)}
             style={{
               display: "flex",
               alignItems: "center",
+              justifyContent: chipWidth ? "center" : undefined,
               gap: 7,
               padding: "9px 14px",
               borderRadius: 12,
@@ -229,7 +228,15 @@ function QuickReplyChips({
               fontFamily: "inherit",
               transition: "background 0.15s, border-color 0.15s, color 0.15s",
               whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
               flexShrink: 0,
+              flexGrow: 0,
+              flexBasis: chipWidth ? chipWidth : undefined,
+              width: chipWidth ? chipWidth : undefined,
+              minWidth: chipWidth ? chipWidth : undefined,
+              maxWidth: chipWidth ? chipWidth : undefined,
+              scrollSnapAlign: chipWidth ? "start" : undefined,
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
