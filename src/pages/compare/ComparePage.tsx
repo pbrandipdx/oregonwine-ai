@@ -5,7 +5,12 @@ import {
   COMPARISONS,
   type CompareCategory,
   type Comparison,
+  type CategoryOption,
 } from "../../data/compare-data";
+import {
+  RH_CATEGORIES,
+  RH_COMPARISONS,
+} from "../../data/rex-hill-compare-data";
 import "./ComparePage.css";
 
 type Phase = "category" | "matchup" | "result";
@@ -13,12 +18,21 @@ type Phase = "category" | "matchup" | "result";
 export function ComparePage() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
+  const wineryParam = searchParams.get("winery");
+  const isRexHill = wineryParam === "rex-hill";
+
+  const categories: CategoryOption[] = isRexHill ? RH_CATEGORIES : CATEGORIES;
+  const comparisons: Comparison[] = isRexHill ? RH_COMPARISONS : COMPARISONS;
+  const badge = isRexHill ? "REX HILL \u00b7 Wine Agent" : "Crushpad.ai \u00b7 Wine Agent";
+  const subtitle = isRexHill
+    ? "Explore Rex Hill\u2019s vineyards, wines, and experiences side by side."
+    : "Pick a category. We\u2019ll handle the argument.";
 
   useEffect(() => {
     const prev = document.title;
-    document.title = "Compare — Crushpad.ai";
+    document.title = isRexHill ? "Compare \u2014 Rex Hill" : "Compare \u2014 Crushpad.ai";
     return () => { document.title = prev; };
-  }, []);
+  }, [isRexHill]);
 
   const [phase, setPhase] = useState<Phase>("category");
   const [category, setCategory] = useState<CompareCategory | null>(null);
@@ -60,16 +74,16 @@ export function ComparePage() {
       "",
       result.verdict,
       "",
-      "Compare more at crushpad.ai/compare",
+      isRexHill ? "Explore more at rexhill.com" : "Compare more at crushpad.ai/compare",
     ].join("\n");
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
-  }, [result]);
+  }, [result, isRexHill]);
 
   const matchups = category
-    ? COMPARISONS.filter((c) => c.category === category)
+    ? comparisons.filter((c) => c.category === category)
     : [];
 
   return (
@@ -84,13 +98,11 @@ export function ComparePage() {
       {/* ── Step 1: Pick Category ── */}
       {phase === "category" && (
         <div className="cmp-home">
-          <p className="cmp-badge">Crushpad.ai &middot; Wine Agent</p>
+          <p className="cmp-badge">{badge}</p>
           <h1 className="cmp-title">Compare</h1>
-          <p className="cmp-subtitle">
-            Pick a category. We'll handle the argument.
-          </p>
+          <p className="cmp-subtitle">{subtitle}</p>
           <div className="cmp-cards">
-            {CATEGORIES.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat.id}
                 className="cmp-card"
@@ -108,7 +120,7 @@ export function ComparePage() {
       {phase === "matchup" && (
         <div className="cmp-matchups" key={category}>
           <p className="cmp-badge">
-            {CATEGORIES.find((c) => c.id === category)?.title}
+            {categories.find((c) => c.id === category)?.title}
           </p>
           <h2 className="cmp-matchup-heading">Pick your matchup</h2>
           <div className="cmp-cards">
@@ -194,8 +206,8 @@ export function ComparePage() {
 
       {!isEmbed && (
         <footer className="cmp-footer">
-          <Link to="/chatbot-demo" style={{ color: "inherit", textDecoration: "none" }}>
-            &larr; Back to Crushpad.ai
+          <Link to={isRexHill ? "/rex-hill/demo" : "/chatbot-demo"} style={{ color: "inherit", textDecoration: "none" }}>
+            &larr; {isRexHill ? "Back to Rex Hill" : "Back to Crushpad.ai"}
           </Link>
         </footer>
       )}

@@ -139,22 +139,50 @@ function QuickReplyChips({
     el.scrollBy({ left: dir === "left" ? -160 : 160, behavior: "smooth" });
   };
 
+  const arrowBtn = (dir: "left" | "right", enabled: boolean): React.CSSProperties => ({
+    width: 28,
+    height: 28,
+    borderRadius: "50%",
+    background: enabled ? "rgba(17,17,17,0.9)" : "transparent",
+    border: `1px solid ${enabled ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
+    color: enabled ? "#c47a84" : "rgba(255,255,255,0.08)",
+    cursor: enabled ? "pointer" : "default",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 15,
+    fontWeight: 700,
+    fontFamily: "'Space Mono', monospace",
+    padding: 0,
+    transition: "all 0.2s",
+    flexShrink: 0,
+  });
+
   return (
-    <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+    <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", display: "flex", alignItems: "center", gap: 6 }}>
       {/* Hide scrollbar across browsers */}
       <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
+
+      {/* Left arrow */}
+      <button
+        type="button"
+        onClick={() => scroll("left")}
+        disabled={!canScrollLeft}
+        aria-label="Scroll left"
+        style={arrowBtn("left", canScrollLeft)}
+      >&lsaquo;</button>
 
       {/* Scrollable chip track */}
       <div
         ref={scrollRef}
         style={{
+          flex: 1,
+          minWidth: 0,
           display: "flex",
           gap: 8,
           overflowX: "auto",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
-          paddingLeft: 4,
-          paddingRight: 4,
           paddingTop: 2,
           paddingBottom: 2,
           WebkitOverflowScrolling: "touch",
@@ -202,73 +230,14 @@ function QuickReplyChips({
         ))}
       </div>
 
-      {/* Arrow navigation below the chips */}
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 12,
-        marginTop: 10,
-        opacity: (canScrollLeft || canScrollRight) ? 1 : 0,
-        transition: "opacity 0.2s",
-        pointerEvents: (canScrollLeft || canScrollRight) ? "auto" : "none",
-      }}>
-        <button
-          type="button"
-          onClick={() => scroll("left")}
-          disabled={!canScrollLeft}
-          aria-label="Scroll left"
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: "50%",
-            background: canScrollLeft ? "rgba(17,17,17,0.9)" : "transparent",
-            border: `1px solid ${canScrollLeft ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
-            color: canScrollLeft ? "#c47a84" : "#333",
-            cursor: canScrollLeft ? "pointer" : "default",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 15,
-            fontWeight: 700,
-            fontFamily: "'Space Mono', monospace",
-            padding: 0,
-            transition: "all 0.2s",
-          }}
-        >&lsaquo;</button>
-
-        <span style={{
-          fontFamily: "'Space Mono', monospace",
-          fontSize: 9,
-          letterSpacing: "1.5px",
-          textTransform: "uppercase" as const,
-          color: "#555",
-        }}>scroll</span>
-
-        <button
-          type="button"
-          onClick={() => scroll("right")}
-          disabled={!canScrollRight}
-          aria-label="Scroll right"
-          style={{
-            width: 28,
-            height: 28,
-            borderRadius: "50%",
-            background: canScrollRight ? "rgba(17,17,17,0.9)" : "transparent",
-            border: `1px solid ${canScrollRight ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
-            color: canScrollRight ? "#c47a84" : "#333",
-            cursor: canScrollRight ? "pointer" : "default",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 15,
-            fontWeight: 700,
-            fontFamily: "'Space Mono', monospace",
-            padding: 0,
-            transition: "all 0.2s",
-          }}
-        >&rsaquo;</button>
-      </div>
+      {/* Right arrow */}
+      <button
+        type="button"
+        onClick={() => scroll("right")}
+        disabled={!canScrollRight}
+        aria-label="Scroll right"
+        style={arrowBtn("right", canScrollRight)}
+      >&rsaquo;</button>
     </div>
   );
 }

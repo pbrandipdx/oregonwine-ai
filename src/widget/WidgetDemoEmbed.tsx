@@ -39,7 +39,7 @@ export function WidgetDemoRexHillEmbed() {
       quickReplyRoutes={{
         "Blind Tasting": "/rex-hill/blind-tasting?embed=1",
         "Match Me": "/rex-hill/match-me?embed=1",
-        Compare: "/compare?embed=1",
+        Compare: "/compare?winery=rex-hill&embed=1",
         "Tasting options": "/winery-info?topic=tastings&winery=rex-hill&embed=1",
         "Hours & directions": "/winery-info?topic=hours&winery=rex-hill&embed=1",
         "Wine club info": "/winery-info?topic=club&winery=rex-hill&embed=1",
