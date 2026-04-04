@@ -225,6 +225,13 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
           </Link>
         </p>
       )}
+      {winery.slug === "ponzi" && (
+        <p style={{ marginTop: "1rem" }}>
+          <Link className="btn" to="/ponzi/demo">
+            Try the Ponzi Vineyards chat
+          </Link>
+        </p>
+      )}
     </article>
   );
 }

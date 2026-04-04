@@ -15,6 +15,10 @@ import {
   CW_CATEGORIES,
   CW_COMPARISONS,
 } from "../../data/crowley-compare-data";
+import {
+  PZ_CATEGORIES,
+  PZ_COMPARISONS,
+} from "../../data/ponzi-compare-data";
 import "./ComparePage.css";
 
 type Phase = "category" | "matchup" | "result";
@@ -37,6 +41,15 @@ const WINERY_CONFIG: Record<string, { categories: CategoryOption[]; comparisons:
     title: "Compare \u2014 Crowley Wines",
     backPath: "/crowley/demo",
     backLabel: "Back to Crowley Wines",
+  },
+  ponzi: {
+    categories: PZ_CATEGORIES,
+    comparisons: PZ_COMPARISONS,
+    badge: "PONZI VINEYARDS \u00b7 Wine Agent",
+    subtitle: "Explore Ponzi\u2019s vineyards, wines, and experiences side by side.",
+    title: "Compare \u2014 Ponzi Vineyards",
+    backPath: "/ponzi/demo",
+    backLabel: "Back to Ponzi Vineyards",
   },
 };
 

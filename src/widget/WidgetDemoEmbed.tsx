@@ -49,6 +49,36 @@ export function WidgetDemoCrowleyEmbed() {
   );
 }
 
+/** Ponzi Vineyards branded demo — answers Ponzi-specific questions. */
+export function WidgetDemoPonziEmbed() {
+  const ponziKey = import.meta.env.VITE_WIDGET_PONZI_KEY || "wk_test_ponzi";
+  return (
+    <ChatWidget
+      apiKey={ponziKey}
+      apiBase={apiBase}
+      themeColor="#c47a84"
+      wineryLabel="PONZI VINEYARDS"
+      embedded
+      embeddedChrome="panel"
+      headerLockup="full"
+      wineryUrl="https://www.ponzivineyards.com"
+      bookingPath="/visit-us/"
+      clubPath="/membership/"
+      wineryPhone="(503) 628-1227"
+      quickReplyRoutes={{
+        "Blind Tasting": "/ponzi/blind-tasting?embed=1",
+        "Match Me": "/ponzi/match-me?embed=1",
+        Compare: "/compare?winery=ponzi&embed=1",
+        "Tasting options": "/winery-info?topic=tastings&winery=ponzi&embed=1",
+        "Hours & directions": "/winery-info?topic=hours&winery=ponzi&embed=1",
+        "Wine club info": "/winery-info?topic=club&winery=ponzi&embed=1",
+        "Food pairings": "/winery-info?topic=pairings&winery=ponzi&embed=1",
+        "Recipes": "/winery-info?topic=recipes&winery=ponzi&embed=1",
+      }}
+    />
+  );
+}
+
 /** Rex Hill branded demo — answers Rex Hill-specific questions. */
 export function WidgetDemoRexHillEmbed() {
   const rexHillKey = import.meta.env.VITE_WIDGET_TEST_KEY || "wk_test_rexhill";

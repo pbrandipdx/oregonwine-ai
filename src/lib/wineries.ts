@@ -15,7 +15,7 @@ export type WineryCardOverride = {
 };
 
 /** Slugs with a built-in research page. */
-const SLUGS_WITH_RESEARCH = new Set(["rex-hill", "chehalem", "soter", "crowley"]);
+const SLUGS_WITH_RESEARCH = new Set(["rex-hill", "chehalem", "soter", "crowley", "ponzi"]);
 
 export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
   "rex-hill": {
@@ -41,6 +41,12 @@ export const WINERY_CARD_OVERRIDES: Record<string, WineryCardOverride> = {
     region: "Willamette Valley · McMinnville / Dundee Hills / Eola-Amity Hills",
     blurb:
       "Minimal-intervention Pinot Noir and Chardonnay from multiple AVAs. Live chat, blind tasting, compare, and research brief.",
+  },
+  ponzi: {
+    cardTitle: "Ponzi Vineyards",
+    region: "Laurelwood District · Chehalem Mountains · Willamette Valley",
+    blurb:
+      "Oregon pioneer (est. 1970), now part of Champagne Bollinger. Four estate vineyards, four tasting experiences, live chat, and full research brief.",
   },
 };
 

@@ -1,0 +1,873 @@
+/* ── Ponzi Vineyards Blind Tasting & Match Me ── */
+/* Shared CSS with .pz- prefix, same dark theme design system */
+
+.pz-bt,
+.pz-mm {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --burgundy: #3d1528;
+  --burgundy-dim: #2a0f1c;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --forest: #2d5a3e;
+  --forest-dim: #1e3d2a;
+  --slate: #3d3d44;
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.15);
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --red: #e05555;
+  --green: #7dcda0;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  padding-bottom: 60px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   BLIND TASTING
+   ═══════════════════════════════════════════ */
+
+/* ── Home Screen ── */
+.pz-bt-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pz-bt-badge,
+.pz-mm-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.pz-bt-title,
+.pz-mm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--cream);
+}
+
+.pz-bt-subtitle,
+.pz-mm-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  max-width: 400px;
+}
+
+.pz-bt-modes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.pz-bt-mode-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-mode-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.pz-bt-mode-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.pz-bt-diff-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.pz-bt-diff-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-diff-btn:hover {
+  color: var(--text-muted);
+  border-color: var(--text-dim);
+}
+
+.pz-bt-diff-btn--active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.pz-bt-start-btn,
+.pz-mm-start-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.pz-bt-start-btn:hover,
+.pz-mm-start-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.pz-bt-howto {
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.pz-bt-howto strong {
+  color: var(--text-muted);
+}
+
+/* ── Game Board ── */
+.pz-bt-board {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pz-bt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.pz-bt-round-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.pz-bt-score-display {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pz-bt-score-num {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Progress Dots ── */
+.pz-bt-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.pz-bt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+
+.pz-bt-dot--filled {
+  background: var(--accent);
+}
+
+.pz-bt-dot--current {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── Clue Cards ── */
+.pz-bt-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.pz-bt-clue {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  border-left: 3px solid var(--border);
+  animation: pzClueIn 0.4s ease-out;
+}
+
+.pz-bt-clue:first-child { border-left-color: var(--accent); }
+.pz-bt-clue:nth-child(2) { border-left-color: var(--gold); }
+.pz-bt-clue:nth-child(3) { border-left-color: var(--forest); }
+.pz-bt-clue:nth-child(4) { border-left-color: #7a9ec4; }
+.pz-bt-clue:nth-child(5) { border-left-color: #b07acc; }
+
+.pz-bt-clue-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.pz-bt-clue-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+@keyframes pzClueIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Guess Panel ── */
+.pz-bt-guess-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.pz-bt-guess-section {
+  margin-bottom: 20px;
+}
+
+.pz-bt-guess-section:last-of-type {
+  margin-bottom: 24px;
+}
+
+.pz-bt-guess-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.pz-bt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pz-bt-chip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pz-bt-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.pz-bt-chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.pz-bt-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.pz-bt-reveal-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-reveal-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.pz-bt-reveal-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pz-bt-submit-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-submit-btn:hover {
+  background: #d48a94;
+}
+
+.pz-bt-submit-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ── Result Screen ── */
+.pz-bt-result {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: pzFadeUp 0.5s ease-out;
+}
+
+@keyframes pzFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pz-bt-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pz-bt-result-answer {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+
+.pz-bt-result-sub {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+.pz-bt-result-score {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.pz-bt-result-max {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.pz-bt-result-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.pz-bt-bonus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pz-bt-bonus--correct {
+  color: var(--green);
+}
+
+.pz-bt-bonus--wrong {
+  color: var(--red);
+}
+
+.pz-bt-result-explain {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.pz-bt-result-explain h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 10px;
+}
+
+.pz-bt-result-explain p {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.pz-bt-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.pz-bt-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.pz-bt-play-again-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-bt-play-again-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Footer ── */
+.pz-bt-footer,
+.pz-mm-footer {
+  margin-top: auto;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.pz-bt-footer a,
+.pz-mm-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════
+   MATCH ME
+   ═══════════════════════════════════════════ */
+
+.pz-mm-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.pz-mm-home-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── Question Screen ── */
+.pz-mm-question {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pzMmFadeIn 0.35s ease-out;
+}
+
+@keyframes pzMmFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pz-mm-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.pz-mm-pip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.pz-mm-pip--filled {
+  background: var(--accent);
+}
+
+.pz-mm-pip--current {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.pz-mm-q-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.pz-mm-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.pz-mm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.pz-mm-option {
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  padding: 18px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.pz-mm-option:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-dim);
+}
+
+/* ── Result Screen ── */
+.pz-mm-result {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: pzMmFadeIn 0.5s ease-out;
+}
+
+.pz-mm-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 32px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.pz-mm-result-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.pz-mm-result-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  line-height: 1.1;
+}
+
+.pz-mm-result-price {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.pz-mm-result-tagline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 28px;
+}
+
+.pz-mm-result-personality {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 6px;
+  display: inline-block;
+  background: var(--accent-dim);
+}
+
+.pz-mm-result-desc {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--cream-dim);
+  margin: 20px 0 0;
+  text-align: left;
+}
+
+.pz-mm-why-match {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.pz-mm-why-match-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.pz-mm-why-match-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.pz-mm-wine-rec {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.pz-mm-wine-rec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.pz-mm-wine-rec-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+}
+
+.pz-mm-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.pz-mm-trait {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.pz-mm-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.pz-mm-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-mm-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.pz-mm-retake-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pz-mm-retake-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .pz-bt-board,
+  .pz-bt-result { padding: 16px; }
+  .pz-bt-clue { padding: 16px 18px; }
+  .pz-bt-guess-panel { padding: 18px; }
+  .pz-bt-result-card { padding: 24px; }
+  .pz-bt-modes { flex-direction: column; }
+  .pz-bt-actions { flex-direction: column; }
+  .pz-bt-result-actions { flex-direction: column; }
+  .pz-bt-diff-row { flex-wrap: wrap; justify-content: center; }
+
+  .pz-mm-question { padding: 16px; }
+  .pz-mm-result { padding: 16px; }
+  .pz-mm-result-card { padding: 28px 20px; }
+  .pz-mm-why-match { padding: 18px; }
+  .pz-mm-wine-rec { padding: 18px; }
+  .pz-mm-result-actions { flex-direction: column; }
+}

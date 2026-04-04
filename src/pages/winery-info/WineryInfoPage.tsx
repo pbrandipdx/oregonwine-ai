@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { REX_HILL_CONTENT } from "../../data/rex-hill-content";
 import { CROWLEY_CONTENT } from "../../data/crowley-content";
+import { PONZI_CONTENT } from "../../data/ponzi-content";
 import type {
   TastingOption,
   HoursDirections,
@@ -223,12 +224,14 @@ export function WineryInfoPage() {
   const WINERY_DISPLAY: Record<string, string> = {
     "rex-hill": "REX HILL",
     crowley: "CROWLEY WINES",
+    ponzi: "PONZI VINEYARDS",
   };
   const wineryDisplay = WINERY_DISPLAY[wineryParam] ?? wineryParam.replace(/-/g, " ").toUpperCase();
 
   const WINERY_DATA: Record<string, typeof REX_HILL_CONTENT> = {
     "rex-hill": REX_HILL_CONTENT,
     crowley: CROWLEY_CONTENT,
+    ponzi: PONZI_CONTENT,
   };
 
   const title = TOPIC_TITLES[topic] ?? "Winery Info";

@@ -14,6 +14,9 @@ import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
 import { CrowleyPartnerPage, CrowleyResearchPage } from "./pages/crowley";
+import { PonziPartnerPage, PonziResearchPage } from "./pages/ponzi";
+import { WidgetDemoPonziPage } from "./pages/WidgetDemoPonziPage";
+import { PonziBlindTasting, PonziMatchMe } from "./pages/ponzi-games";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
 import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
@@ -116,6 +119,8 @@ function AppRoutesInner() {
     location.pathname === "/rex-hill/match-me" ||
     location.pathname === "/crowley/blind-tasting" ||
     location.pathname === "/crowley/match-me" ||
+    location.pathname === "/ponzi/blind-tasting" ||
+    location.pathname === "/ponzi/match-me" ||
     location.pathname === "/plan-visit" ||
     location.pathname === "/compare" ||
     location.pathname === "/featured-winery" ||
@@ -137,6 +142,8 @@ function AppRoutesInner() {
             <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
             <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
             <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
+            <Route path="/ponzi/blind-tasting" element={<PonziBlindTasting />} />
+            <Route path="/ponzi/match-me" element={<PonziMatchMe />} />
             <Route path="/plan-visit" element={<PlanVisitPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
@@ -201,6 +208,14 @@ function AppRoutesInner() {
           <Route path="/chehalem/research" element={<ChehalemResearchPage />} />
           <Route path="/chehalem/analytics" element={<AnalyticsPage />} />
           <Route path="/chehalem/admin" element={<AdminPage />} />
+
+          <Route path="/ponzi" element={<PonziPartnerPage />} />
+          <Route path="/ponzi/demo" element={<WidgetDemoPonziPage />} />
+          <Route path="/ponzi/research" element={<PonziResearchPage />} />
+          <Route path="/ponzi/blind-tasting" element={<PonziBlindTasting />} />
+          <Route path="/ponzi/match-me" element={<PonziMatchMe />} />
+          <Route path="/ponzi/analytics" element={<AnalyticsPage />} />
+          <Route path="/ponzi/admin" element={<AdminPage />} />
 
           <Route path="/soter" element={<SoterPartnerPage />} />
           <Route path="/soter/research" element={<SoterResearchPage />} />
