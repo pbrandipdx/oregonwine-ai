@@ -7,7 +7,7 @@
   bottom: 0;
   width: 260px;
   background: var(--cn-bg, #080808);
-  border-right: 1px solid var(--cn-border, #2a2a2a);
+  border-right: none;
   display: flex;
   flex-direction: column;
   z-index: 40;
