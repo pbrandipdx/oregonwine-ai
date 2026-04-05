@@ -70,13 +70,8 @@ export function Sidebar({
   const location = useLocation();
   const path = location.pathname;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [partnerUnlocked, setPartnerUnlocked] = useState(() => sessionStorage.getItem("wp_unlocked") === "1");
 
-  // Re-check unlock state on navigation (in case they just unlocked on /winery)
-  useEffect(() => {
-    setMobileOpen(false);
-    setPartnerUnlocked(sessionStorage.getItem("wp_unlocked") === "1");
-  }, [path]);
+  useEffect(() => { setMobileOpen(false); }, [path]);
 
   const isActive = (to: string) => path === to;
   const linkClass = (to: string) =>
@@ -151,28 +146,26 @@ export function Sidebar({
             </Link>
           </div>
 
-          {/* Tools — only visible after partner unlock */}
-          {partnerUnlocked && (
-            <div className="sb-section">
-              {!collapsed && <p className="sb-section-label">Tools</p>}
-              <Link className={linkClass("/blind-tasting")} to="/blind-tasting" title="Blind Tasting">
-                <IconGamepad />
-                {!collapsed && <span className="sb-link-text">Blind Tasting</span>}
-              </Link>
-              <Link className={linkClass("/match-me")} to="/match-me" title="Match Me">
-                <IconGamepad />
-                {!collapsed && <span className="sb-link-text">Match Me</span>}
-              </Link>
-              <Link className={linkClass("/compare")} to="/compare" title="Compare">
-                <IconGrid />
-                {!collapsed && <span className="sb-link-text">Compare</span>}
-              </Link>
-              <Link className={linkClass("/plan-visit")} to="/plan-visit" title="Plan Visit">
-                <IconInfo />
-                {!collapsed && <span className="sb-link-text">Plan Visit</span>}
-              </Link>
-            </div>
-          )}
+          {/* Tools */}
+          <div className="sb-section">
+            {!collapsed && <p className="sb-section-label">Tools</p>}
+            <Link className={linkClass("/blind-tasting")} to="/blind-tasting" title="Blind Tasting">
+              <IconGamepad />
+              {!collapsed && <span className="sb-link-text">Blind Tasting</span>}
+            </Link>
+            <Link className={linkClass("/match-me")} to="/match-me" title="Match Me">
+              <IconGamepad />
+              {!collapsed && <span className="sb-link-text">Match Me</span>}
+            </Link>
+            <Link className={linkClass("/compare")} to="/compare" title="Compare">
+              <IconGrid />
+              {!collapsed && <span className="sb-link-text">Compare</span>}
+            </Link>
+            <Link className={linkClass("/plan-visit")} to="/plan-visit" title="Plan Visit">
+              <IconInfo />
+              {!collapsed && <span className="sb-link-text">Plan Visit</span>}
+            </Link>
+          </div>
         </nav>
 
         {/* Bottom */}
