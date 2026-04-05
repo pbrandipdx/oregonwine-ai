@@ -67,10 +67,29 @@ function AppRoutesInner() {
     p.endsWith("/match-me");
 
   /* Detect winery sub-pages (e.g. /rex-hill/demo, /crowley/analytics) */
-  const WINERY_SLUGS = ["rex-hill", "crowley", "chehalem", "ponzi", "soter"];
+  const WINERY_NAV: Record<string, string> = {
+    "rex-hill": "REX HILL",
+    crowley: "Crowley Wines",
+    chehalem: "Chehalem Winery",
+    ponzi: "Ponzi Vineyards",
+    soter: "Soter Vineyards",
+  };
+  const WINERY_SLUGS = Object.keys(WINERY_NAV);
   const winerySlugMatch = WINERY_SLUGS.find((s) => p.startsWith(`/${s}`));
   const isWinerySubPage = !!winerySlugMatch && p !== `/${winerySlugMatch}`;
   const isWineryRootPage = !!winerySlugMatch && p === `/${winerySlugMatch}`;
+  const wineryName = winerySlugMatch ? WINERY_NAV[winerySlugMatch] : "";
+  const winerySection = winerySlugMatch ? p.replace(`/${winerySlugMatch}`, "").replace("/", "") : "";
+
+  const WINERY_SECTIONS = [
+    { key: "", label: "Partner" },
+    { key: "demo", label: "Chat" },
+    { key: "research", label: "Research" },
+    { key: "blind-tasting", label: "Blind Tasting" },
+    { key: "match-me", label: "Match Me" },
+    { key: "analytics", label: "Analytics" },
+    { key: "admin", label: "Admin" },
+  ];
 
   // When embedded in an iframe (?embed=1), hide sidebar and remove padding
   if (isEmbed) {
@@ -108,15 +127,33 @@ function AppRoutesInner() {
         onToggle={() => setSidebarCollapsed((c) => !c)}
       />
       <div className={`app-content${sidebarCollapsed ? " app-content--collapsed" : ""}`}>
-        {/* Back-to-wineries bar on winery sub-pages */}
-        {(isWinerySubPage || isWineryRootPage) && (
-          <div className="winery-back-bar">
-            <Link to="/winery" className="winery-back-link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
-              </svg>
-              Back to Wineries
-            </Link>
+        {/* Winery navigation bar */}
+        {(isWinerySubPage || isWineryRootPage) && winerySlugMatch && (
+          <div className="winery-nav-bar">
+            <div className="winery-nav-top">
+              <Link to="/winery" className="winery-nav-back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
+                </svg>
+                All Wineries
+              </Link>
+              <span className="winery-nav-name">{wineryName}</span>
+            </div>
+            <div className="winery-nav-tabs">
+              {WINERY_SECTIONS.map((s) => {
+                const to = s.key ? `/${winerySlugMatch}/${s.key}` : `/${winerySlugMatch}`;
+                const active = winerySection === s.key;
+                return (
+                  <Link
+                    key={s.key}
+                    to={to}
+                    className={`winery-nav-tab${active ? " winery-nav-tab--active" : ""}`}
+                  >
+                    {s.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
         )}
         <main

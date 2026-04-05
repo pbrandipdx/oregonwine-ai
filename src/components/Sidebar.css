@@ -203,8 +203,36 @@
   letter-spacing: 0.04em;
 }
 
+/* ── Mobile hamburger ─────────────────────────────────────── */
+.sb-mobile-hamburger {
+  display: none;
+}
+
 /* ── Mobile ───────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .sb-mobile-hamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 50;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--cn-border, #2a2a2a);
+    background: var(--cn-bg, #080808);
+    color: var(--cn-text-secondary, #a8a39e);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .sb-mobile-hamburger:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--cn-text, #eceae8);
+  }
+
   .sb {
     transform: translateX(-100%);
     width: 280px;

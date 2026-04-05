@@ -131,7 +131,7 @@ const FEATURE_LABELS: { key: keyof WineryEntry["features"]; label: string; path:
 
 export function WineryPortfolioPage() {
   const navigate = useNavigate();
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem("wp_unlocked") === "1");
   const [pw, setPw] = useState("");
   const [shake, setShake] = useState(false);
 
@@ -139,6 +139,7 @@ export function WineryPortfolioPage() {
     e.preventDefault();
     if (pw.trim().toLowerCase() === "jory") {
       setUnlocked(true);
+      sessionStorage.setItem("wp_unlocked", "1");
     } else {
       setShake(true);
       setTimeout(() => setShake(false), 500);

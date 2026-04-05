@@ -301,33 +301,107 @@ body {
   height: min(680px, calc(100dvh - 5.75rem));
 }
 
-/* ── Winery back bar ─────────────────────────────────────── */
-.winery-back-bar {
-  padding: 10px 24px;
+/* ── Winery navigation bar ────────────────────────────────── */
+.winery-nav-bar {
   background: var(--cn-bg, #080808);
   border-bottom: 1px solid var(--cn-border, #2a2a2a);
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
-.winery-back-link {
+.winery-nav-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px 0;
+}
+
+.winery-nav-back {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-mono, "Space Mono", monospace);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--cn-text-secondary, #a8a39e);
   text-decoration: none;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
+  border: 1px solid var(--cn-border, #2a2a2a);
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
 }
 
-.winery-back-link:hover {
+.winery-nav-back:hover {
   color: var(--cn-text, #eceae8);
   background: rgba(255, 255, 255, 0.06);
+  border-color: #444;
+}
+
+.winery-nav-name {
+  font-family: var(--font-display, "Cormorant Garamond", Georgia, serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cn-text, #eceae8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.winery-nav-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 10px 24px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.winery-nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.winery-nav-tab {
+  font-family: var(--font-mono, "Space Mono", monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cn-text-secondary, #a8a39e);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.winery-nav-tab:hover {
+  color: var(--cn-text, #eceae8);
+}
+
+.winery-nav-tab--active {
+  color: var(--cn-accent, #c47a84);
+  border-bottom-color: var(--cn-accent, #c47a84);
+}
+
+.winery-nav-tab--active:hover {
+  color: var(--cn-accent, #c47a84);
+}
+
+@media (max-width: 768px) {
+  .winery-nav-top {
+    padding: 10px 16px 0;
+  }
+  .winery-nav-tabs {
+    padding: 8px 16px 0;
+  }
+  .winery-nav-name {
+    font-size: 1rem;
+  }
 }
 
 /* ── Admin (light cards on dark site — body text is light, surfaces need dark ink) ─ */
