@@ -123,9 +123,7 @@ export function CrowleyResearchPage() {
   return (
     <article className="research-page">
       <SEOHead {...winerySubPageSEO("Crowley Wines", "crowley", "research")} />
-      <Link className="back" to="/crowley">
-        ← Crowley Wines
-      </Link>
+
 
       {/* Header */}
       <header className="page-head" style={{ marginBottom: "0.5rem" }}>

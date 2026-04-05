@@ -104,8 +104,8 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
     return (
       <div className="panel panel-warn">
         <p>{err ?? "Something went wrong."}</p>
-        <Link className="btn btn-ghost" to="/">
-          ← Home
+        <Link className="btn btn-ghost" to="/winery">
+          ← Back to Wineries
         </Link>
       </div>
     );
@@ -131,9 +131,6 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
           url: winery.website || undefined,
         }}
       />
-      <Link className="back" to="/">
-        ← Home
-      </Link>
       <header className="page-head">
         <h1>{winery.name}</h1>
         {winery.ava && <p className="muted">{winery.ava}</p>}

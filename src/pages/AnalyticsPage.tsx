@@ -287,7 +287,7 @@ export function AnalyticsPage() {
           Example (public demo): <Link to="/analytics/rex-hill">/analytics/rex-hill</Link>
         </p>
         <p>
-          <Link to="/">← Home</Link>
+          <Link to="/winery">← Back to Wineries</Link>
         </p>
       </div>
     );
@@ -308,7 +308,7 @@ export function AnalyticsPage() {
         <h1>Chat Analytics</h1>
         <p style={{ color: "#b00020" }}>{wineryErr ?? "Winery not found."}</p>
         <p>
-          <Link to="/">← Home</Link>
+          <Link to="/winery">← Back to Wineries</Link>
         </p>
       </div>
     );

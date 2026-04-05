@@ -123,9 +123,7 @@ export function PonziResearchPage() {
   return (
     <article className="research-page">
       <SEOHead {...winerySubPageSEO("Ponzi Vineyards", "ponzi", "research")} />
-      <Link className="back" to="/ponzi">
-        &larr; Ponzi Vineyards
-      </Link>
+
 
       {/* Header */}
       <header className="page-head" style={{ marginBottom: "0.5rem" }}>

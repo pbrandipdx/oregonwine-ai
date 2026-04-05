@@ -153,9 +153,7 @@ export function RexHillResearchPage() {
   return (
     <article className="research-page">
       <SEOHead {...winerySubPageSEO("REX HILL", "rex-hill", "research")} />
-      <Link className="back" to="/rex-hill">
-        ← Rex Hill
-      </Link>
+
 
       {/* Header */}
       <header className="page-head" style={{ marginBottom: "0.5rem" }}>

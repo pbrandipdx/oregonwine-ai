@@ -8,9 +8,7 @@ export function ChehalemResearchPage() {
   return (
     <article className="research-page">
       <SEOHead {...winerySubPageSEO("Chehalem Winery", "chehalem", "research")} />
-      <Link className="back" to="/">
-        ← Home
-      </Link>
+
 
       <header className="page-head" style={{ marginBottom: "0.5rem" }}>
         <p className="eyebrow">Technical Research Brief</p>
