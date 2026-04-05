@@ -39,38 +39,39 @@
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
       color: var(--text);
-      padding: 3.5rem 1.5rem 4.25rem;
+      padding: clamp(5rem, 10vh, 8rem) 1.5rem clamp(5rem, 10vh, 7rem);
       text-align: left;
     }
 
     .hiw .hero-inner {
-      max-width: 40rem;
+      max-width: 44rem;
       margin: 0 auto;
     }
 
     .hiw .hero-badge {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: var(--accent);
-      margin-bottom: 1.1rem;
+      margin-bottom: 1.4rem;
     }
 
     .hiw .hero h1 {
       font-family: var(--font-display);
-      font-size: clamp(1.85rem, 4vw, 2.65rem);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
       font-weight: 600;
-      line-height: 1.14;
-      margin-bottom: 1rem;
+      line-height: 1.12;
+      margin-bottom: 1.25rem;
       letter-spacing: -0.02em;
     }
 
     .hiw .hero p {
-      font-size: 1.08rem;
+      font-size: 1.18rem;
+      line-height: 1.6;
       color: var(--muted);
-      max-width: 36rem;
+      max-width: 38rem;
       margin: 0 0 1.65rem;
     }
 

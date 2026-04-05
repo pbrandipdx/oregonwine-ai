@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { WINERY_CARD_OVERRIDES } from "../lib/wineries";
 import { SEOHead, PAGE_SEO } from "../lib/seo";
 
@@ -130,6 +130,7 @@ const FEATURE_LABELS: { key: keyof WineryEntry["features"]; label: string; path:
 ];
 
 export function WineryPortfolioPage() {
+  const navigate = useNavigate();
   const [unlocked, setUnlocked] = useState(false);
   const [pw, setPw] = useState("");
   const [shake, setShake] = useState(false);
@@ -170,6 +171,13 @@ export function WineryPortfolioPage() {
                 />
                 <button type="submit" className="wp-gate-btn">Unlock</button>
               </form>
+              <button
+                type="button"
+                className="wp-gate-back"
+                onClick={() => navigate(-1)}
+              >
+                &larr; Go Back
+              </button>
             </div>
           </div>
         </div>
@@ -245,6 +253,27 @@ export function WineryPortfolioPage() {
         }
         .wp-gate-btn:hover {
           background: #d48a94;
+        }
+        .wp-gate-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 20px;
+          padding: 8px 16px;
+          border-radius: 8px;
+          border: 1px solid #2a2a2a;
+          background: transparent;
+          color: #a8a39e;
+          font-family: "Space Mono", monospace;
+          font-size: 0.75rem;
+          letter-spacing: 0.04em;
+          cursor: pointer;
+          transition: color 0.15s, border-color 0.15s, background 0.15s;
+        }
+        .wp-gate-back:hover {
+          color: #eceae8;
+          border-color: #444;
+          background: rgba(255,255,255,0.05);
         }
         .wp-gate-shake {
           animation: wp-shake 0.4s ease;

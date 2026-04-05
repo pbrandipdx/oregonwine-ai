@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useParams, useSearchParams } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useParams, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
 import { HomePage } from "./pages/HomePage";
@@ -66,6 +66,12 @@ function AppRoutesInner() {
     p.endsWith("/blind-tasting") ||
     p.endsWith("/match-me");
 
+  /* Detect winery sub-pages (e.g. /rex-hill/demo, /crowley/analytics) */
+  const WINERY_SLUGS = ["rex-hill", "crowley", "chehalem", "ponzi", "soter"];
+  const winerySlugMatch = WINERY_SLUGS.find((s) => p.startsWith(`/${s}`));
+  const isWinerySubPage = !!winerySlugMatch && p !== `/${winerySlugMatch}`;
+  const isWineryRootPage = !!winerySlugMatch && p === `/${winerySlugMatch}`;
+
   // When embedded in an iframe (?embed=1), hide sidebar and remove padding
   if (isEmbed) {
     return (
@@ -102,6 +108,17 @@ function AppRoutesInner() {
         onToggle={() => setSidebarCollapsed((c) => !c)}
       />
       <div className={`app-content${sidebarCollapsed ? " app-content--collapsed" : ""}`}>
+        {/* Back-to-wineries bar on winery sub-pages */}
+        {(isWinerySubPage || isWineryRootPage) && (
+          <div className="winery-back-bar">
+            <Link to="/winery" className="winery-back-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 12H5" /><path d="M12 19l-7-7 7-7" />
+              </svg>
+              Back to Wineries
+            </Link>
+          </div>
+        )}
         <main
           className={
             isHomeLanding || isDemoShell
