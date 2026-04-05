@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { WINERIES, getRandomQuestions, type WineryMatch, type QuizQuestion } from "../../data/match-me-wineries";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import "./MatchMePage.css";
 
 type Phase = "home" | "quiz" | "result";
@@ -78,6 +79,7 @@ export function MatchMePage() {
 
   return (
     <div className="mm">
+      <SEOHead {...PAGE_SEO.matchMe} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="mm-home">

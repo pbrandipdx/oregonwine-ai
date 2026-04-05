@@ -8,6 +8,8 @@
     "build": "vite build",
     "build:widget": "BUILD_TARGET=widget vite build",
     "preview": "vite preview",
+    "prerender": "tsx scripts/prerender.ts",
+    "build:seo": "vite build && tsx scripts/prerender.ts",
     "design:headers": "python3 -m http.server 8765 --directory local --bind 127.0.0.1",
     "embed": "tsx scripts/embed.ts",
     "crawl": "tsx scripts/crawl.ts",

@@ -7,6 +7,7 @@ import {
   type PZQuizQuestion,
 } from "../../data/ponzi-match-me";
 import "./PonziGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 type Phase = "home" | "quiz" | "result";
 
@@ -79,6 +80,7 @@ export function PonziMatchMe() {
 
   return (
     <div className="pz-mm">
+      <SEOHead {...winerySubPageSEO("Ponzi Vineyards", "ponzi", "match-me")} />
       {/* -- Home -- */}
       {phase === "home" && (
         <div className="pz-mm-home">

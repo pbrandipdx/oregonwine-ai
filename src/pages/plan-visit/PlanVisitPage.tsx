@@ -12,6 +12,7 @@ import {
   type Winery,
   type LunchSpot,
 } from "../../data/plan-visit-data";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import "./PlanVisitPage.css";
 
 type Phase = "home" | "quiz" | "result";
@@ -233,6 +234,7 @@ export function PlanVisitPage() {
 
   return (
     <div className="pv">
+      <SEOHead {...PAGE_SEO.planVisit} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="pv-home">

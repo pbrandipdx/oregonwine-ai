@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Block admin/internal routes from crawling
+Disallow: /admin
+Disallow: /*/admin
+Disallow: /*/analytics
+Disallow: /chatbot-demo/admin
+Disallow: /chatbot-demo/analytics
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://crushpad.ai/sitemap.xml

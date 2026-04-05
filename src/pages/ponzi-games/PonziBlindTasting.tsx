@@ -11,6 +11,7 @@ import {
   type PZVintage,
 } from "../../data/ponzi-blind-tasting";
 import "./PonziGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /* -- Helpers -- */
 
@@ -128,6 +129,7 @@ export function PonziBlindTasting() {
 
   return (
     <div className="pz-bt">
+      <SEOHead {...winerySubPageSEO("Ponzi Vineyards", "ponzi", "blind-tasting")} />
       {/* -- Home -- */}
       {phase === "home" && (
         <div className="pz-bt-home">

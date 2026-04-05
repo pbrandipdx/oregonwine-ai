@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./HowItWorksPage.css";
 import "./BookDemoPage.css";
 
@@ -114,6 +115,7 @@ export function BookDemoPage() {
 
   return (
     <div className="hiw bdemo-page">
+      <SEOHead {...PAGE_SEO.bookDemo} />
       <section className="bdemo-hero" aria-labelledby="bdemo-heading">
         <div className="bdemo-hero-inner">
           <h1 id="bdemo-heading">Book a demo</h1>

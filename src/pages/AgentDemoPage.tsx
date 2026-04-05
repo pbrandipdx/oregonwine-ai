@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IMPACT_STATS } from "../impactStats";
 import { QUICK_REPLY_LABELS, type QuickReplyLabel } from "../lib/quickReplyMessages";
+import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./AgentDemoPage.css";
 
 type Intent = "tasting" | "party" | "shop" | "ask";
@@ -36,6 +37,7 @@ export function AgentDemoPage() {
 
   return (
     <div className="adp">
+      <SEOHead {...PAGE_SEO.agentDemo} />
       <div className="adp-inner">
         <header className="adp-hero">
           <div className="adp-hero-meta">

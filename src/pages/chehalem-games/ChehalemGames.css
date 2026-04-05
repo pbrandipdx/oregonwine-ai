@@ -1,0 +1,873 @@
+/* ── Chehalem Winery Blind Tasting & Match Me ── */
+/* Shared CSS with .ch- prefix, same dark theme design system */
+
+.ch-bt,
+.ch-mm {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --burgundy: #3d1528;
+  --burgundy-dim: #2a0f1c;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --forest: #2d5a3e;
+  --forest-dim: #1e3d2a;
+  --slate: #3d3d44;
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.15);
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --red: #e05555;
+  --green: #7dcda0;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  padding-bottom: 60px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   BLIND TASTING
+   ═══════════════════════════════════════════ */
+
+/* ── Home Screen ── */
+.ch-bt-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ch-bt-badge,
+.ch-mm-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.ch-bt-title,
+.ch-mm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--cream);
+}
+
+.ch-bt-subtitle,
+.ch-mm-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  max-width: 400px;
+}
+
+.ch-bt-modes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ch-bt-mode-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-mode-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.ch-bt-mode-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.ch-bt-diff-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.ch-bt-diff-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-diff-btn:hover {
+  color: var(--text-muted);
+  border-color: var(--text-dim);
+}
+
+.ch-bt-diff-btn--active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.ch-bt-start-btn,
+.ch-mm-start-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.ch-bt-start-btn:hover,
+.ch-mm-start-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.ch-bt-howto {
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.ch-bt-howto strong {
+  color: var(--text-muted);
+}
+
+/* ── Game Board ── */
+.ch-bt-board {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ch-bt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.ch-bt-round-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.ch-bt-score-display {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ch-bt-score-num {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Progress Dots ── */
+.ch-bt-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.ch-bt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+
+.ch-bt-dot--filled {
+  background: var(--accent);
+}
+
+.ch-bt-dot--current {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── Clue Cards ── */
+.ch-bt-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.ch-bt-clue {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  border-left: 3px solid var(--border);
+  animation: chClueIn 0.4s ease-out;
+}
+
+.ch-bt-clue:first-child { border-left-color: var(--accent); }
+.ch-bt-clue:nth-child(2) { border-left-color: var(--gold); }
+.ch-bt-clue:nth-child(3) { border-left-color: var(--forest); }
+.ch-bt-clue:nth-child(4) { border-left-color: #7a9ec4; }
+.ch-bt-clue:nth-child(5) { border-left-color: #b07acc; }
+
+.ch-bt-clue-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.ch-bt-clue-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+@keyframes chClueIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Guess Panel ── */
+.ch-bt-guess-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.ch-bt-guess-section {
+  margin-bottom: 20px;
+}
+
+.ch-bt-guess-section:last-of-type {
+  margin-bottom: 24px;
+}
+
+.ch-bt-guess-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.ch-bt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ch-bt-chip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ch-bt-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.ch-bt-chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.ch-bt-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.ch-bt-reveal-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-reveal-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.ch-bt-reveal-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.ch-bt-submit-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-submit-btn:hover {
+  background: #d48a94;
+}
+
+.ch-bt-submit-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ── Result Screen ── */
+.ch-bt-result {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: chFadeUp 0.5s ease-out;
+}
+
+@keyframes chFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ch-bt-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.ch-bt-result-answer {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+
+.ch-bt-result-sub {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+.ch-bt-result-score {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.ch-bt-result-max {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.ch-bt-result-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.ch-bt-bonus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ch-bt-bonus--correct {
+  color: var(--green);
+}
+
+.ch-bt-bonus--wrong {
+  color: var(--red);
+}
+
+.ch-bt-result-explain {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.ch-bt-result-explain h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 10px;
+}
+
+.ch-bt-result-explain p {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.ch-bt-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.ch-bt-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.ch-bt-play-again-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-bt-play-again-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Footer ── */
+.ch-bt-footer,
+.ch-mm-footer {
+  margin-top: auto;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.ch-bt-footer a,
+.ch-mm-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════
+   MATCH ME
+   ═══════════════════════════════════════════ */
+
+.ch-mm-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.ch-mm-home-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── Question Screen ── */
+.ch-mm-question {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: chMmFadeIn 0.35s ease-out;
+}
+
+@keyframes chMmFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ch-mm-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.ch-mm-pip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.ch-mm-pip--filled {
+  background: var(--accent);
+}
+
+.ch-mm-pip--current {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.ch-mm-q-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.ch-mm-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.ch-mm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.ch-mm-option {
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  padding: 18px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.ch-mm-option:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-dim);
+}
+
+/* ── Result Screen ── */
+.ch-mm-result {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: chMmFadeIn 0.5s ease-out;
+}
+
+.ch-mm-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 32px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.ch-mm-result-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.ch-mm-result-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  line-height: 1.1;
+}
+
+.ch-mm-result-price {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.ch-mm-result-tagline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 28px;
+}
+
+.ch-mm-result-personality {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 6px;
+  display: inline-block;
+  background: var(--accent-dim);
+}
+
+.ch-mm-result-desc {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--cream-dim);
+  margin: 20px 0 0;
+  text-align: left;
+}
+
+.ch-mm-why-match {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.ch-mm-why-match-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.ch-mm-why-match-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.ch-mm-wine-rec {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.ch-mm-wine-rec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.ch-mm-wine-rec-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+}
+
+.ch-mm-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.ch-mm-trait {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.ch-mm-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.ch-mm-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-mm-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.ch-mm-retake-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ch-mm-retake-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .ch-bt-board,
+  .ch-bt-result { padding: 16px; }
+  .ch-bt-clue { padding: 16px 18px; }
+  .ch-bt-guess-panel { padding: 18px; }
+  .ch-bt-result-card { padding: 24px; }
+  .ch-bt-modes { flex-direction: column; }
+  .ch-bt-actions { flex-direction: column; }
+  .ch-bt-result-actions { flex-direction: column; }
+  .ch-bt-diff-row { flex-wrap: wrap; justify-content: center; }
+
+  .ch-mm-question { padding: 16px; }
+  .ch-mm-result { padding: 16px; }
+  .ch-mm-result-card { padding: 28px 20px; }
+  .ch-mm-why-match { padding: 18px; }
+  .ch-mm-wine-rec { padding: 18px; }
+  .ch-mm-result-actions { flex-direction: column; }
+}

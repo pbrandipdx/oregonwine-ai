@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
 import { CRUSHPAD_DEMO_SLUG, inferWinerySlugFromPath } from "../lib/wineries";
+import { SEOHead, winerySubPageSEO } from "../lib/seo";
 
 type WineryMeta = { id: string; name: string; slug: string };
 
@@ -325,6 +326,7 @@ export function AnalyticsPage() {
 
   return (
     <div style={{ maxWidth: 960, margin: "0 auto", padding: "24px 20px", color: "#eceae8" }}>
+      <SEOHead {...winerySubPageSEO("Analytics", "analytics", "analytics")} />
       <h1 style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: "2.2rem", fontWeight: 700, marginBottom: 8 }}>Chat Analytics</h1>
       <p style={{ marginBottom: 8, fontSize: 16 }}>
         <strong>{wineryMeta.name}</strong>{" "}

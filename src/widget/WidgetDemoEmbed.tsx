@@ -79,6 +79,66 @@ export function WidgetDemoPonziEmbed() {
   );
 }
 
+/** Chehalem Winery branded demo — answers Chehalem-specific questions. */
+export function WidgetDemoChehalemEmbed() {
+  const chehalemKey = import.meta.env.VITE_WIDGET_CHEHALEM_KEY || "wk_beta_chehalem_001";
+  return (
+    <ChatWidget
+      apiKey={chehalemKey}
+      apiBase={apiBase}
+      themeColor="#c47a84"
+      wineryLabel="CHEHALEM WINERY"
+      embedded
+      embeddedChrome="panel"
+      headerLockup="full"
+      wineryUrl="https://chehalemwines.com"
+      bookingPath="/visit/"
+      clubPath="/wine-club/"
+      wineryPhone="(503) 864-3404"
+      quickReplyRoutes={{
+        "Blind Tasting": "/chehalem/blind-tasting?embed=1",
+        "Match Me": "/chehalem/match-me?embed=1",
+        Compare: "/compare?winery=chehalem&embed=1",
+        "Tasting options": "/winery-info?topic=tastings&winery=chehalem&embed=1",
+        "Hours & directions": "/winery-info?topic=hours&winery=chehalem&embed=1",
+        "Wine club info": "/winery-info?topic=club&winery=chehalem&embed=1",
+        "Food pairings": "/winery-info?topic=pairings&winery=chehalem&embed=1",
+        "Recipes": "/winery-info?topic=recipes&winery=chehalem&embed=1",
+      }}
+    />
+  );
+}
+
+/** Soter Vineyards branded demo — answers Soter-specific questions. */
+export function WidgetDemoSoterEmbed() {
+  const soterKey = import.meta.env.VITE_WIDGET_SOTER_KEY || "wk_test_soter";
+  return (
+    <ChatWidget
+      apiKey={soterKey}
+      apiBase={apiBase}
+      themeColor="#c47a84"
+      wineryLabel="SOTER VINEYARDS"
+      embedded
+      embeddedChrome="panel"
+      headerLockup="full"
+      wineryUrl="https://sotervineyards.com"
+      bookingPath="/visit-soter-vineyards/"
+      clubPath="/wine-club/"
+      wineryPhone="(503) 662-5600"
+      quickReplyRoutes={{
+        "Blind Tasting": "/soter/blind-tasting?embed=1",
+        "Match Me": "/soter/match-me?embed=1",
+        Compare: "/compare?winery=soter&embed=1",
+        "Tasting options": "/winery-info?topic=tastings&winery=soter&embed=1",
+        "Hours & directions": "/winery-info?topic=hours&winery=soter&embed=1",
+        "Wine club info": "/winery-info?topic=club&winery=soter&embed=1",
+        "Food pairings": "/winery-info?topic=pairings&winery=soter&embed=1",
+        "Recipes": "/winery-info?topic=recipes&winery=soter&embed=1",
+      }}
+    />
+  );
+}
+
 /** Rex Hill branded demo — answers Rex Hill-specific questions. */
 export function WidgetDemoRexHillEmbed() {
   const rexHillKey = import.meta.env.VITE_WIDGET_TEST_KEY || "wk_test_rexhill";

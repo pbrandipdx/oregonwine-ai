@@ -7,6 +7,7 @@ import {
   type RHQuizQuestion,
 } from "../../data/rex-hill-match-me";
 import "./RexHillGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 type Phase = "home" | "quiz" | "result";
 
@@ -80,6 +81,7 @@ export function RexHillMatchMe() {
 
   return (
     <div className="rh-mm">
+      <SEOHead {...winerySubPageSEO("REX HILL", "rex-hill", "match-me")} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="rh-mm-home">

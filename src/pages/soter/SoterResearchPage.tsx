@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /**
  * Draft technical brief — expand with verified stack / DNS research (Rex Hill pattern).
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 export function SoterResearchPage() {
   return (
     <article className="research-page">
+      <SEOHead {...winerySubPageSEO("Soter Vineyards", "soter", "research")} />
       <Link className="back" to="/">
         ← Home
       </Link>

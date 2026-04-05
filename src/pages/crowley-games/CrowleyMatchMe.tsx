@@ -7,6 +7,7 @@ import {
   type CWQuizQuestion,
 } from "../../data/crowley-match-me";
 import "./CrowleyGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 type Phase = "home" | "quiz" | "result";
 
@@ -80,6 +81,7 @@ export function CrowleyMatchMe() {
 
   return (
     <div className="cw-mm">
+      <SEOHead {...winerySubPageSEO("Crowley Wines", "crowley", "match-me")} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="cw-mm-home">

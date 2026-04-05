@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /**
  * Placeholder technical brief for winery #2 — expand with verified DNS/HTML research like Rex Hill.
@@ -6,6 +7,7 @@ import { Link } from "react-router-dom";
 export function ChehalemResearchPage() {
   return (
     <article className="research-page">
+      <SEOHead {...winerySubPageSEO("Chehalem Winery", "chehalem", "research")} />
       <Link className="back" to="/">
         ← Home
       </Link>

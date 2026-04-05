@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import {
   CATEGORIES,
   COMPARISONS,
@@ -19,6 +20,14 @@ import {
   PZ_CATEGORIES,
   PZ_COMPARISONS,
 } from "../../data/ponzi-compare-data";
+import {
+  CH_CATEGORIES,
+  CH_COMPARISONS,
+} from "../../data/chehalem-compare-data";
+import {
+  ST_CATEGORIES,
+  ST_COMPARISONS,
+} from "../../data/soter-compare-data";
 import "./ComparePage.css";
 
 type Phase = "category" | "matchup" | "result";
@@ -50,6 +59,24 @@ const WINERY_CONFIG: Record<string, { categories: CategoryOption[]; comparisons:
     title: "Compare \u2014 Ponzi Vineyards",
     backPath: "/ponzi/demo",
     backLabel: "Back to Ponzi Vineyards",
+  },
+  chehalem: {
+    categories: CH_CATEGORIES,
+    comparisons: CH_COMPARISONS,
+    badge: "CHEHALEM WINERY \u00b7 Wine Agent",
+    subtitle: "Explore Chehalem\u2019s vineyards, wines, and experiences side by side.",
+    title: "Compare \u2014 Chehalem Winery",
+    backPath: "/chehalem/demo",
+    backLabel: "Back to Chehalem Winery",
+  },
+  soter: {
+    categories: ST_CATEGORIES,
+    comparisons: ST_COMPARISONS,
+    badge: "SOTER VINEYARDS \u00b7 Wine Agent",
+    subtitle: "Explore Soter\u2019s vineyards, wines, and philosophy side by side.",
+    title: "Compare \u2014 Soter Vineyards",
+    backPath: "/soter/demo",
+    backLabel: "Back to Soter Vineyards",
   },
 };
 
@@ -124,6 +151,7 @@ export function ComparePage() {
 
   return (
     <div className="cmp">
+      <SEOHead {...PAGE_SEO.compare} />
       {/* ── Back button ── */}
       {phase !== "category" && (
         <button className="cmp-back" onClick={goBack}>

@@ -11,6 +11,7 @@ import {
   type CWVintage,
 } from "../../data/crowley-blind-tasting";
 import "./CrowleyGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /* ── Helpers ── */
 
@@ -128,6 +129,7 @@ export function CrowleyBlindTasting() {
 
   return (
     <div className="cw-bt">
+      <SEOHead {...winerySubPageSEO("Crowley Wines", "crowley", "blind-tasting")} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="cw-bt-home">

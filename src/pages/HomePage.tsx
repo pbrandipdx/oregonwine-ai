@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { IMPACT_STATS } from "../impactStats";
+import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./HowItWorksPage.css";
 
 export function HomePage() {
   return (
     <div className="hiw">
+      <SEOHead {...PAGE_SEO.home} />
       <section className="hero">
         <div className="hero-inner">
           <p className="hero-badge">Built for wineries &amp; tasting rooms</p>

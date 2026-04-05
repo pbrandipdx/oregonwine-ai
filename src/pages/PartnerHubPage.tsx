@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useWineryDirectory } from "../contexts/WineryDirectoryContext";
 import { WINERY_CARD_OVERRIDES } from "../lib/wineries";
+import { SEOHead } from "../lib/seo";
 
 function regionLine(w: {
   slug: string;
@@ -31,6 +32,11 @@ export function PartnerHubPage() {
 
   return (
     <div className="landing-page">
+      <SEOHead
+        title="Partner Wineries"
+        description="Crushpad.ai partner wineries in the Willamette Valley. AI-powered tasting assistants for Oregon's best Pinot Noir producers."
+        path="/partners"
+      />
       <section className="landing-hero landing-hero--minimal" aria-labelledby="hub-title">
         <div className="landing-hero-inner">
           <p className="landing-badge landing-badge--minimal">Partner directory</p>

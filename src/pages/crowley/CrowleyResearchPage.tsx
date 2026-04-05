@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /* ── static research data ─────────────────────────────────────────────── */
 
@@ -121,6 +122,7 @@ const INTEGRATION_STAGES: {
 export function CrowleyResearchPage() {
   return (
     <article className="research-page">
+      <SEOHead {...winerySubPageSEO("Crowley Wines", "crowley", "research")} />
       <Link className="back" to="/crowley">
         ← Crowley Wines
       </Link>

@@ -12,7 +12,11 @@ import { AdminPage } from "./pages/AdminPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
+import { WidgetDemoChehalemPage } from "./pages/WidgetDemoChehalemPage";
+import { ChehalemBlindTasting, ChehalemMatchMe } from "./pages/chehalem-games";
 import { SoterPartnerPage, SoterResearchPage } from "./pages/soter";
+import { WidgetDemoSoterPage } from "./pages/WidgetDemoSoterPage";
+import { SoterBlindTasting, SoterMatchMe } from "./pages/soter-games";
 import { CrowleyPartnerPage, CrowleyResearchPage } from "./pages/crowley";
 import { PonziPartnerPage, PonziResearchPage } from "./pages/ponzi";
 import { WidgetDemoPonziPage } from "./pages/WidgetDemoPonziPage";
@@ -122,6 +126,10 @@ function AppRoutesInner() {
     location.pathname === "/crowley/match-me" ||
     location.pathname === "/ponzi/blind-tasting" ||
     location.pathname === "/ponzi/match-me" ||
+    location.pathname === "/chehalem/blind-tasting" ||
+    location.pathname === "/chehalem/match-me" ||
+    location.pathname === "/soter/blind-tasting" ||
+    location.pathname === "/soter/match-me" ||
     location.pathname === "/plan-visit" ||
     location.pathname === "/compare" ||
     location.pathname === "/featured-winery" ||
@@ -145,6 +153,10 @@ function AppRoutesInner() {
             <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
             <Route path="/ponzi/blind-tasting" element={<PonziBlindTasting />} />
             <Route path="/ponzi/match-me" element={<PonziMatchMe />} />
+            <Route path="/chehalem/blind-tasting" element={<ChehalemBlindTasting />} />
+            <Route path="/chehalem/match-me" element={<ChehalemMatchMe />} />
+            <Route path="/soter/blind-tasting" element={<SoterBlindTasting />} />
+            <Route path="/soter/match-me" element={<SoterMatchMe />} />
             <Route path="/plan-visit" element={<PlanVisitPage />} />
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
@@ -207,7 +219,10 @@ function AppRoutesInner() {
           <Route path="/crowley/admin" element={<AdminPage />} />
 
           <Route path="/chehalem" element={<ChehalemPartnerPage />} />
+          <Route path="/chehalem/demo" element={<WidgetDemoChehalemPage />} />
           <Route path="/chehalem/research" element={<ChehalemResearchPage />} />
+          <Route path="/chehalem/blind-tasting" element={<ChehalemBlindTasting />} />
+          <Route path="/chehalem/match-me" element={<ChehalemMatchMe />} />
           <Route path="/chehalem/analytics" element={<AnalyticsPage />} />
           <Route path="/chehalem/admin" element={<AdminPage />} />
 
@@ -220,7 +235,10 @@ function AppRoutesInner() {
           <Route path="/ponzi/admin" element={<AdminPage />} />
 
           <Route path="/soter" element={<SoterPartnerPage />} />
+          <Route path="/soter/demo" element={<WidgetDemoSoterPage />} />
           <Route path="/soter/research" element={<SoterResearchPage />} />
+          <Route path="/soter/blind-tasting" element={<SoterBlindTasting />} />
+          <Route path="/soter/match-me" element={<SoterMatchMe />} />
           <Route path="/soter/analytics" element={<AnalyticsPage />} />
           <Route path="/soter/admin" element={<AdminPage />} />
 

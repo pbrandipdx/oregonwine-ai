@@ -11,6 +11,7 @@ import {
   type RHVintage,
 } from "../../data/rex-hill-blind-tasting";
 import "./RexHillGames.css";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 
 /* ── Helpers ── */
 
@@ -128,6 +129,7 @@ export function RexHillBlindTasting() {
 
   return (
     <div className="rh-bt">
+      <SEOHead {...winerySubPageSEO("REX HILL", "rex-hill", "blind-tasting")} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="rh-bt-home">

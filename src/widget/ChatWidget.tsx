@@ -516,6 +516,18 @@ export function ChatWidget({
     async (text: string) => {
       const trimmed = text.trim();
       if (!trimmed || loading) return;
+
+      // Intercept quick-reply labels that map to inline game/info pages —
+      // load the page directly without sending a chat message (prevents flash).
+      const interceptRoute = quickReplyRoutes?.[trimmed];
+      if (interceptRoute) {
+        setGameView(interceptRoute);
+        setShowLanding(false);
+        setLandingExiting(false);
+        setInput("");
+        return;
+      }
+
       if (!apiBase) {
         setError("Missing API configuration.");
         return;
@@ -584,7 +596,7 @@ export function ChatWidget({
         setLoading(false);
       }
     },
-    [apiBase, apiKey, loading, messages, sessionId, wineryLabel, activeMode]
+    [apiBase, apiKey, loading, messages, sessionId, wineryLabel, activeMode, quickReplyRoutes]
   );
 
   /** Agent demo / host pages can trigger the same send pipeline as the composer (e.g. left-rail discovery card). */

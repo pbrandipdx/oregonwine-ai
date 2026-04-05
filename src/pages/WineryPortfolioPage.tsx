@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { WINERY_CARD_OVERRIDES } from "../lib/wineries";
+import { SEOHead, PAGE_SEO } from "../lib/seo";
 
 /* ── Per-winery feature flags (what's actually built) ── */
 
@@ -85,12 +86,12 @@ const WINERIES: WineryEntry[] = [
     established: 1990,
     features: {
       partner: true,
-      chat: false,
+      chat: true,
       research: true,
-      blindTasting: false,
-      matchMe: false,
-      compare: false,
-      wineryInfo: false,
+      blindTasting: true,
+      matchMe: true,
+      compare: true,
+      wineryInfo: true,
       analytics: true,
       admin: true,
     },
@@ -103,12 +104,12 @@ const WINERIES: WineryEntry[] = [
     established: 1997,
     features: {
       partner: true,
-      chat: false,
+      chat: true,
       research: true,
-      blindTasting: false,
-      matchMe: false,
-      compare: false,
-      wineryInfo: false,
+      blindTasting: true,
+      matchMe: true,
+      compare: true,
+      wineryInfo: true,
       analytics: true,
       admin: true,
     },
@@ -134,6 +135,7 @@ export function WineryPortfolioPage() {
 
   return (
     <article className="winery-portfolio">
+      <SEOHead {...PAGE_SEO.wineryPortfolio} />
       <style>{`
         .winery-portfolio {
           max-width: 960px;

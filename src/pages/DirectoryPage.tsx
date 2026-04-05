@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
 import { formatCents } from "../lib/format";
+import { SEOHead } from "../lib/seo";
 
 type WineryRow = {
   id: string;
@@ -60,6 +61,11 @@ export function DirectoryPage() {
 
   return (
     <div>
+      <SEOHead
+        title="Oregon Winery Directory"
+        description="Browse Willamette Valley wineries on Crushpad.ai. Find tasting rooms, reserve visits, and discover Oregon Pinot Noir experiences powered by AI."
+        path="/directory"
+      />
       <header className="page-head">
         <h1>Winery directory</h1>
         <p className="muted">Public listings (RLS read). Partner widgets use their own API keys.</p>

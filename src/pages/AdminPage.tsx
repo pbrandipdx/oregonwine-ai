@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
+import { SEOHead, winerySubPageSEO } from "../lib/seo";
 
 type Winery = { id: string; name: string; slug: string };
 
@@ -263,6 +264,7 @@ export function AdminPage() {
 
   return (
     <div className="admin-page">
+      <SEOHead {...winerySubPageSEO("Admin", "admin", "admin")} />
       <h1>Winery Admin</h1>
       <p className="admin-intro">
         Add facts to teach the chatbot, review unanswered questions, and sync to

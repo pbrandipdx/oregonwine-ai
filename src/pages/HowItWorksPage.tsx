@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { IMPACT_STATS } from "../impactStats";
+import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./HowItWorksPage.css";
 
 export function HowItWorksPage() {
   return (
     <div className="hiw">
+      <SEOHead {...PAGE_SEO.howItWorks} />
       <div className="container">
         <div className="section">
           <h2>The Problem Every Winery Knows</h2>

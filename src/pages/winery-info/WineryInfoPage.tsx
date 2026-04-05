@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import { REX_HILL_CONTENT } from "../../data/rex-hill-content";
 import { CROWLEY_CONTENT } from "../../data/crowley-content";
 import { PONZI_CONTENT } from "../../data/ponzi-content";
+import { CHEHALEM_CONTENT } from "../../data/chehalem-content";
+import { SOTER_CONTENT } from "../../data/soter-content";
 import type {
   TastingOption,
   HoursDirections,
@@ -245,6 +248,8 @@ export function WineryInfoPage() {
     "rex-hill": "REX HILL",
     crowley: "CROWLEY WINES",
     ponzi: "PONZI VINEYARDS",
+    chehalem: "CHEHALEM WINERY",
+    soter: "SOTER VINEYARDS",
   };
   const wineryDisplay = WINERY_DISPLAY[wineryParam] ?? wineryParam.replace(/-/g, " ").toUpperCase();
 
@@ -252,6 +257,8 @@ export function WineryInfoPage() {
     "rex-hill": REX_HILL_CONTENT,
     crowley: CROWLEY_CONTENT,
     ponzi: PONZI_CONTENT,
+    chehalem: CHEHALEM_CONTENT,
+    soter: SOTER_CONTENT,
   };
 
   const title = TOPIC_TITLES[topic] ?? "Winery Info";
@@ -268,6 +275,7 @@ export function WineryInfoPage() {
 
   return (
     <div className="wi">
+      <SEOHead {...PAGE_SEO.wineryInfo} />
       {/* Hero / header */}
       <div className="wi-hero">
         <p className="wi-badge">

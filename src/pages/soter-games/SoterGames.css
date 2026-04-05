@@ -1,0 +1,873 @@
+/* ── Crowley Wines Blind Tasting & Match Me ── */
+/* Shared CSS with .st- prefix, same dark theme design system */
+
+.st-bt,
+.st-mm {
+  --bg: #080808;
+  --surface: #111;
+  --surface2: #1a1a1a;
+  --burgundy: #3d1528;
+  --burgundy-dim: #2a0f1c;
+  --cream: #f5efe6;
+  --cream-dim: #d4cec5;
+  --forest: #2d5a3e;
+  --forest-dim: #1e3d2a;
+  --slate: #3d3d44;
+  --gold: #c9a94e;
+  --gold-dim: rgba(201, 169, 78, 0.15);
+  --accent: #c47a84;
+  --accent-dim: rgba(196, 122, 132, 0.12);
+  --text: #eceae8;
+  --text-muted: #a8a39e;
+  --text-dim: #666;
+  --border: #222;
+  --red: #e05555;
+  --green: #7dcda0;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  min-height: 100vh;
+  padding-bottom: 60px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════
+   BLIND TASTING
+   ═══════════════════════════════════════════ */
+
+/* ── Home Screen ── */
+.st-bt-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.st-bt-badge,
+.st-mm-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.st-bt-title,
+.st-mm-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--cream);
+}
+
+.st-bt-subtitle,
+.st-mm-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 40px;
+  max-width: 400px;
+}
+
+.st-bt-modes {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.st-bt-mode-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-mode-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.st-bt-mode-btn--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.st-bt-diff-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.st-bt-diff-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-diff-btn:hover {
+  color: var(--text-muted);
+  border-color: var(--text-dim);
+}
+
+.st-bt-diff-btn--active {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.st-bt-start-btn,
+.st-mm-start-btn {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 16px 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+.st-bt-start-btn:hover,
+.st-mm-start-btn:hover {
+  background: #d48a94;
+  transform: translateY(-1px);
+}
+
+.st-bt-howto {
+  margin-top: 40px;
+  font-size: 13px;
+  color: var(--text-dim);
+  max-width: 440px;
+  line-height: 1.7;
+}
+
+.st-bt-howto strong {
+  color: var(--text-muted);
+}
+
+/* ── Game Board ── */
+.st-bt-board {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.st-bt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.st-bt-round-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.st-bt-score-display {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.st-bt-score-num {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Progress Dots ── */
+.st-bt-progress {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.st-bt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: all 0.3s;
+}
+
+.st-bt-dot--filled {
+  background: var(--accent);
+}
+
+.st-bt-dot--current {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* ── Clue Cards ── */
+.st-bt-clues {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.st-bt-clue {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 24px;
+  border-left: 3px solid var(--border);
+  animation: stClueIn 0.4s ease-out;
+}
+
+.st-bt-clue:first-child { border-left-color: var(--accent); }
+.st-bt-clue:nth-child(2) { border-left-color: var(--gold); }
+.st-bt-clue:nth-child(3) { border-left-color: var(--forest); }
+.st-bt-clue:nth-child(4) { border-left-color: #7a9ec4; }
+.st-bt-clue:nth-child(5) { border-left-color: #b07acc; }
+
+.st-bt-clue-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.st-bt-clue-text {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+@keyframes stClueIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Guess Panel ── */
+.st-bt-guess-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.st-bt-guess-section {
+  margin-bottom: 20px;
+}
+
+.st-bt-guess-section:last-of-type {
+  margin-bottom: 24px;
+}
+
+.st-bt-guess-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.st-bt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.st-bt-chip {
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.st-bt-chip:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.st-bt-chip--selected {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  color: var(--cream);
+}
+
+.st-bt-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.st-bt-reveal-btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-reveal-btn:hover {
+  border-color: var(--text-dim);
+  color: var(--text);
+}
+
+.st-bt-reveal-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.st-bt-submit-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-submit-btn:hover {
+  background: #d48a94;
+}
+
+.st-bt-submit-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ── Result Screen ── */
+.st-bt-result {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: cwFadeUp 0.5s ease-out;
+}
+
+@keyframes cwFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.st-bt-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.st-bt-result-answer {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+}
+
+.st-bt-result-sub {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-muted);
+  margin: 0 0 24px;
+}
+
+.st-bt-result-score {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.st-bt-result-max {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+
+.st-bt-result-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.st-bt-bonus {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.st-bt-bonus--correct {
+  color: var(--green);
+}
+
+.st-bt-bonus--wrong {
+  color: var(--red);
+}
+
+.st-bt-result-explain {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.st-bt-result-explain h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 10px;
+}
+
+.st-bt-result-explain p {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.st-bt-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.st-bt-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.st-bt-play-again-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-bt-play-again-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Footer ── */
+.st-bt-footer,
+.st-mm-footer {
+  margin-top: auto;
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.st-bt-footer a,
+.st-mm-footer a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════
+   MATCH ME
+   ═══════════════════════════════════════════ */
+
+.st-mm-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.st-mm-home-hint {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+/* ── Question Screen ── */
+.st-mm-question {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: cwMmFadeIn 0.35s ease-out;
+}
+
+@keyframes cwMmFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.st-mm-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 40px;
+}
+
+.st-mm-pip {
+  width: 40px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.st-mm-pip--filled {
+  background: var(--accent);
+}
+
+.st-mm-pip--current {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.st-mm-q-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+.st-mm-q-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 32px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.st-mm-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.st-mm-option {
+  font-family: var(--font-body);
+  font-size: 15px;
+  text-align: left;
+  padding: 18px 24px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+
+.st-mm-option:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  background: var(--accent-dim);
+}
+
+/* ── Result Screen ── */
+.st-mm-result {
+  width: 100%;
+  max-width: 580px;
+  padding: 24px;
+  margin: 0 auto;
+  animation: cwMmFadeIn 0.5s ease-out;
+}
+
+.st-mm-result-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 40px 32px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.st-mm-result-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+
+.st-mm-result-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0 0 4px;
+  line-height: 1.1;
+}
+
+.st-mm-result-price {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin: 0 0 8px;
+}
+
+.st-mm-result-tagline {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold);
+  margin: 0 0 28px;
+}
+
+.st-mm-result-personality {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--accent-dim);
+  border-radius: 6px;
+  display: inline-block;
+  background: var(--accent-dim);
+}
+
+.st-mm-result-desc {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--cream-dim);
+  margin: 20px 0 0;
+  text-align: left;
+}
+
+.st-mm-why-match {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.st-mm-why-match-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.st-mm-why-match-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.st-mm-wine-rec {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.st-mm-wine-rec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+
+.st-mm-wine-rec-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin: 0;
+}
+
+.st-mm-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.st-mm-trait {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+
+.st-mm-result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.st-mm-share-btn {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-mm-share-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.st-mm-retake-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-mm-retake-btn:hover {
+  background: #d48a94;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .st-bt-board,
+  .st-bt-result { padding: 16px; }
+  .st-bt-clue { padding: 16px 18px; }
+  .st-bt-guess-panel { padding: 18px; }
+  .st-bt-result-card { padding: 24px; }
+  .st-bt-modes { flex-direction: column; }
+  .st-bt-actions { flex-direction: column; }
+  .st-bt-result-actions { flex-direction: column; }
+  .st-bt-diff-row { flex-wrap: wrap; justify-content: center; }
+
+  .st-mm-question { padding: 16px; }
+  .st-mm-result { padding: 16px; }
+  .st-mm-result-card { padding: 28px 20px; }
+  .st-mm-why-match { padding: 18px; }
+  .st-mm-wine-rec { padding: 18px; }
+  .st-mm-result-actions { flex-direction: column; }
+}

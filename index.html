@@ -3,24 +3,192 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crushpad.ai</title>
+
+    <!-- PRIMARY SEO TAGS -->
+    <title>Crushpad.ai | AI-Powered Wine Concierge for Oregon Wineries</title>
+    <meta name="description" content="Crushpad.ai gives every Oregon winery an AI-powered chatbot trained on your wines, hours, and experiences. Visitors get instant answers, you get more bookings." />
+    <meta name="keywords" content="Oregon wine, AI wine concierge, Oregon wineries, Willamette Valley wine, winery chatbot, wine tasting Oregon, Oregon Pinot Noir, wine country Oregon" />
+    <meta name="author" content="Crushpad.ai" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://crushpad.ai/" />
+
+    <!-- LANGUAGE -->
+    <meta http-equiv="content-language" content="en-US" />
+    <link rel="alternate" hreflang="en-us" href="https://crushpad.ai/" />
+
+    <!-- OPEN GRAPH (Facebook, LinkedIn, iMessage) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://crushpad.ai/" />
+    <meta property="og:title" content="Crushpad.ai | AI-Powered Wine Concierge for Oregon Wineries" />
+    <meta property="og:description" content="AI chatbots for wineries that drive visits and revenue. Trained on your wines, hours, and experiences." />
+    <meta property="og:image" content="https://crushpad.ai/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Crushpad.ai" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- TWITTER CARD -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://crushpad.ai/" />
+    <meta name="twitter:title" content="Crushpad.ai | AI-Powered Wine Concierge for Oregon Wineries" />
+    <meta name="twitter:description" content="AI chatbots for wineries that drive visits and revenue. Trained on your wines, hours, and experiences." />
+    <meta name="twitter:image" content="https://crushpad.ai/og-image.jpg" />
+
+    <!-- SCHEMA: Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Crushpad.ai",
+      "url": "https://crushpad.ai",
+      "logo": "https://crushpad.ai/logo.png",
+      "description": "AI-powered wine concierge platform for Oregon wineries. Chatbots trained on your wines, hours, and tasting experiences to drive visits and revenue.",
+      "sameAs": [],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@crushpad.ai",
+        "contactType": "sales"
+      }
+    }
+    </script>
+
+    <!-- SCHEMA: WebSite with SearchAction -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Crushpad.ai",
+      "url": "https://crushpad.ai",
+      "description": "AI-powered wine concierge for Oregon wineries and tasting rooms",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://crushpad.ai/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- SCHEMA: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Crushpad.ai Wine Concierge",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "AI-powered chatbot platform for wineries. Trained on your wines, tasting notes, hours, and events to answer visitor questions 24/7.",
+      "offers": {
+        "@type": "Offer",
+        "category": "SaaS"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "Crushpad.ai",
+        "url": "https://crushpad.ai"
+      }
+    }
+    </script>
+
+    <!-- SCHEMA: FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Crushpad.ai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Crushpad.ai is an AI-powered wine concierge platform that gives every winery a 24/7 chatbot trained on their specific wines, tasting notes, hours, and experiences. Visitors get instant, accurate answers and wineries get more bookings and visits."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Crushpad.ai work for wineries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Crushpad.ai crawls your winery website, ingests your wine data, tasting notes, hours, and events, then creates a custom AI chatbot widget that can be embedded on your site. The chatbot answers visitor questions about your wines, recommends pairings, helps plan visits, and drives tasting room bookings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Oregon wineries use Crushpad.ai?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Crushpad.ai works with Willamette Valley wineries including REX HILL Winery, Ponzi Vineyards, Crowley Wines, Chehalem Winery, and Soter Vineyards. The platform is designed for Oregon wineries of all sizes across every AVA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What wine regions does Crushpad.ai cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Crushpad.ai currently focuses on Oregon's Willamette Valley wine region, including the Dundee Hills, Chehalem Mountains, Laurelwood District, Yamhill-Carlton, Eola-Amity Hills, Ribbon Ridge, and McMinnville AVAs. We're expanding to cover all 23 Oregon AVAs."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- PERFORMANCE: Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
+    <!-- FONTS -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@500;600;700&family=Newsreader:wght@400;500;600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
+
+    <!-- FAVICON (update these paths when you have actual favicons) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   </head>
   <body>
     <div id="root">
-      <p style="margin: 2rem; font-family: 'Space Mono', monospace; color: #a8a39e; background: #080808">
-        Loading Crushpad.ai… If this never disappears, open the console (⌥⌘J) and ensure you are on
-        <strong> http://localhost:5173 </strong> (run <code>npm run dev</code>), not a
-        <code>file://</code> URL.
-      </p>
+      <!-- SEO: Crawlable fallback content for search engines that don't execute JS -->
+      <div id="seo-fallback">
+        <h1>Crushpad.ai — AI-Powered Wine Concierge for Oregon Wineries</h1>
+        <p>
+          Crushpad.ai gives every Oregon winery an AI-powered chatbot trained on your wines, hours,
+          and tasting experiences — so visitors get instant answers and you get more bookings.
+        </p>
+        <h2>Oregon Winery Partners</h2>
+        <ul>
+          <li><a href="/rex-hill">REX HILL Winery &amp; Vineyards</a> — Laurelwood District, Willamette Valley</li>
+          <li><a href="/ponzi">Ponzi Vineyards</a> — Laurelwood District, Chehalem Mountains, Willamette Valley</li>
+          <li><a href="/crowley">Crowley Wines</a> — McMinnville / Dundee Hills / Eola-Amity Hills</li>
+          <li><a href="/chehalem">Chehalem Winery</a> — Chehalem Mountains AVA, Willamette Valley</li>
+          <li><a href="/soter">Soter Vineyards</a> — Mineral Springs Ranch, Yamhill-Carlton AVA</li>
+        </ul>
+        <h2>Features</h2>
+        <ul>
+          <li><a href="/how-it-works">How it works</a> — See how AI transforms winery websites</li>
+          <li><a href="/chatbot-demo">Chatbot demo</a> — Try the AI wine concierge live</li>
+          <li><a href="/agent-demo">Agent demo</a> — Experience the AI agent in action</li>
+          <li><a href="/blind-tasting">Blind tasting</a> — Test your palate with AI</li>
+          <li><a href="/match-me">Wine match</a> — Get AI-powered wine recommendations</li>
+          <li><a href="/plan-visit">Plan a visit</a> — AI-assisted wine country trip planning</li>
+          <li><a href="/compare">Compare wines</a> — Side-by-side wine comparison tool</li>
+          <li><a href="/book-demo">Book a demo</a> — Schedule a demo for your winery</li>
+        </ul>
+        <h2>Oregon Wine Regions</h2>
+        <p>
+          Crushpad.ai serves wineries across Oregon's premier wine regions including the Willamette Valley,
+          Dundee Hills, Chehalem Mountains, Yamhill-Carlton, Eola-Amity Hills, McMinnville, Ribbon Ridge,
+          Laurelwood District, and Southern Oregon AVAs. Oregon is the nation's third-largest wine-producing
+          state with over 700 wineries across 23 American Viticultural Areas.
+        </p>
+        <footer>
+          <p>&copy; 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for Oregon wineries</p>
+        </footer>
+      </div>
     </div>
     <noscript>
-      <p style="margin: 2rem">Enable JavaScript to run this app.</p>
+      <h1>Crushpad.ai — AI-Powered Wine Concierge for Oregon Wineries</h1>
+      <p>Crushpad.ai gives every winery an AI-powered chatbot trained on your wines, hours, and experiences. Enable JavaScript to use the full application.</p>
     </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>

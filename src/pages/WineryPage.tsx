@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
 import { formatCents } from "../lib/format";
+import { SEOHead } from "../lib/seo";
 
 type Winery = {
   id: string;
@@ -116,6 +117,20 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
 
   return (
     <article className="winery-detail">
+      <SEOHead
+        title={`${winery.name} — Winery Details`}
+        description={winery.description || `Visit ${winery.name} in the Willamette Valley. Tasting room details, hours, and AI-powered concierge powered by Crushpad.ai.`}
+        path={`/winery/${slug}`}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Winery",
+          name: winery.name,
+          description: winery.description || undefined,
+          address: winery.address ? { "@type": "PostalAddress", streetAddress: winery.address, addressLocality: winery.city, addressRegion: winery.state } : undefined,
+          telephone: winery.phone || undefined,
+          url: winery.website || undefined,
+        }}
+      />
       <Link className="back" to="/">
         ← Home
       </Link>
@@ -229,6 +244,20 @@ export function WineryPage({ slug: slugProp }: WineryPageProps = {}) {
         <p style={{ marginTop: "1rem" }}>
           <Link className="btn" to="/ponzi/demo">
             Try the Ponzi Vineyards chat
+          </Link>
+        </p>
+      )}
+      {winery.slug === "chehalem" && (
+        <p style={{ marginTop: "1rem" }}>
+          <Link className="btn" to="/chehalem/demo">
+            Try the Chehalem Winery chat
+          </Link>
+        </p>
+      )}
+      {winery.slug === "soter" && (
+        <p style={{ marginTop: "1rem" }}>
+          <Link className="btn" to="/soter/demo">
+            Try the Soter Vineyards chat
           </Link>
         </p>
       )}

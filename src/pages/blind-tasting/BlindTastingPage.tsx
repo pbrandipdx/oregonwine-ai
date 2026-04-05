@@ -10,6 +10,7 @@ import {
   type AVA,
   type Style,
 } from "../../data/blind-tasting-wines";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import "./BlindTastingPage.css";
 
 /* ── Helpers ── */
@@ -128,6 +129,7 @@ export function BlindTastingPage() {
 
   return (
     <div className="bt">
+      <SEOHead {...PAGE_SEO.blindTasting} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="bt-home">

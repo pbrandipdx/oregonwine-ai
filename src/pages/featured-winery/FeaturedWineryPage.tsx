@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FEATURED_WINERIES, type FeaturedWinery } from "../../data/featured-wineries";
+import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import "./FeaturedWineryPage.css";
 
 function pickRandom(exclude?: string): FeaturedWinery {
@@ -31,6 +32,7 @@ export function FeaturedWineryPage() {
 
   return (
     <div className="fw">
+      <SEOHead {...PAGE_SEO.featuredWinery} />
       {/* ── Hero ── */}
       <div className="fw-hero" key={winery.id}>
         <p className="fw-badge">Crushpad.ai &middot; Featured Winery</p>
