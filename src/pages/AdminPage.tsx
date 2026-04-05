@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { supabase, supabaseEnvHint } from "../lib/supabase";
+import { inferWinerySlugFromPath, CRUSHPAD_DEMO_SLUG } from "../lib/wineries";
 import { SEOHead, winerySubPageSEO } from "../lib/seo";
 
 type Winery = { id: string; name: string; slug: string };
@@ -95,6 +97,11 @@ const CATEGORIES = [
 ];
 
 export function AdminPage() {
+  const location = useLocation();
+  const urlSlug = inferWinerySlugFromPath(location.pathname);
+  /* When accessed via /{slug}/admin, lock to that winery */
+  const lockedSlug = urlSlug && urlSlug !== CRUSHPAD_DEMO_SLUG ? urlSlug : null;
+
   const [allWineries, setAllWineries] = useState<Winery[]>([]);
   const [selectedWinery, setSelectedWinery] = useState<string>("");
   const [facts, setFacts] = useState<Fact[]>([]);
@@ -114,6 +121,16 @@ export function AdminPage() {
       .then(({ data }) => {
         if (!data) return;
         setAllWineries(data);
+
+        /* If locked to a specific winery, select it */
+        if (lockedSlug) {
+          const locked = data.find((w) => w.slug === lockedSlug);
+          if (locked) {
+            setSelectedWinery(locked.id);
+            return;
+          }
+        }
+
         const visible = data.filter((w) => !isHiddenFromAdminWinerySelect(w));
         setSelectedWinery((prev) => {
           const m = data.find((w) => w.id === prev);
@@ -123,7 +140,7 @@ export function AdminPage() {
           return visible[0]?.id ?? "";
         });
       });
-  }, []);
+  }, [lockedSlug]);
 
   useEffect(() => {
     const m = allWineries.find((w) => w.id === selectedWinery);
@@ -271,22 +288,28 @@ export function AdminPage() {
         the knowledge base.
       </p>
 
-      <label className="admin-field-label">
-        Winery:{" "}
-        <select
-          className="admin-select"
-          value={selectedWinery}
-          onChange={(e) => setSelectedWinery(e.target.value)}
-          style={{ padding: "6px 12px", borderRadius: 6, marginLeft: 8 }}
-        >
-          {winerySelectOptions.map((w) => (
-            <option key={w.id} value={w.id}>
-              {w.name}
-              {isSoterSlug(w.slug) ? " (partner)" : ""}
-            </option>
-          ))}
-        </select>
-      </label>
+      {lockedSlug ? (
+        <p className="admin-field-label" style={{ fontSize: "1.1rem" }}>
+          Winery: <strong>{wineryNameById[selectedWinery] ?? lockedSlug}</strong>
+        </p>
+      ) : (
+        <label className="admin-field-label">
+          Winery:{" "}
+          <select
+            className="admin-select"
+            value={selectedWinery}
+            onChange={(e) => setSelectedWinery(e.target.value)}
+            style={{ padding: "6px 12px", borderRadius: 6, marginLeft: 8 }}
+          >
+            {winerySelectOptions.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.name}
+                {isSoterSlug(w.slug) ? " (partner)" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
 
       {/* Add Fact Section */}
       <section style={{ marginTop: 32 }}>
