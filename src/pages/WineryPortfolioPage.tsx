@@ -1,3 +1,4 @@
+import { useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { WINERY_CARD_OVERRIDES } from "../lib/wineries";
 import { SEOHead, PAGE_SEO } from "../lib/seo";
@@ -129,6 +130,20 @@ const FEATURE_LABELS: { key: keyof WineryEntry["features"]; label: string; path:
 ];
 
 export function WineryPortfolioPage() {
+  const [unlocked, setUnlocked] = useState(false);
+  const [pw, setPw] = useState("");
+  const [shake, setShake] = useState(false);
+
+  const handleSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    if (pw.trim().toLowerCase() === "jory") {
+      setUnlocked(true);
+    } else {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    }
+  }, [pw]);
+
   const fullCount = WINERIES.filter(
     (w) => w.features.chat && w.features.blindTasting && w.features.compare
   ).length;
@@ -136,7 +151,111 @@ export function WineryPortfolioPage() {
   return (
     <article className="winery-portfolio">
       <SEOHead {...PAGE_SEO.wineryPortfolio} />
+
+      {/* ── Password gate ─────────────────────────────────── */}
+      {!unlocked && (
+        <div className="wp-gate">
+          <div className="wp-gate-box-wrapper">
+            <div className={`wp-gate-box${shake ? " wp-gate-shake" : ""}`}>
+              <h2 className="wp-gate-title">Partner Access</h2>
+              <p className="wp-gate-desc">Enter the password to view the winery portfolio.</p>
+              <form onSubmit={handleSubmit} className="wp-gate-form">
+                <input
+                  type="password"
+                  className="wp-gate-input"
+                  placeholder="Password"
+                  value={pw}
+                  onChange={(e) => setPw(e.target.value)}
+                  autoFocus
+                />
+                <button type="submit" className="wp-gate-btn">Unlock</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
       <style>{`
+        .wp-gate {
+          position: fixed;
+          inset: 0;
+          z-index: 100;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          backdrop-filter: blur(18px);
+          background: rgba(8, 8, 8, 0.75);
+        }
+        .wp-gate-box-wrapper {
+          width: 100%;
+          max-width: 400px;
+          padding: 0 24px;
+        }
+        .wp-gate-box {
+          background: #111;
+          border: 1px solid #2a2a2a;
+          border-radius: 16px;
+          padding: 40px 32px;
+          text-align: center;
+          box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+        }
+        .wp-gate-title {
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: 1.6rem;
+          font-weight: 600;
+          margin: 0 0 8px;
+          color: #eceae8;
+        }
+        .wp-gate-desc {
+          font-size: 0.9rem;
+          color: #a8a39e;
+          margin: 0 0 24px;
+        }
+        .wp-gate-form {
+          display: flex;
+          gap: 8px;
+        }
+        .wp-gate-input {
+          flex: 1;
+          padding: 12px 16px;
+          border-radius: 8px;
+          border: 1px solid #2a2a2a;
+          background: #0a0a0a;
+          color: #eceae8;
+          font-family: "Space Mono", monospace;
+          font-size: 0.85rem;
+          outline: none;
+          transition: border-color 0.15s;
+        }
+        .wp-gate-input:focus {
+          border-color: #c47a84;
+        }
+        .wp-gate-btn {
+          padding: 12px 24px;
+          border-radius: 8px;
+          border: none;
+          background: #c47a84;
+          color: #080808;
+          font-family: "Space Mono", monospace;
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          cursor: pointer;
+          transition: background 0.15s;
+        }
+        .wp-gate-btn:hover {
+          background: #d48a94;
+        }
+        .wp-gate-shake {
+          animation: wp-shake 0.4s ease;
+        }
+        @keyframes wp-shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-12px); }
+          40% { transform: translateX(10px); }
+          60% { transform: translateX(-8px); }
+          80% { transform: translateX(6px); }
+        }
         .winery-portfolio {
           max-width: 960px;
           margin: 0 auto;

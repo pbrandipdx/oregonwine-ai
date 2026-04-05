@@ -7,6 +7,30 @@ export function HowItWorksPage() {
   return (
     <div className="hiw">
       <SEOHead {...PAGE_SEO.howItWorks} />
+
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-inner">
+          <p className="hero-badge">Built for wineries &amp; tasting rooms</p>
+          <h1>Your 24/7 wine concierge that drives visits &amp; revenue</h1>
+          <p>
+            Crushpad.ai gives every winery an AI-powered chatbot trained on <em>your</em> wines, hours, and
+            experiences — so visitors get instant answers and you get more bookings.
+          </p>
+        </div>
+      </section>
+
+      {/* Stats banner */}
+      <div className="stats-banner" role="list" aria-label="Key outcomes">
+        {IMPACT_STATS.map((s) => (
+          <div key={s.label} className="stat-card" role="listitem">
+            <div className="stat-number">{s.value}</div>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-source">{s.hint}</div>
+          </div>
+        ))}
+      </div>
+
       <div className="container">
         <div className="section">
           <h2>The Problem Every Winery Knows</h2>
@@ -265,60 +289,12 @@ export function HowItWorksPage() {
           </div>
         </div>
 
-        {/* Pricing section hidden for now
-        <div className="section">
-          <h2>Simple, Transparent Pricing</h2>
-          <p className="subtitle">No setup fees. No contracts. Just results.</p>
-          <div className="pricing-box">
-            <div>
-              <h3>Crushpad.ai Concierge</h3>
-              <div className="price">
-                $99<span>/month</span>
-              </div>
-              <p style={{ opacity: 0.85, fontSize: "0.95rem", marginBottom: 0 }}>
-                Less than the cost of a single afternoon of staff time answering repetitive questions.
-              </p>
-            </div>
-            <div>
-              <ul>
-                <li>Custom-trained AI concierge for your winery</li>
-                <li>Embeddable chat widget (your brand colors)</li>
-                <li>Full analytics dashboard &amp; gap analysis</li>
-                <li>Admin panel for adding facts &amp; content</li>
-                <li>Human handoff to your team (phone/email)</li>
-                <li>Contextual CTAs for bookings &amp; wine clubs</li>
-                <li>Up to 1,000 conversations/month</li>
-                <li>Free setup &amp; content crawl</li>
-                <li>30-day money-back guarantee</li>
-              </ul>
-            </div>
-          </div>
-          <div className="highlight">
-            <h3>The ROI math</h3>
-            <p style={{ marginBottom: 0 }}>
-              If your tasting room averages 500 website visitors/month and industry data shows a 27% revenue lift
-              from AI concierge interactions, even a conservative estimate suggests{" "}
-              <strong>multiple additional bookings per month</strong> — easily covering the subscription and then some.
-              At a 28% click-through rate (vs. 2–5% for standard web CTAs), more visitors take action on every visit.
-            </p>
-          </div>
-        </div>
-        */}
-
         <div className="cta-section">
           <h2>Give Your Visitors the Experience They Expect</h2>
           <p>
             Your wines deserve a concierge that knows them as well as your team does — and is available when your
             team isn&apos;t.
           </p>
-          <div className="hero-actions">
-            <Link className="hero-cta" to="/book-demo">
-              Book a demo
-            </Link>
-            <Link className="hero-cta ghost" to="/chatbot-demo">
-              Try it live
-            </Link>
-          </div>
           <div className="cta-badges">
             <span>✓ Free setup</span>
             <span>✓ No contract</span>
