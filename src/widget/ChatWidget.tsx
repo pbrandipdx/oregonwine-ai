@@ -313,7 +313,7 @@ function EngagementBubbles({
   marginTop: number;
 }) {
   return (
-    <div style={{ display: "flex", flexWrap: "nowrap", justifyContent: "center", gap: 8, marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto" }}>
+    <div style={{ display: "flex", flexWrap: "nowrap", gap: 8, marginTop, width: "100%", maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto", padding: "2px 16px", boxSizing: "border-box", scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" as any, touchAction: "pan-x" }}>
       {ENGAGEMENT_LABELS.map((label) => (
         <button
           key={label}

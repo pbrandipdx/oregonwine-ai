@@ -236,16 +236,19 @@
   .sb {
     transform: translateX(-100%);
     width: 280px;
+    visibility: hidden;
   }
 
   .sb--collapsed {
     transform: translateX(-100%);
     width: 280px;
+    visibility: hidden;
   }
 
   .sb--mobile-open {
     transform: translateX(0) !important;
     width: 280px !important;
+    visibility: visible !important;
   }
 
   /* Show full labels in mobile drawer even if "collapsed" */

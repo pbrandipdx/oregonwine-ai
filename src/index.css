@@ -23,11 +23,18 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
+
 body {
   margin: 0;
   font-family: var(--font-body);
   font-size: 1.125rem;
   font-weight: 400;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
   background-color: var(--cn-bg);
   background-image: linear-gradient(
       rgba(196, 122, 132, 0.04) 1px,
@@ -71,6 +78,7 @@ body {
   .app-content,
   .app-content--collapsed {
     margin-left: 0;
+    overflow-x: hidden;
   }
 }
 
