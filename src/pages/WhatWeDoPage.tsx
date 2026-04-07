@@ -59,13 +59,13 @@ export function WhatWeDoPage() {
         </div>
 
         <div className="section">
-          <div className="highlight">
-            <h3>The Pitch in One Sentence</h3>
-            <p style={{ fontSize: "1.4rem", fontStyle: "italic", textAlign: "center", margin: 0 }}>
+          <figure className="pull-quote">
+            <blockquote>
               &ldquo;It&apos;s like cloning your best tasting room associate and putting them on every page of your
               website.&rdquo;
-            </p>
-          </div>
+            </blockquote>
+            <figcaption>— Willamette Valley Wine Maker</figcaption>
+          </figure>
         </div>
 
         <div className="section">
