@@ -13,6 +13,15 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
+  // The widget bundle is loaded directly into a customer's browser, so any
+  // unreplaced `process.env.NODE_ENV` references (added by React/ReactDOM in
+  // their dev/prod branches) crash with "process is not defined". Replace at
+  // build time so the IIFE is fully self-contained.
+  define: isWidgetBuild
+    ? {
+        "process.env.NODE_ENV": JSON.stringify("production"),
+      }
+    : undefined,
   build: isWidgetBuild
     ? {
         lib: {
