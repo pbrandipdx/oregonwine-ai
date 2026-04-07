@@ -40,8 +40,8 @@ export function HowItWorksPage() {
         <div className="section">
           <h2>Three steps to a smarter tasting room.</h2>
           <p className="subtitle">
-            Crushpad.ai is designed to go from handshake to live on your site in under a week — with zero developer
-            time required from your team.
+            Crushpad.ai is designed to go live on your site in under a week — with zero developer time required from
+            your team.
           </p>
           <div className="variant-switch" role="tablist" aria-label="Choose layout">
             <button
