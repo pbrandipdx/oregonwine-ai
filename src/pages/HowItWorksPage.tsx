@@ -78,9 +78,10 @@ export function HowItWorksPage() {
               <div className="step-body">
                 <h3>We train it on your winery.</h3>
                 <p>
-                  Send us your tech sheets, tasting notes, FAQs, and website URL. We build a private knowledge base that
-                  captures your wines, your story, and your brand voice. You review and approve before anything goes
-                  live.
+                  We&apos;ve already scraped the public web for your brand — your tasting menu, hours, press, and
+                  reviews. Send us your tech sheets, tasting notes, and FAQs to round it out, and we build a private
+                  knowledge base that captures your wines, your story, and your brand voice. You review and approve
+                  before anything goes live.
                 </p>
               </div>
             </li>
