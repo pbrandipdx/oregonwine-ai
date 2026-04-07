@@ -1,14 +1,9 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { IMPACT_STATS } from "../impactStats";
 import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./HowItWorksPage.css";
 
-type StepVariant = "timeline" | "cards" | "editorial";
-
 export function HowItWorksPage() {
-  const [variant, setVariant] = useState<StepVariant>("timeline");
-
   return (
     <div className="hiw">
       <SEOHead {...PAGE_SEO.howItWorks} />
@@ -43,36 +38,7 @@ export function HowItWorksPage() {
             Crushpad.ai is designed to go live on your site in under a week — with zero developer time required from
             your team.
           </p>
-          <div className="variant-switch" role="tablist" aria-label="Choose layout">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={variant === "timeline"}
-              className={variant === "timeline" ? "is-active" : ""}
-              onClick={() => setVariant("timeline")}
-            >
-              A · Timeline
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={variant === "cards"}
-              className={variant === "cards" ? "is-active" : ""}
-              onClick={() => setVariant("cards")}
-            >
-              B · Cards
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={variant === "editorial"}
-              className={variant === "editorial" ? "is-active" : ""}
-              onClick={() => setVariant("editorial")}
-            >
-              C · Editorial
-            </button>
-          </div>
-          <ol className={`steps steps--${variant}`}>
+          <ol className="steps">
             <li className="step">
               <div className="step-num">1</div>
               <div className="step-body">
