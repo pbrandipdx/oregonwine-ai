@@ -85,13 +85,13 @@ export function WhatWeDoPage() {
         </div>
 
         <div className="section">
-          <div className="highlight">
-            <h3>The Pitch in One Sentence</h3>
-            <p style={{ fontSize: "1.4rem", fontStyle: "italic", textAlign: "center", margin: 0 }}>
+          <blockquote className="highlight" style={{ textAlign: "center" }}>
+            <p style={{ fontSize: "1.4rem", fontStyle: "italic", margin: "0 0 1rem" }}>
               &ldquo;It&apos;s like cloning your best tasting room associate and putting them on every page of your
               website.&rdquo;
             </p>
-          </div>
+            <footer style={{ fontSize: "1rem", opacity: 0.8 }}>— Willamette Valley Winery Owner</footer>
+          </blockquote>
         </div>
 
         <div className="section">
