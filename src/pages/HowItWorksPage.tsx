@@ -125,10 +125,6 @@ export function HowItWorksPage() {
 
         <div className="section">
           <h2>Analytics Built In</h2>
-          <p className="subtitle">
-            Every winery gets a private dashboard at <code>/your-slug/analytics</code> — scoped to your data only, no
-            shared picker, no cross-winery leakage.
-          </p>
           <div className="feature-grid">
             <div className="feature-card">
               <div className="feature-icon">01</div>
