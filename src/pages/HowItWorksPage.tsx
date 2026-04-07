@@ -33,28 +33,33 @@ export function HowItWorksPage() {
 
       <div className="container">
         <div className="section">
-          <h2>The Problem Every Winery Knows</h2>
-          <p className="subtitle">Visitors have questions. Your team can&apos;t answer them all, all the time.</p>
-          <p>
-            Your website gets traffic from people planning their Willamette Valley trip. They want to know tasting
-            fees, whether they need a reservation, if they can bring their dog, and what wine clubs you offer. But
-            most winery websites bury this information, or worse — don&apos;t have it at all.
-          </p>
-          <p>
-            The result? Visitors leave. They pick the winery down the road that answered faster. Industry data from
-            wine chatbot deployments shows that{" "}
-            <strong>52% of chatbot interactions are pairing or visit-planning questions</strong> — the exact
-            questions that convert browsers into visitors. And peak activity hits at <strong>9 PM</strong>, well after
-            your tasting room closes.
-          </p>
-          <div className="highlight">
-            <h3>What happens without a concierge?</h3>
-            <ul>
-              <li>Visitors can&apos;t find hours, fees, or reservation info quickly</li>
-              <li>Your staff fields the same 10 questions by phone and email every day</li>
-              <li>Trip planners pick the competitor who answered instantly at 9 PM</li>
-              <li>You miss bookings from mobile visitors who won&apos;t dig through your site</li>
-            </ul>
+          <h2>How It Works</h2>
+          <p className="subtitle">From sign-up to live on your site in three simple steps.</p>
+          <div className="feature-grid">
+            <div className="feature-card">
+              <div className="feature-icon">1</div>
+              <h3>We Crawl Your Content</h3>
+              <p>
+                We pull verified information from your website, menus, and any materials you provide. Everything is
+                organized by category — wines, experiences, hours, policies, and more.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">2</div>
+              <h3>Train Your Concierge</h3>
+              <p>
+                Your data is embedded into a hybrid search engine (keyword + AI vectors) so the concierge always finds
+                the right answer. You review and approve everything via the admin panel.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">3</div>
+              <h3>Embed &amp; Go Live</h3>
+              <p>
+                Add one script tag to your website. Your concierge appears as a chat widget matching your brand colors.
+                Analytics start flowing immediately.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -120,10 +125,6 @@ export function HowItWorksPage() {
 
         <div className="section">
           <h2>Analytics Built In</h2>
-          <p className="subtitle">
-            Every winery gets a private dashboard at <code>/your-slug/analytics</code> — scoped to your data only, no
-            shared picker, no cross-winery leakage.
-          </p>
           <div className="feature-grid">
             <div className="feature-card">
               <div className="feature-icon">01</div>
@@ -312,37 +313,6 @@ export function HowItWorksPage() {
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div className="section">
-          <h2>How It Works</h2>
-          <p className="subtitle">From sign-up to live on your site in three simple steps.</p>
-          <div className="feature-grid">
-            <div className="feature-card">
-              <div className="feature-icon">1</div>
-              <h3>We Crawl Your Content</h3>
-              <p>
-                We pull verified information from your website, menus, and any materials you provide. Everything is
-                organized by category — wines, experiences, hours, policies, and more.
-              </p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">2</div>
-              <h3>Train Your Concierge</h3>
-              <p>
-                Your data is embedded into a hybrid search engine (keyword + AI vectors) so the concierge always finds
-                the right answer. You review and approve everything via the admin panel.
-              </p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">3</div>
-              <h3>Embed &amp; Go Live</h3>
-              <p>
-                Add one script tag to your website. Your concierge appears as a chat widget matching your brand colors.
-                Analytics start flowing immediately.
-              </p>
-            </div>
-          </div>
         </div>
 
         <div className="cta-section">
