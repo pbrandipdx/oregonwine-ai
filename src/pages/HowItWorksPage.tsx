@@ -119,6 +119,62 @@ export function HowItWorksPage() {
         </div>
 
         <div className="section">
+          <h2>Analytics Built In</h2>
+          <p className="subtitle">
+            Every winery gets a private dashboard at <code>/your-slug/analytics</code> — scoped to your data only, no
+            shared picker, no cross-winery leakage.
+          </p>
+          <div className="feature-grid">
+            <div className="feature-card">
+              <div className="feature-icon">01</div>
+              <h3>Headline Metrics</h3>
+              <p>
+                Total messages, unique sessions, deflection rate, satisfaction, thumbs up/down, and average latency — all
+                at a glance.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">02</div>
+              <h3>Daily Breakdown</h3>
+              <p>
+                Messages, deflections, ratings, and response times aggregated by day so you can spot trends, busy
+                weekends, and release-day surges.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">03</div>
+              <h3>Top Prompts &amp; Recent Turns</h3>
+              <p>
+                See the most-asked questions and the latest 100 conversations — the fastest way to understand what
+                guests actually want to know.
+              </p>
+            </div>
+          </div>
+          <div className="stats-banner" style={{ marginTop: "2rem" }}>
+            <div className="stat-card">
+              <div className="stat-number">1,284</div>
+              <div className="stat-label">Messages</div>
+              <div className="stat-source">Sample · Rex Hill · 7d</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">412</div>
+              <div className="stat-label">Sessions</div>
+              <div className="stat-source">Sample · Rex Hill · 7d</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">94%</div>
+              <div className="stat-label">Satisfaction</div>
+              <div className="stat-source">Sample · Rex Hill · 7d</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">1.4s</div>
+              <div className="stat-label">Avg Latency</div>
+              <div className="stat-source">Sample · Rex Hill · 7d</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="section">
           <h2>The Data: Why Wine Chatbots Work</h2>
           <p className="subtitle">Industry results from real wine chatbot deployments prove the ROI.</p>
           <p>
