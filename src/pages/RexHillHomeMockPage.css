@@ -48,8 +48,11 @@
   padding: 1.25rem 2rem;
   background: var(--rh-cream);
   border-bottom: 1px solid var(--rh-line);
-  position: relative;
-  z-index: 50;
+  position: sticky;
+  top: 0;
+  /* Must sit above the chat scrim (999) and popover (1000) so the WINE AGENT
+     trigger stays clickable to toggle the panel closed. */
+  z-index: 1100;
 }
 
 .rh-logo {
@@ -354,10 +357,10 @@
 
 .rh-chat-popover {
   position: fixed;
-  top: 5.6rem;
+  top: 6.5rem;
   right: 1.5rem;
   width: min(420px, calc(100vw - 3rem));
-  height: min(640px, calc(100vh - 7rem));
+  height: min(640px, calc(100vh - 8rem));
   z-index: 1000;
   pointer-events: none;
   opacity: 0;
