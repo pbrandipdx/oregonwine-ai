@@ -12,6 +12,7 @@ import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
+import { RexHillHomeMockPage } from "./pages/RexHillHomeMockPage";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { WidgetDemoChehalemPage } from "./pages/WidgetDemoChehalemPage";
 import { ChehalemBlindTasting, ChehalemMatchMe } from "./pages/chehalem-games";
@@ -91,6 +92,21 @@ function AppRoutesInner() {
     { key: "analytics", label: "Analytics" },
     { key: "admin", label: "Admin" },
   ];
+
+  // Full-bleed sales mock pages — render as if they were the customer's own site,
+  // with no Crushpad sidebar / winery nav chrome around them.
+  const isFullBleedMock = p === "/rex-hill/preview";
+  if (isFullBleedMock) {
+    return (
+      <div className="app" style={{ minHeight: "100vh" }}>
+        <main className="main main--landing" style={{ padding: 0 }}>
+          <Routes>
+            <Route path="/rex-hill/preview" element={<RexHillHomeMockPage />} />
+          </Routes>
+        </main>
+      </div>
+    );
+  }
 
   // When embedded in an iframe (?embed=1), hide sidebar and remove padding
   if (isEmbed) {
@@ -192,6 +208,7 @@ function AppRoutesInner() {
             {/* ── Rex Hill ─────────────────────────────────────── */}
             <Route path="/rex-hill" element={<RexHillPartnerPage />} />
             <Route path="/rex-hill/demo" element={<WidgetDemoRexHillPage />} />
+            <Route path="/rex-hill/preview" element={<RexHillHomeMockPage />} />
             <Route path="/rex-hill/research" element={<RexHillResearchPage />} />
             <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
             <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
