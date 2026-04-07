@@ -25,6 +25,32 @@ export function WhatWeDoPage() {
 
       <div className="container">
         <div className="section">
+          <h2>The Problem Every Winery Knows</h2>
+          <p className="subtitle">Visitors have questions. Your team can&apos;t answer them all, all the time.</p>
+          <p>
+            Your website gets traffic from people planning their Willamette Valley trip. They want to know tasting
+            fees, whether they need a reservation, if they can bring their dog, and what wine clubs you offer. But
+            most winery websites bury this information, or worse — don&apos;t have it at all.
+          </p>
+          <p>
+            The result? Visitors leave. They pick the winery down the road that answered faster. Industry data from
+            wine chatbot deployments shows that{" "}
+            <strong>52% of chatbot interactions are pairing or visit-planning questions</strong> — the exact
+            questions that convert browsers into visitors. And peak activity hits at <strong>9 PM</strong>, well after
+            your tasting room closes.
+          </p>
+          <div className="highlight">
+            <h3>What happens without a concierge?</h3>
+            <ul>
+              <li>Visitors can&apos;t find hours, fees, or reservation info quickly</li>
+              <li>Your staff fields the same 10 questions by phone and email every day</li>
+              <li>Trip planners pick the competitor who answered instantly at 9 PM</li>
+              <li>You miss bookings from mobile visitors who won&apos;t dig through your site</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="section">
           <h2>Every question, answered instantly.</h2>
           <p className="subtitle">
             Your visitors have questions long before they arrive — and long after the tasting room closes. Crushpad.ai
