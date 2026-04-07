@@ -492,6 +492,137 @@
       margin: 0;
     }
 
+    .hiw .steps {
+      list-style: none;
+      margin: 1.5rem 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .hiw .step {
+      display: grid;
+      grid-template-columns: 4rem 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .hiw .step-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.85;
+    }
+
+    .hiw .step-body h3 {
+      margin: 0.25rem 0 0.5rem;
+    }
+
+    .hiw .step-body p {
+      margin-bottom: 0.75rem;
+    }
+
+    .hiw .code-block {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1rem 1.15rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text);
+      overflow-x: auto;
+      margin: 0.75rem 0 0;
+      white-space: pre;
+    }
+
+    .hiw .live-panel {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1rem 1.15rem 0.65rem;
+      margin-top: 0.75rem;
+    }
+
+    .hiw .live-panel-header {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .hiw .live-panel-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .hiw .live-panel-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .hiw .live-panel-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hiw .live-time {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--dim);
+      white-space: nowrap;
+    }
+
+    .hiw .admin-list {
+      list-style: none;
+      margin: 1.25rem 0 0;
+      padding: 0;
+    }
+
+    .hiw .admin-list li {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--border);
+      margin: 0;
+    }
+
+    .hiw .admin-list li:last-child {
+      border-bottom: none;
+    }
+
+    .hiw .admin-list h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 0 0.4rem;
+    }
+
+    .hiw .admin-list p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 640px) {
+      .hiw .step {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .hiw .step-num {
+        font-size: 2.25rem;
+      }
+    }
+
     .hiw .page-footer {
       text-align: center;
       padding: 2rem 1.5rem 2.5rem;

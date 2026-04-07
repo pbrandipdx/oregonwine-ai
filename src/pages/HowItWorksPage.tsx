@@ -33,6 +33,131 @@ export function HowItWorksPage() {
 
       <div className="container">
         <div className="section">
+          <h2>Three steps to a smarter tasting room.</h2>
+          <p className="subtitle">
+            Crushpad.ai is designed to go from handshake to live on your site in under a week — with zero developer
+            time required from your team.
+          </p>
+          <ol className="steps">
+            <li className="step">
+              <div className="step-num">1</div>
+              <div className="step-body">
+                <h3>We train it on your winery.</h3>
+                <p>
+                  Send us your tech sheets, tasting notes, FAQs, and website URL. We build a private knowledge base that
+                  captures your wines, your story, and your brand voice. You review and approve before anything goes
+                  live.
+                </p>
+              </div>
+            </li>
+            <li className="step">
+              <div className="step-num">2</div>
+              <div className="step-body">
+                <h3>You paste one line of code.</h3>
+                <p>
+                  Drop a single snippet into your website — Squarespace, WordPress, Shopify, Wix, or custom. That&apos;s
+                  it. The concierge appears as a discreet button in the corner of every page.
+                </p>
+                <pre className="code-block">
+                  <code>
+                    {`<script src="https://crushpad.ai/embed.js"\n        data-winery="rex-hill"></script>`}
+                  </code>
+                </pre>
+              </div>
+            </li>
+            <li className="step">
+              <div className="step-num">3</div>
+              <div className="step-body">
+                <h3>You watch it work.</h3>
+                <p>
+                  Log into your admin panel to see every conversation in real time. Refine answers, spot trends, and
+                  learn exactly what visitors want to know about your winery.
+                </p>
+                <div className="live-panel">
+                  <div className="live-panel-header">Live Questions · Rex Hill</div>
+                  <ul className="live-panel-list">
+                    <li><span>Do you allow dogs on the patio?</span><span className="live-time">2 min ago</span></li>
+                    <li><span>What&apos;s the difference between your reserve Pinots?</span><span className="live-time">6 min ago</span></li>
+                    <li><span>Can I bring a group of 8 on Saturday?</span><span className="live-time">14 min ago</span></li>
+                    <li><span>Is the 2022 Jacob-Hart still available?</span><span className="live-time">22 min ago</span></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <div className="section">
+          <h2>Inside the admin panel.</h2>
+          <p className="subtitle">Everything you need, nothing you don&apos;t.</p>
+          <ul className="admin-list">
+            <li>
+              <h4>Real-time question feed</h4>
+              <p>
+                Watch visitor questions stream in as they happen. See which wines get the most interest, which questions
+                come up repeatedly, and where guests get stuck.
+              </p>
+            </li>
+            <li>
+              <h4>Answer refinement</h4>
+              <p>
+                Not happy with how the concierge answered something? Edit the response once — it learns for every future
+                visitor. No ML expertise required.
+              </p>
+            </li>
+            <li>
+              <h4>Knowledge base editor</h4>
+              <p>
+                Update your wine list, vintages, tasting room hours, and policies any time. Changes go live instantly —
+                no re-training, no waiting.
+              </p>
+            </li>
+            <li>
+              <h4>Weekly insights email</h4>
+              <p>
+                Every Monday, you get a summary: top questions, trending wines, visitor sentiment, and opportunities to
+                improve the guest experience.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div className="section">
+          <h2>Common questions.</h2>
+          <p className="subtitle">If yours isn&apos;t here, just ask.</p>
+          <ul className="admin-list">
+            <li>
+              <h4>Will it actually sound like my winery?</h4>
+              <p>
+                Yes. We tune the voice, tone, and word choices to match your existing marketing — and you approve every
+                part of it before launch.
+              </p>
+            </li>
+            <li>
+              <h4>What happens when it doesn&apos;t know something?</h4>
+              <p>
+                It says so, honestly — and offers to connect the guest with your team. No hallucinations, no making up
+                vintages that don&apos;t exist.
+              </p>
+            </li>
+            <li>
+              <h4>How long does setup take?</h4>
+              <p>
+                Typically 5–7 days from kickoff to live. Most of that is us building and you reviewing. The actual
+                install takes ten minutes.
+              </p>
+            </li>
+            <li>
+              <h4>What does it cost?</h4>
+              <p>
+                Simple monthly subscription based on your winery&apos;s size. No setup fees during pilot. Cancel any
+                time.
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div className="section">
           <h2>The Problem Every Winery Knows</h2>
           <p className="subtitle">Visitors have questions. Your team can&apos;t answer them all, all the time.</p>
           <p>
@@ -342,6 +467,14 @@ export function HowItWorksPage() {
                 Analytics start flowing immediately.
               </p>
             </div>
+          </div>
+        </div>
+
+        <div className="cta-section">
+          <h2>Want to see it on your wines?</h2>
+          <p>Send us your URL and we&apos;ll build you a live preview within 48 hours.</p>
+          <div className="hero-actions">
+            <Link to="/book-demo" className="hero-cta">Request a Preview</Link>
           </div>
         </div>
 
