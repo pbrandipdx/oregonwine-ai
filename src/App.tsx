@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BookDemoPage } from "./pages/BookDemoPage";
 import { HomePage } from "./pages/HomePage";
 import { HowItWorksPage } from "./pages/HowItWorksPage";
+import { WhatWeDoPage } from "./pages/WhatWeDoPage";
 import { WidgetDemoPage } from "./pages/WidgetDemoPage";
 import { WidgetDemoRexHillPage } from "./pages/WidgetDemoRexHillPage";
 import { WidgetDemoCrowleyPage } from "./pages/WidgetDemoCrowleyPage";
@@ -171,7 +172,8 @@ function AppRoutesInner() {
 
             {/* ── Public pages ─────────────────────────────────── */}
             <Route path="/home" element={<HomePage />} />
-            <Route path="/how-it-works" element={<HowItWorksPage />} />
+            <Route path="/what-we-do" element={<WhatWeDoPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
             <Route path="/book-demo" element={<BookDemoPage />} />
             <Route path="/chatbot-demo" element={<WidgetDemoPage />} />
             <Route path="/chatbot-demo/analytics" element={<AnalyticsPage />} />

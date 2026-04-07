@@ -128,6 +128,10 @@ export function Sidebar({
           {/* Info */}
           <div className="sb-section">
             {!collapsed && <p className="sb-section-label">Info</p>}
+            <Link className={linkClass("/what-we-do")} to="/what-we-do" title="What We Do">
+              <IconBook />
+              {!collapsed && <span className="sb-link-text">What We Do</span>}
+            </Link>
             <Link className={linkClass("/how-it-works")} to="/how-it-works" title="How It Works">
               <IconBook />
               {!collapsed && <span className="sb-link-text">How It Works</span>}
