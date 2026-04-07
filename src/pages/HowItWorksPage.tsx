@@ -123,41 +123,6 @@ export function HowItWorksPage() {
         </div>
 
         <div className="section">
-          <h2>Inside the admin panel.</h2>
-          <p className="subtitle">Everything you need, nothing you don&apos;t.</p>
-          <ul className="admin-list">
-            <li>
-              <h4>Real-time question feed</h4>
-              <p>
-                Watch visitor questions stream in as they happen. See which wines get the most interest, which questions
-                come up repeatedly, and where guests get stuck.
-              </p>
-            </li>
-            <li>
-              <h4>Answer refinement</h4>
-              <p>
-                Not happy with how the concierge answered something? Edit the response once — it learns for every future
-                visitor. No ML expertise required.
-              </p>
-            </li>
-            <li>
-              <h4>Knowledge base editor</h4>
-              <p>
-                Update your wine list, vintages, tasting room hours, and policies any time. Changes go live instantly —
-                no re-training, no waiting.
-              </p>
-            </li>
-            <li>
-              <h4>Weekly insights email</h4>
-              <p>
-                Every Monday, you get a summary: top questions, trending wines, visitor sentiment, and opportunities to
-                improve the guest experience.
-              </p>
-            </li>
-          </ul>
-        </div>
-
-        <div className="section">
           <h2>Common questions.</h2>
           <p className="subtitle">If yours isn&apos;t here, just ask.</p>
           <ul className="admin-list">
@@ -276,6 +241,41 @@ export function HowItWorksPage() {
               </p>
             </div>
           </div>
+        </div>
+
+        <div className="section">
+          <h2>Inside the admin panel.</h2>
+          <p className="subtitle">Everything you need, nothing you don&apos;t.</p>
+          <ul className="admin-list">
+            <li>
+              <h4>Real-time question feed</h4>
+              <p>
+                Watch visitor questions stream in as they happen. See which wines get the most interest, which questions
+                come up repeatedly, and where guests get stuck.
+              </p>
+            </li>
+            <li>
+              <h4>Answer refinement</h4>
+              <p>
+                Not happy with how the concierge answered something? Edit the response once — it learns for every future
+                visitor. No ML expertise required.
+              </p>
+            </li>
+            <li>
+              <h4>Knowledge base editor</h4>
+              <p>
+                Update your wine list, vintages, tasting room hours, and policies any time. Changes go live instantly —
+                no re-training, no waiting.
+              </p>
+            </li>
+            <li>
+              <h4>Weekly insights email</h4>
+              <p>
+                Every Monday, you get a summary: top questions, trending wines, visitor sentiment, and opportunities to
+                improve the guest experience.
+              </p>
+            </li>
+          </ul>
         </div>
 
         <div className="section">
