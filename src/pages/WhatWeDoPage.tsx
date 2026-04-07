@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { SEOHead, PAGE_SEO } from "../lib/seo";
 import "./HowItWorksPage.css";
 
-export function WhatItIsPage() {
+export function WhatWeDoPage() {
   return (
     <div className="hiw">
-      <SEOHead {...PAGE_SEO.whatItIs} />
+      <SEOHead {...PAGE_SEO.whatWeDo} />
 
       {/* Hero */}
       <section className="hero">
