@@ -145,8 +145,7 @@ export function WhatWeDoPage() {
             <li>
               <h4>How long does setup take?</h4>
               <p>
-                Typically 5–7 days from kickoff to live. Most of that is us building and you reviewing. The actual
-                install takes ten minutes.
+                Typically 5–7 days from kickoff to live. Most of that is us building and you reviewing.
               </p>
             </li>
           </ul>
