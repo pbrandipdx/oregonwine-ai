@@ -33,6 +33,37 @@ export function HowItWorksPage() {
 
       <div className="container">
         <div className="section">
+          <h2>How It Works</h2>
+          <p className="subtitle">From sign-up to live on your site in three simple steps.</p>
+          <div className="feature-grid">
+            <div className="feature-card">
+              <div className="feature-icon">1</div>
+              <h3>We Crawl Your Content</h3>
+              <p>
+                We pull verified information from your website, menus, and any materials you provide. Everything is
+                organized by category — wines, experiences, hours, policies, and more.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">2</div>
+              <h3>Train Your Concierge</h3>
+              <p>
+                Your data is embedded into a hybrid search engine (keyword + AI vectors) so the concierge always finds
+                the right answer. You review and approve everything via the admin panel.
+              </p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">3</div>
+              <h3>Embed &amp; Go Live</h3>
+              <p>
+                Add one script tag to your website. Your concierge appears as a chat widget matching your brand colors.
+                Analytics start flowing immediately.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="section">
           <h2>Crushpad.ai: Your Always-On Expert</h2>
           <p className="subtitle">An AI concierge trained specifically on your winery&apos;s information.</p>
           <p>
@@ -286,37 +317,6 @@ export function HowItWorksPage() {
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div className="section">
-          <h2>How It Works</h2>
-          <p className="subtitle">From sign-up to live on your site in three simple steps.</p>
-          <div className="feature-grid">
-            <div className="feature-card">
-              <div className="feature-icon">1</div>
-              <h3>We Crawl Your Content</h3>
-              <p>
-                We pull verified information from your website, menus, and any materials you provide. Everything is
-                organized by category — wines, experiences, hours, policies, and more.
-              </p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">2</div>
-              <h3>Train Your Concierge</h3>
-              <p>
-                Your data is embedded into a hybrid search engine (keyword + AI vectors) so the concierge always finds
-                the right answer. You review and approve everything via the admin panel.
-              </p>
-            </div>
-            <div className="feature-card">
-              <div className="feature-icon">3</div>
-              <h3>Embed &amp; Go Live</h3>
-              <p>
-                Add one script tag to your website. Your concierge appears as a chat widget matching your brand colors.
-                Analytics start flowing immediately.
-              </p>
-            </div>
-          </div>
         </div>
 
         <div className="cta-section">
