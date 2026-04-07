@@ -124,6 +124,34 @@ export function WhatWeDoPage() {
           </div>
         </div>
 
+        <div className="section">
+          <h2>Common questions.</h2>
+          <p className="subtitle">If yours isn&apos;t here, just ask.</p>
+          <ul className="admin-list">
+            <li>
+              <h4>Will it actually sound like my winery?</h4>
+              <p>
+                Yes. We tune the voice, tone, and word choices to match your existing marketing — and you approve every
+                part of it before launch.
+              </p>
+            </li>
+            <li>
+              <h4>What happens when it doesn&apos;t know something?</h4>
+              <p>
+                It says so, honestly — and offers to connect the guest with your team. No hallucinations, no making up
+                vintages that don&apos;t exist.
+              </p>
+            </li>
+            <li>
+              <h4>How long does setup take?</h4>
+              <p>
+                Typically 5–7 days from kickoff to live. Most of that is us building and you reviewing. The actual
+                install takes ten minutes.
+              </p>
+            </li>
+          </ul>
+        </div>
+
         <div className="cta-section">
           <h2>Ready to pour a glass?</h2>
           <p>
