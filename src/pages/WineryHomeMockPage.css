@@ -1,4 +1,9 @@
-/* Rex Hill homepage mock — chrome only, no overrides of the chat widget itself */
+/*
+ * Shared homepage-mock chrome used by /{slug}/preview for every partner winery.
+ * Brand colors are injected via CSS variables on the root .rh-mock element
+ * (see WineryHomeMockPage.tsx — cssVars inline). The defaults below are
+ * Rex Hill's palette and act as a fallback if a slug has no override.
+ */
 
 .rh-mock {
   --rh-burgundy: #6e1f2b;
