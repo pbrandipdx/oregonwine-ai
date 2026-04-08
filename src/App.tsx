@@ -12,7 +12,7 @@ import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
-import { WineryHomeMockPage } from "./pages/WineryHomeMockPage";
+import { WineryPreviewDispatcher } from "./pages/preview/WineryPreviewDispatcher";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { WidgetDemoChehalemPage } from "./pages/WidgetDemoChehalemPage";
 import { ChehalemBlindTasting, ChehalemMatchMe } from "./pages/chehalem-games";
@@ -102,7 +102,7 @@ function AppRoutesInner() {
       <div className="app" style={{ minHeight: "100vh" }}>
         <main className="main main--landing" style={{ padding: 0 }}>
           <Routes>
-            <Route path="/:slug/preview" element={<WineryHomeMockPage />} />
+            <Route path="/:slug/preview" element={<WineryPreviewDispatcher />} />
           </Routes>
         </main>
       </div>

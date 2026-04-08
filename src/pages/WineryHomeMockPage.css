@@ -8,13 +8,13 @@
 .rh-mock {
   --rh-burgundy: #6e1f2b;
   --rh-burgundy-deep: #4a141d;
-  --rh-cream: #f7f1e8;
+  --rh-cream: #fcfcfc;
   --rh-ink: #1f1410;
   --rh-muted: #7c6f66;
   --rh-line: #e3dccf;
-  --rh-gold: #b88a3c;
-  --rh-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-  --rh-sans: "Inter", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --rh-gold: #986a4c;
+  --rh-serif: "Cormorant Garamond", "Crimson Pro", "Playfair Display", Georgia, serif;
+  --rh-sans: "DM Sans", "Work Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
 
   background: var(--rh-cream);
   color: var(--rh-ink);
@@ -55,9 +55,10 @@
   border-bottom: 1px solid var(--rh-line);
   position: sticky;
   top: 0;
-  /* Must sit above the chat scrim (999) and popover (1000) so the WINE AGENT
-     trigger stays clickable to toggle the panel closed. */
-  z-index: 1100;
+  /* Must sit above the chat scrim (1500) and popover (1600) so the WINE
+     AGENT trigger stays clickable to toggle the panel closed. */
+  z-index: 1800;
+  isolation: isolate;
 }
 
 .rh-logo {
@@ -150,6 +151,8 @@
 /* ─── Wine Agent trigger ─── */
 .rh-agent-trigger {
   position: relative;
+  /* Stay clickable over the scrim + popover when chat is open. */
+  z-index: 2000;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -235,7 +238,9 @@
 .rh-hero {
   position: relative;
   height: clamp(420px, 60vh, 620px);
-  background-image: url("https://rexhill.com/wp-content/uploads/2024/04/REX-HILL-Outdoor-Patio-Sunset-scaled.jpg");
+  /* Background image is set inline per-winery via WineryHomeMockPage.tsx
+     config — see WINERY_MOCK_CONFIGS. Fallback is the Rex Hill 2025 web main. */
+  background-image: url("https://rexhill.com/wp-content/uploads/2025/09/REX-HILL-Web-Main.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -270,11 +275,11 @@
 
 .rh-hero-cta {
   display: inline-block;
-  background: transparent;
-  border: 1px solid #fff;
+  background: rgba(152, 106, 76, 0.88);
+  border: 1px solid rgba(152, 106, 76, 0.88);
   color: #fff;
   text-decoration: none;
-  padding: 0.95rem 2rem;
+  padding: 1rem 2.2rem;
   font-size: 0.78rem;
   letter-spacing: 0.18em;
   font-weight: 500;
@@ -282,8 +287,8 @@
 }
 
 .rh-hero-cta:hover {
-  background: #fff;
-  color: var(--rh-ink);
+  background: #986a4c;
+  border-color: #986a4c;
 }
 
 /* ─── Cards row ─── */
@@ -356,7 +361,7 @@
   inset: 0;
   background: rgba(20, 12, 10, 0.35);
   backdrop-filter: blur(2px);
-  z-index: 999;
+  z-index: 1500;
   animation: rh-fade-in 0.25s ease;
 }
 
@@ -366,7 +371,7 @@
   right: 1.5rem;
   width: min(420px, calc(100vw - 3rem));
   height: min(640px, calc(100vh - 8rem));
-  z-index: 1000;
+  z-index: 1600;
   pointer-events: none;
   opacity: 0;
   transform: translateY(-12px) scale(0.92);
@@ -423,18 +428,38 @@
   .rh-icon-label {
     display: none;
   }
+  .rh-logo-word {
+    font-size: 1.35rem;
+    letter-spacing: 0.14em;
+  }
+  .rh-logo-crest {
+    font-size: 1.3rem;
+  }
 }
 
 @media (max-width: 600px) {
   .rh-announce {
-    font-size: 0.72rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.68rem;
+    padding: 0.5rem 0.85rem;
+    line-height: 1.4;
   }
   .rh-agent-trigger-label {
     display: none;
   }
   .rh-agent-trigger {
-    padding: 0.6rem;
+    padding: 0.55rem 0.6rem;
+  }
+  .rh-hero {
+    height: clamp(420px, 60vh, 540px);
+  }
+  .rh-hero h1 {
+    font-size: clamp(1.75rem, 7vw, 2.6rem);
+    margin-bottom: 1.5rem;
+  }
+  .rh-hero-cta {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
   }
   .rh-chat-popover {
     top: auto;
