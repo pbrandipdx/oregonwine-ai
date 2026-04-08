@@ -48,7 +48,7 @@ export const WINERY_MOCK_CONFIGS: Record<string, WineryMockConfig> = {
       headline: "Sustainable Luxury From Oregon's Willamette Valley",
       cta: "BOOK A TASTING EXPERIENCE",
       image:
-        "https://rexhill.com/wp-content/uploads/2024/04/REX-HILL-Outdoor-Patio-Sunset-scaled.jpg",
+        "https://rexhill.com/wp-content/uploads/2025/09/REX-HILL-Web-Main.jpg",
     },
     cards: [
       {
@@ -63,11 +63,11 @@ export const WINERY_MOCK_CONFIGS: Record<string, WineryMockConfig> = {
       },
     ],
     brand: {
-      cream: "#f7f1e8",
+      cream: "#fcfcfc",
       ink: "#1f1410",
       burgundy: "#6e1f2b",
       burgundyDeep: "#4a141d",
-      gold: "#b88a3c",
+      gold: "#986a4c",
     },
   },
 

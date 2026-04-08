@@ -347,10 +347,10 @@ export function CrowleyPreview() {
         /* ── Hero ── */
         .crw-hero {
           position: relative;
-          height: clamp(460px, 60vh, 640px);
-          background-image: url("https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=2200&q=80");
+          height: clamp(500px, 68vh, 720px);
+          background-image: url("https://images.unsplash.com/photo-1506377711776-dbdc2f3c20d0?auto=format&fit=crop&w=2400&q=80");
           background-size: cover;
-          background-position: center;
+          background-position: center 60%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -359,7 +359,7 @@ export function CrowleyPreview() {
         .crw-hero-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.0) 55%, rgba(0,0,0,0.18) 100%);
+          background: linear-gradient(180deg, rgba(200, 222, 236, 0.35) 0%, rgba(200, 222, 236, 0.0) 50%, rgba(0, 0, 0, 0.15) 100%);
         }
         .crw-hero-inner {
           position: relative;
@@ -367,15 +367,15 @@ export function CrowleyPreview() {
           padding: 0 1.5rem;
           max-width: 60rem;
           color: var(--crw-ink);
-          text-shadow: 0 2px 14px rgba(255, 255, 255, 0.35);
         }
         .crw-hero-eyebrow {
           font-family: var(--crw-serif);
-          font-size: 0.78rem;
+          font-size: 0.82rem;
           font-weight: 600;
           letter-spacing: 0.28em;
-          margin: 0 0 1rem;
+          margin: 0 0 1.2rem;
           color: var(--crw-ink);
+          text-shadow: 0 1px 10px rgba(255, 255, 255, 0.6);
         }
         .crw-hero h1 {
           font-family: var(--crw-serif);
@@ -387,28 +387,30 @@ export function CrowleyPreview() {
         }
         .crw-hero-cta {
           display: inline-block;
-          background: var(--crw-sage);
-          color: var(--crw-ink);
+          background: #a7b5a2;
+          color: #fff;
           text-decoration: none;
-          padding: 1rem 2.5rem;
+          padding: 1rem 2.8rem;
           font-size: 0.84rem;
-          letter-spacing: 0.18em;
-          font-weight: 500;
-          border-radius: 2px;
-          border: 1px solid rgba(140, 154, 126, 0.7);
+          letter-spacing: 0.2em;
+          font-weight: 600;
+          border-radius: 3px;
+          border: 1px solid #a7b5a2;
           font-family: var(--crw-serif);
+          text-transform: uppercase;
           transition: background 0.25s;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
-        .crw-hero-cta:hover { background: var(--crw-sage-dark); }
+        .crw-hero-cta:hover { background: var(--crw-sage-dark); border-color: var(--crw-sage-dark); }
 
         /* ── Discover The Vineyards ── */
         .crw-discover {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          min-height: 420px;
+          min-height: 440px;
         }
         .crw-discover-img {
-          background-image: url("https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?auto=format&fit=crop&w=1600&q=80");
+          background-image: url("https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1600&q=80");
           background-size: cover;
           background-position: center;
         }

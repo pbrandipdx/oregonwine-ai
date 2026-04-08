@@ -145,13 +145,15 @@ export function SoterPreview() {
 
       <style>{`
         .svp {
-          --svp-ink: #2b2b24;
-          --svp-muted: #7b7568;
+          --svp-ink: #3a3a34;
+          --svp-muted: #8b8b82;
           --svp-line: #e6e2d8;
-          --svp-cream: #fbfaf6;
-          --svp-green: #4d5c3a;
-          --svp-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-          --svp-sans: "Inter", system-ui, -apple-system, sans-serif;
+          --svp-cream: #ffffff;
+          --svp-green: #8b9084;
+          --svp-green-deep: #6f7468;
+          --svp-serif: "Cinzel", "Cormorant Garamond", "Playfair Display", Georgia, serif;
+          --svp-body: "Cormorant Garamond", Georgia, serif;
+          --svp-sans: "DM Sans", system-ui, -apple-system, sans-serif;
           background: #fff;
           color: var(--svp-ink);
           font-family: var(--svp-sans);
@@ -276,7 +278,7 @@ export function SoterPreview() {
         .svp-brand {
           display: flex;
           justify-content: center;
-          padding: 1.25rem 2rem 1rem;
+          padding: 1.5rem 2rem 1.1rem;
           background: #fff;
         }
         .svp-brand-link {
@@ -285,47 +287,49 @@ export function SoterPreview() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.1rem;
+          gap: 0.15rem;
         }
         .svp-brand-word {
           font-family: var(--svp-serif);
-          font-size: 2.4rem;
-          letter-spacing: 0.42em;
-          padding-left: 0.42em;
-          font-weight: 500;
+          font-size: 2.1rem;
+          letter-spacing: 0.46em;
+          padding-left: 0.46em;
+          font-weight: 400;
           line-height: 1;
+          color: #4a4a42;
         }
         .svp-brand-sub {
           font-family: var(--svp-serif);
-          font-size: 0.78rem;
-          letter-spacing: 0.36em;
-          padding-left: 0.36em;
+          font-size: 0.7rem;
+          letter-spacing: 0.38em;
+          padding-left: 0.38em;
           color: var(--svp-muted);
-          font-style: italic;
           font-weight: 400;
+          text-transform: uppercase;
         }
 
         /* ── Nav ── */
         .svp-nav {
-          background: #eeeae0;
+          background: #e8e4d7;
           border-top: 1px solid var(--svp-line);
           border-bottom: 1px solid var(--svp-line);
         }
         .svp-nav-inner {
           max-width: 1100px;
           margin: 0 auto;
-          padding: 0.95rem 2rem;
+          padding: 1rem 2rem;
           display: flex;
           justify-content: center;
           gap: 3.2rem;
         }
         .svp-nav-inner a {
-          color: var(--svp-ink);
+          color: #4a4a42;
           text-decoration: none;
           font-size: 0.78rem;
-          font-weight: 500;
-          letter-spacing: 0.22em;
+          font-weight: 600;
+          letter-spacing: 0.24em;
           transition: color 0.2s;
+          text-transform: uppercase;
         }
         .svp-nav-inner a:hover {
           color: var(--svp-green);
@@ -334,12 +338,12 @@ export function SoterPreview() {
         /* ── Hero ── */
         .svp-hero {
           position: relative;
-          height: clamp(540px, 72vh, 760px);
-          background-image: url("https://images.unsplash.com/photo-1568213816046-0ee1c42bd559?auto=format&fit=crop&w=2200&q=80");
+          height: clamp(560px, 78vh, 820px);
+          background-image: url("https://images.squarespace-cdn.com/content/v1/5e3a5536ac71fc660508f195/450dec5f-6dad-4260-b0b9-79e31349b8a0/provisions-tasting-downshot.jpg");
           background-size: cover;
           background-position: center;
           display: flex;
-          align-items: flex-end;
+          align-items: center;
           justify-content: center;
           color: #fff;
           text-align: center;
@@ -347,45 +351,49 @@ export function SoterPreview() {
         .svp-hero-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.38) 75%, rgba(0,0,0,0.55) 100%);
+          background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.28) 70%, rgba(0,0,0,0.42) 100%);
         }
         .svp-hero-inner {
           position: relative;
           z-index: 1;
-          padding: 0 1.5rem 6rem;
-          max-width: 54rem;
+          padding: 0 1.5rem;
+          max-width: 60rem;
         }
         .svp-hero h1 {
-          font-family: var(--svp-serif);
-          font-size: clamp(2.4rem, 6vw, 4.4rem);
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: clamp(2.8rem, 7.5vw, 5.6rem);
           font-weight: 500;
-          line-height: 1.05;
-          margin: 0 0 1.1rem;
-          letter-spacing: -0.01em;
-          text-shadow: 0 2px 24px rgba(0, 0, 0, 0.55);
+          line-height: 1;
+          margin: 0 0 1.25rem;
+          letter-spacing: -0.005em;
+          text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
         }
         .svp-hero-sub {
-          font-family: var(--svp-serif);
-          font-size: clamp(1.05rem, 1.6vw, 1.45rem);
-          font-style: italic;
-          font-weight: 400;
-          margin: 0 0 2rem;
+          font-family: "Cormorant Garamond", Georgia, serif;
+          font-size: clamp(1.15rem, 1.7vw, 1.6rem);
+          font-weight: 500;
+          font-style: normal;
+          margin: 0 0 2.4rem;
           text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
         }
         .svp-hero-cta {
           display: inline-block;
+          background: transparent;
           border: 1px solid #fff;
           color: #fff;
           text-decoration: none;
-          padding: 1rem 2.4rem;
-          font-size: 0.78rem;
-          letter-spacing: 0.22em;
-          font-weight: 500;
+          padding: 1.1rem 2.6rem;
+          font-family: var(--svp-sans);
+          font-size: 0.72rem;
+          letter-spacing: 0.32em;
+          font-weight: 600;
+          text-transform: uppercase;
           transition: background 0.25s, color 0.25s;
         }
         .svp-hero-cta:hover {
-          background: #fff;
-          color: var(--svp-ink);
+          background: var(--svp-green);
+          border-color: var(--svp-green);
+          color: #fff;
         }
 
         /* ── Footer ── */

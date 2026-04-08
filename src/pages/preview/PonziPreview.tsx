@@ -345,8 +345,12 @@ export function PonziPreview() {
         /* ── Hero ── */
         .pnz-hero {
           position: relative;
-          height: clamp(560px, 78vh, 820px);
-          background: linear-gradient(135deg, #d4c7aa 0%, #c9b89a 40%, #b8a890 100%);
+          height: clamp(580px, 82vh, 860px);
+          background-image:
+            linear-gradient(180deg, rgba(212, 199, 170, 0.1) 0%, rgba(168, 150, 120, 0.35) 100%),
+            url("https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=2200&q=80");
+          background-size: cover;
+          background-position: center 30%;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -357,7 +361,7 @@ export function PonziPreview() {
         .pnz-hero-overlay {
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at center, rgba(0,0,0,0) 30%, rgba(0,0,0,0.35) 100%);
+          background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0.1) 20%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0.45) 100%);
         }
         .pnz-hero-inner {
           position: relative;
@@ -370,24 +374,24 @@ export function PonziPreview() {
         /* Decorative paint swatches behind the wordmark */
         .pnz-swatches {
           position: absolute;
-          top: -4rem;
+          top: -5rem;
           left: 50%;
-          transform: translateX(-48%);
+          transform: translateX(-50%);
           display: flex;
-          gap: 0.4rem;
-          opacity: 0.85;
+          gap: 0.35rem;
+          opacity: 0.92;
+          filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
         }
         .pnz-swatch {
           display: block;
-          width: 52px;
-          height: 72px;
-          border-radius: 8px;
-          filter: blur(1px);
+          width: 68px;
+          height: 88px;
+          border-radius: 4px;
         }
-        .pnz-swatch--1 { background: #295b97; transform: rotate(-3deg); }
-        .pnz-swatch--2 { background: #3e7a69; transform: rotate(2deg); margin-top: 8px; }
-        .pnz-swatch--3 { background: #e8d8c5; transform: rotate(-1deg); margin-top: 4px; }
-        .pnz-swatch--4 { background: #c8542a; transform: rotate(3deg); margin-top: 10px; }
+        .pnz-swatch--1 { background: #2b5f9c; transform: rotate(-4deg) translateY(-2px); }
+        .pnz-swatch--2 { background: #3b7d6d; transform: rotate(1deg) translateY(6px); }
+        .pnz-swatch--3 { background: #e8d8c5; transform: rotate(-2deg) translateY(2px); }
+        .pnz-swatch--4 { background: #cc4f28; transform: rotate(3deg) translateY(8px); }
 
         .pnz-wordmark {
           display: flex;
@@ -396,22 +400,23 @@ export function PonziPreview() {
           gap: 0.1rem;
           position: relative;
           z-index: 2;
-          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.55);
         }
         .pnz-script {
           font-family: var(--pnz-script);
-          font-size: clamp(4rem, 11vw, 8rem);
-          font-weight: 600;
-          line-height: 0.95;
+          font-size: clamp(5rem, 13vw, 9.5rem);
+          font-weight: 700;
+          line-height: 0.85;
           color: #fff;
         }
         .pnz-line {
           font-family: var(--pnz-sans);
-          font-size: clamp(0.85rem, 1.5vw, 1.15rem);
-          letter-spacing: 0.5em;
-          padding-left: 0.5em;
+          font-size: clamp(0.9rem, 1.7vw, 1.3rem);
+          letter-spacing: 0.55em;
+          padding-left: 0.55em;
           color: #fff;
           font-weight: 400;
+          margin-top: -0.5rem;
         }
         .pnz-small {
           font-family: var(--pnz-sans);

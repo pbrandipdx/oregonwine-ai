@@ -240,12 +240,12 @@ export function ChehalemPreview() {
           --chp-ink: #1c1c1c;
           --chp-muted: #6b6b68;
           --chp-line: #e6e4de;
-          --chp-cream: #f4eee1;
-          --chp-blue: #233a5c;
-          --chp-beige: #d4c9b0;
+          --chp-cream: #f5f5f5;
+          --chp-blue: #3a4b5e;
+          --chp-beige: #9b918a;
           --chp-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-          --chp-sans: "Inter", system-ui, -apple-system, sans-serif;
-          background: #fff;
+          --chp-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+          background: var(--chp-cream);
           color: var(--chp-ink);
           font-family: var(--chp-sans);
           min-height: 100vh;
@@ -395,8 +395,8 @@ export function ChehalemPreview() {
         /* ── Hero ── */
         .chp-hero {
           position: relative;
-          height: clamp(460px, 60vh, 640px);
-          background-image: url("https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=2200&q=80");
+          height: clamp(460px, 62vh, 660px);
+          background-image: url("https://www.chehalemwines.com/wp-content/uploads/2026/02/16x9-Rose-scaled.png");
           background-size: cover;
           background-position: center;
           display: flex;
@@ -408,7 +408,7 @@ export function ChehalemPreview() {
         .chp-hero-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+          background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.42) 100%);
         }
         .chp-hero-inner {
           position: relative;
