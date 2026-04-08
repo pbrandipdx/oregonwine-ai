@@ -407,6 +407,52 @@
   }
 }
 
+/* ─── Hamburger + mobile drawer ─── */
+.rh-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  padding: 0.35rem;
+  color: var(--rh-ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.rh-drawer {
+  display: none;
+  position: fixed;
+  top: 6rem;
+  left: 0;
+  right: 0;
+  background: var(--rh-cream);
+  z-index: 1099;
+  padding: 0.5rem 1.25rem 1.25rem;
+  border-bottom: 1px solid var(--rh-line);
+  transform: translateY(-120%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.rh-drawer.is-open {
+  transform: translateY(0);
+}
+
+.rh-drawer-link {
+  display: block;
+  padding: 0.9rem 0.25rem;
+  color: var(--rh-ink);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  border-bottom: 1px solid var(--rh-line);
+}
+
+.rh-drawer-link:last-of-type {
+  border-bottom: none;
+}
+
 /* ─── Mobile ─── */
 @media (max-width: 900px) {
   .rh-nav {
@@ -417,24 +463,53 @@
   .rh-nav-links {
     display: none;
   }
+  .rh-menu-btn {
+    display: inline-flex;
+  }
+  .rh-drawer {
+    display: block;
+  }
   .rh-cards {
     grid-template-columns: 1fr;
   }
   .rh-icon-label {
     display: none;
   }
+  .rh-logo-word {
+    font-size: 1.35rem;
+    letter-spacing: 0.14em;
+  }
+  .rh-logo-crest {
+    font-size: 1.3rem;
+  }
 }
 
 @media (max-width: 600px) {
   .rh-announce {
-    font-size: 0.72rem;
-    padding: 0.5rem 1rem;
+    font-size: 0.68rem;
+    padding: 0.5rem 0.85rem;
+    line-height: 1.4;
+  }
+  .rh-drawer {
+    top: 5rem;
   }
   .rh-agent-trigger-label {
     display: none;
   }
   .rh-agent-trigger {
-    padding: 0.6rem;
+    padding: 0.55rem 0.6rem;
+  }
+  .rh-hero {
+    height: clamp(420px, 60vh, 540px);
+  }
+  .rh-hero h1 {
+    font-size: clamp(1.75rem, 7vw, 2.6rem);
+    margin-bottom: 1.5rem;
+  }
+  .rh-hero-cta {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
   }
   .rh-chat-popover {
     top: auto;
