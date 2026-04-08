@@ -471,14 +471,6 @@ export function HowItWorksPage() {
         </div>
 
         <div className="cta-section">
-          <h2>Want to see it on your wines?</h2>
-          <p>Send us your URL and we&apos;ll build you a live preview within 48 hours.</p>
-          <div className="hero-actions">
-            <Link to="/book-demo" className="hero-cta">Request a Preview</Link>
-          </div>
-        </div>
-
-        <div className="cta-section">
           <h2>Give Your Visitors the Experience They Expect</h2>
           <p>
             Your wines deserve a concierge that knows them as well as your team does — and is available when your
