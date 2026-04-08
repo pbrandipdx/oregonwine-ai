@@ -250,7 +250,10 @@ export function CrowleyPreview() {
           background: var(--crw-sage);
           position: sticky;
           top: 0;
-          z-index: 1100;
+          /* Above the chat scrim (1500) and popover (1600) so the Wine
+             Agent trigger stays clickable to toggle the panel closed. */
+          z-index: 1800;
+          isolation: isolate;
         }
         .crw-brand {
           justify-self: start;
@@ -303,6 +306,8 @@ export function CrowleyPreview() {
         /* ── Wine Agent trigger ── */
         .crw-agent-trigger {
           position: relative;
+          /* Stay clickable over the scrim + popover when chat is open. */
+          z-index: 2000;
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
@@ -332,6 +337,7 @@ export function CrowleyPreview() {
           border: 2px solid var(--crw-burgundy);
           opacity: 0;
           animation: crw-agent-pulse 1.8s ease-out 1.1s 3;
+          pointer-events: none;
         }
         .crw-agent-icon { display: inline-flex; width: 0.95rem; height: 0.95rem; }
         @keyframes crw-agent-in {
@@ -473,7 +479,7 @@ export function CrowleyPreview() {
           inset: 0;
           background: rgba(40, 30, 25, 0.4);
           backdrop-filter: blur(2px);
-          z-index: 999;
+          z-index: 1500;
         }
         .crw-popover {
           position: fixed;
@@ -481,7 +487,7 @@ export function CrowleyPreview() {
           right: 1.5rem;
           width: min(420px, calc(100vw - 3rem));
           height: min(640px, calc(100vh - 7.5rem));
-          z-index: 1000;
+          z-index: 1600;
           pointer-events: none;
           opacity: 0;
           transform: translateY(-12px) scale(0.92);

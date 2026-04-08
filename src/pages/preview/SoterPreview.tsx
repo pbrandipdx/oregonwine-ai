@@ -168,7 +168,10 @@ export function SoterPreview() {
           border-bottom: 1px solid var(--svp-line);
           position: sticky;
           top: 0;
-          z-index: 1100;
+          /* Above the chat scrim (1500) and popover (1600) so the Wine
+             Agent trigger stays clickable to toggle the panel closed. */
+          z-index: 1800;
+          isolation: isolate;
         }
         .svp-top-inner {
           max-width: 1380px;
@@ -225,6 +228,8 @@ export function SoterPreview() {
         /* ── Wine Agent trigger ── */
         .svp-agent-trigger {
           position: relative;
+          /* Stay clickable over the scrim + popover when chat is open. */
+          z-index: 2000;
           display: inline-flex;
           align-items: center;
           gap: 0.4rem;
@@ -415,7 +420,7 @@ export function SoterPreview() {
           inset: 0;
           background: rgba(20, 18, 12, 0.35);
           backdrop-filter: blur(2px);
-          z-index: 999;
+          z-index: 1500;
         }
         .svp-popover {
           position: fixed;
@@ -423,7 +428,7 @@ export function SoterPreview() {
           right: 1.5rem;
           width: min(420px, calc(100vw - 3rem));
           height: min(640px, calc(100vh - 6rem));
-          z-index: 1000;
+          z-index: 1600;
           pointer-events: none;
           opacity: 0;
           transform: translateY(-12px) scale(0.92);

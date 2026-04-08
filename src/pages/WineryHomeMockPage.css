@@ -55,9 +55,10 @@
   border-bottom: 1px solid var(--rh-line);
   position: sticky;
   top: 0;
-  /* Must sit above the chat scrim (999) and popover (1000) so the WINE AGENT
-     trigger stays clickable to toggle the panel closed. */
-  z-index: 1100;
+  /* Must sit above the chat scrim (1500) and popover (1600) so the WINE
+     AGENT trigger stays clickable to toggle the panel closed. */
+  z-index: 1800;
+  isolation: isolate;
 }
 
 .rh-logo {
@@ -150,6 +151,8 @@
 /* ─── Wine Agent trigger ─── */
 .rh-agent-trigger {
   position: relative;
+  /* Stay clickable over the scrim + popover when chat is open. */
+  z-index: 2000;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -358,7 +361,7 @@
   inset: 0;
   background: rgba(20, 12, 10, 0.35);
   backdrop-filter: blur(2px);
-  z-index: 999;
+  z-index: 1500;
   animation: rh-fade-in 0.25s ease;
 }
 
@@ -368,7 +371,7 @@
   right: 1.5rem;
   width: min(420px, calc(100vw - 3rem));
   height: min(640px, calc(100vh - 8rem));
-  z-index: 1000;
+  z-index: 1600;
   pointer-events: none;
   opacity: 0;
   transform: translateY(-12px) scale(0.92);
