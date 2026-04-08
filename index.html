@@ -145,6 +145,26 @@
     <!-- FAVICON (update these paths when you have actual favicons) -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Hide the Vercel Live Feedback / Toolbar overlay on preview deployments.
+         Targets every selector Vercel is known to inject at the body level.
+         Shadow-DOM internals can't be reached from here, so the authoritative
+         fix is Project Settings → Preview Feedback → Disabled. -->
+    <style>
+      vercel-live-feedback,
+      [data-vercel-live-feedback],
+      #vercel-live-feedback,
+      #__vercel_live_feedback,
+      [data-vercel-toolbar],
+      #vercel-toolbar,
+      iframe[src*="vercel.live"],
+      iframe[src*="/_next-live/feedback"],
+      iframe[src*="feedback.vercel.app"] {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root">
