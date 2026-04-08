@@ -27,7 +27,6 @@ export function WineryHomeMockPage({ slug: slugProp }: Props) {
 
   const [chatOpen, setChatOpen] = useState(false);
   const [pulseDone, setPulseDone] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
@@ -110,32 +109,8 @@ export function WineryHomeMockPage({ slug: slugProp }: Props) {
             </span>
             <span className="rh-agent-trigger-label">Wine Agent</span>
           </button>
-
-          <button
-            type="button"
-            className="rh-menu-btn"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
         </div>
       </header>
-
-      {/* Mobile drawer */}
-      <div className={`rh-drawer ${menuOpen ? "is-open" : ""}`}>
-        {config.menu.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="rh-drawer-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
 
       {/* Hero */}
       <section
@@ -201,22 +176,6 @@ export function WineryHomeMockPage({ slug: slugProp }: Props) {
 }
 
 /* ───────── Icons ───────── */
-
-function MenuIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
 
 function UserIcon() {
   return (

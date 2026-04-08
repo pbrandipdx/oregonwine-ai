@@ -17,7 +17,6 @@ export function PonziPreview() {
   const chat = PREVIEW_CHAT_CONFIGS.ponzi;
   const [chatOpen, setChatOpen] = useState(false);
   const [pulseDone, setPulseDone] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
@@ -135,31 +134,8 @@ export function PonziPreview() {
             </span>
             <span className="pnz-agent-label">Wine Agent</span>
           </button>
-          <button
-            type="button"
-            className="pnz-menu-btn"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
         </div>
       </header>
-
-      {/* Mobile drawer */}
-      <div className={`pnz-drawer ${menuOpen ? "is-open" : ""}`}>
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="pnz-drawer-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
 
       <section className="pnz-hero">
         <div className="pnz-hero-overlay" />
@@ -271,40 +247,6 @@ export function PonziPreview() {
           z-index: 1100;
           border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .pnz-menu-btn {
-          display: none;
-          background: transparent;
-          border: none;
-          padding: 0.35rem;
-          color: #eee5d1;
-          cursor: pointer;
-        }
-        .pnz-drawer {
-          display: none;
-          position: fixed;
-          top: 6.5rem;
-          left: 0;
-          right: 0;
-          background: var(--pnz-green);
-          z-index: 1099;
-          padding: 0.5rem 1.25rem 1.25rem;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          transform: translateY(-110%);
-          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.35);
-        }
-        .pnz-drawer.is-open { transform: translateY(0); }
-        .pnz-drawer-link {
-          display: block;
-          padding: 0.85rem 0.25rem;
-          color: #eee5d1;
-          text-decoration: none;
-          font-size: 0.85rem;
-          font-weight: 500;
-          letter-spacing: 0.14em;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .pnz-drawer-link:last-of-type { border-bottom: none; }
         .pnz-badge {
           display: inline-flex;
           text-decoration: none;
@@ -566,8 +508,6 @@ export function PonziPreview() {
         @media (max-width: 1100px) {
           .pnz-nav-links { display: none; }
           .pnz-nav { grid-template-columns: auto 1fr auto; padding: 0.35rem 1.25rem; }
-          .pnz-menu-btn { display: inline-flex; }
-          .pnz-drawer { display: block; }
         }
         @media (max-width: 700px) {
           .pnz-top {
@@ -577,7 +517,6 @@ export function PonziPreview() {
           }
           .pnz-top-sep { display: inline; }
           .pnz-top-link { display: none; }
-          .pnz-drawer { top: 5.75rem; }
           .pnz-agent-label { display: none; }
           .pnz-agent-trigger { padding: 0.5rem 0.6rem; }
           .pnz-badge svg { width: 48px; height: 48px; }
@@ -609,21 +548,6 @@ export function PonziPreview() {
   );
 }
 
-function MenuIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
 function CartIcon() {
   return (
     <svg

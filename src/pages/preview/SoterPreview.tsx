@@ -20,7 +20,6 @@ export function SoterPreview() {
   const chat = PREVIEW_CHAT_CONFIGS.soter;
   const [chatOpen, setChatOpen] = useState(false);
   const [pulseDone, setPulseDone] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
@@ -47,8 +46,8 @@ export function SoterPreview() {
         noindex
       />
 
-      {/* Top utility bar with announcement (desktop) */}
-      <div className="svp-top svp-top--desktop">
+      {/* Top utility bar with announcement + account icons */}
+      <div className="svp-top">
         <div className="svp-top-inner">
           <div className="svp-top-announce">
             Our Winter 2026 Release is here, and we're glad to finally share
@@ -79,42 +78,16 @@ export function SoterPreview() {
         </div>
       </div>
 
-      {/* Mobile header — hamburger | wordmark | actions */}
-      <header className="svp-mobile-head">
-        <button
-          type="button"
-          className="svp-menu-btn"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-        >
-          {menuOpen ? <CloseIcon /> : <MenuIcon />}
-        </button>
-        <a href="#" className="svp-brand-link" aria-label="Soter Vineyards">
-          <span className="svp-brand-word">SOTER</span>
-          <span className="svp-brand-sub">Vineyards</span>
-        </a>
-        <div className="svp-mobile-actions">
-          <a href="#login" className="svp-top-link">
-            LOG IN
-          </a>
-          <a href="#cart" className="svp-top-cart" aria-label="Cart">
-            <CartIcon />
-            <span className="svp-cart-count">0</span>
-          </a>
-        </div>
-      </header>
-
-      {/* Desktop wordmark */}
-      <header className="svp-brand svp-brand--desktop">
+      {/* Wordmark */}
+      <header className="svp-brand">
         <a href="#" className="svp-brand-link" aria-label="Soter Vineyards">
           <span className="svp-brand-word">SOTER</span>
           <span className="svp-brand-sub">Vineyards</span>
         </a>
       </header>
 
-      {/* Centered nav (desktop) */}
-      <nav className="svp-nav svp-nav--desktop">
+      {/* Centered nav */}
+      <nav className="svp-nav">
         <div className="svp-nav-inner">
           {navItems.map((item) => (
             <a key={item} href="#">
@@ -123,34 +96,6 @@ export function SoterPreview() {
           ))}
         </div>
       </nav>
-
-      {/* Mobile drawer */}
-      <div className={`svp-drawer ${menuOpen ? "is-open" : ""}`}>
-        <div className="svp-drawer-announce">
-          Our Winter 2026 Release is here.{" "}
-          <a href="#shop">SHOP NOW</a>
-        </div>
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="svp-drawer-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            {item}
-          </a>
-        ))}
-        <button
-          type="button"
-          className={`svp-drawer-agent ${pulseDone ? "is-rest" : "is-pulsing"}`}
-          onClick={() => {
-            setMenuOpen(false);
-            setChatOpen(true);
-          }}
-        >
-          <SparkleIcon /> Wine Agent
-        </button>
-      </div>
 
       {/* Hero */}
       <section className="svp-hero">
@@ -215,7 +160,7 @@ export function SoterPreview() {
           overflow-x: hidden;
         }
 
-        /* ── Top utility bar (desktop) ── */
+        /* ── Top utility bar ── */
         .svp-top {
           background: #fff;
           border-bottom: 1px solid var(--svp-line);
@@ -223,8 +168,6 @@ export function SoterPreview() {
           top: 0;
           z-index: 1100;
         }
-        .svp-mobile-head { display: none; }
-        .svp-drawer { display: none; }
         .svp-top-inner {
           max-width: 1380px;
           margin: 0 auto;
@@ -501,116 +444,17 @@ export function SoterPreview() {
         }
 
         @media (max-width: 900px) {
-          /* Hide desktop chrome, show mobile chrome */
-          .svp-top--desktop,
-          .svp-brand--desktop,
-          .svp-nav--desktop { display: none !important; }
-
-          .svp-mobile-head {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.85rem 1rem;
-            background: #fff;
-            border-bottom: 1px solid var(--svp-line);
-            position: sticky;
-            top: 0;
-            z-index: 1100;
-          }
-          .svp-menu-btn {
-            background: transparent;
-            border: none;
-            padding: 0.4rem;
-            color: var(--svp-ink);
-            cursor: pointer;
-            display: inline-flex;
-            justify-self: start;
-          }
-          .svp-mobile-head .svp-brand-link {
-            justify-self: center;
-            align-items: center;
-            display: flex;
+          .svp-top-inner {
             flex-direction: column;
-            gap: 0;
-          }
-          .svp-mobile-head .svp-brand-word {
-            font-size: 1.4rem;
-            letter-spacing: 0.36em;
-            padding-left: 0.36em;
-          }
-          .svp-mobile-head .svp-brand-sub {
-            font-size: 0.58rem;
-            letter-spacing: 0.32em;
-            padding-left: 0.32em;
-          }
-          .svp-mobile-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            justify-self: end;
-          }
-          .svp-mobile-actions .svp-top-link { font-size: 0.65rem; }
-          .svp-mobile-actions .svp-top-cart { color: var(--svp-ink); }
-
-          /* Mobile drawer */
-          .svp-drawer {
-            display: block;
-            position: fixed;
-            top: 3.85rem;
-            left: 0;
-            right: 0;
-            background: #fff;
-            z-index: 1099;
-            padding: 1rem 1.25rem 1.5rem;
-            border-bottom: 1px solid var(--svp-line);
-            transform: translateY(-110%);
-            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-          }
-          .svp-drawer.is-open { transform: translateY(0); }
-          .svp-drawer-announce {
-            font-size: 0.78rem;
-            text-align: center;
-            padding-bottom: 1rem;
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid var(--svp-line);
-            color: var(--svp-ink);
-          }
-          .svp-drawer-announce a {
-            color: var(--svp-green);
-            font-weight: 700;
-            text-decoration: underline;
-            margin-left: 0.25rem;
-          }
-          .svp-drawer-link {
-            display: block;
-            padding: 0.85rem 0.25rem;
-            color: var(--svp-ink);
-            text-decoration: none;
-            font-size: 0.88rem;
-            font-weight: 500;
-            letter-spacing: 0.16em;
-            border-bottom: 1px solid var(--svp-line);
-          }
-          .svp-drawer-link:last-of-type { border-bottom: none; }
-          .svp-drawer-agent {
-            display: inline-flex;
-            align-items: center;
             gap: 0.45rem;
-            margin-top: 1rem;
-            background: var(--svp-green);
-            color: #fff;
-            border: none;
-            border-radius: 999px;
-            padding: 0.7rem 1.2rem;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            cursor: pointer;
+            padding: 0.65rem 1rem;
           }
-
+          .svp-top-announce { font-size: 0.72rem; }
+          .svp-brand { padding: 1rem 1rem 0.75rem; }
+          .svp-brand-word { font-size: 1.75rem; }
+          .svp-brand-sub { font-size: 0.68rem; }
+          .svp-nav-inner { gap: 1.5rem; padding: 0.75rem 1rem; overflow-x: auto; }
+          .svp-nav-inner a { font-size: 0.7rem; white-space: nowrap; }
           .svp-hero { height: clamp(520px, 75vh, 700px); }
           .svp-hero-inner { padding: 0 1.25rem 4rem; }
           .svp-hero h1 { font-size: clamp(2.2rem, 12vw, 3.4rem); }
@@ -618,6 +462,8 @@ export function SoterPreview() {
           .svp-hero-cta { padding: 0.9rem 2rem; font-size: 0.72rem; letter-spacing: 0.22em; }
         }
         @media (max-width: 600px) {
+          .svp-agent-label { display: none; }
+          .svp-agent-trigger { padding: 0.5rem 0.6rem; }
           .svp-popover {
             top: auto;
             right: 0;
@@ -634,21 +480,6 @@ export function SoterPreview() {
 }
 
 /* ───── icons ───── */
-function MenuIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
 function CartIcon() {
   return (
     <svg

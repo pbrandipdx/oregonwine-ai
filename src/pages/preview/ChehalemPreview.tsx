@@ -17,7 +17,6 @@ export function ChehalemPreview() {
   const chat = PREVIEW_CHAT_CONFIGS.chehalem;
   const [chatOpen, setChatOpen] = useState(false);
   const [pulseDone, setPulseDone] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
@@ -100,31 +99,8 @@ export function ChehalemPreview() {
             </span>
             <span className="chp-agent-label">Wine Agent</span>
           </button>
-          <button
-            type="button"
-            className="chp-menu-btn"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
         </div>
       </header>
-
-      {/* Mobile drawer */}
-      <div className={`chp-drawer ${menuOpen ? "is-open" : ""}`}>
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="chp-drawer-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
 
       {/* Hero */}
       <section className="chp-hero">
@@ -290,40 +266,6 @@ export function ChehalemPreview() {
           top: 0;
           z-index: 1100;
         }
-        .chp-menu-btn {
-          display: none;
-          background: transparent;
-          border: none;
-          padding: 0.35rem;
-          color: var(--chp-ink);
-          cursor: pointer;
-        }
-        .chp-drawer {
-          display: none;
-          position: fixed;
-          top: 3.5rem;
-          left: 0;
-          right: 0;
-          background: #fff;
-          z-index: 1099;
-          padding: 0.25rem 1.25rem 1rem;
-          border-bottom: 1px solid var(--chp-line);
-          transform: translateY(-110%);
-          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
-        }
-        .chp-drawer.is-open { transform: translateY(0); }
-        .chp-drawer-link {
-          display: block;
-          padding: 0.85rem 0.25rem;
-          color: var(--chp-ink);
-          text-decoration: none;
-          font-size: 0.85rem;
-          font-weight: 500;
-          letter-spacing: 0.14em;
-          border-bottom: 1px solid var(--chp-line);
-        }
-        .chp-drawer-link:last-of-type { border-bottom: none; }
         .chp-brand {
           display: flex;
           align-items: center;
@@ -590,8 +532,6 @@ export function ChehalemPreview() {
         @media (max-width: 1100px) {
           .chp-nav-links { display: none; }
           .chp-nav { grid-template-columns: 1fr auto; padding: 0.85rem 1.25rem; gap: 0.75rem; }
-          .chp-menu-btn { display: inline-flex; }
-          .chp-drawer { display: block; }
         }
         @media (max-width: 700px) {
           .chp-socials { display: none; }
@@ -620,21 +560,6 @@ export function ChehalemPreview() {
   );
 }
 
-function MenuIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
 function CartIcon() {
   return (
     <svg

@@ -17,7 +17,6 @@ export function CrowleyPreview() {
   const chat = PREVIEW_CHAT_CONFIGS.crowley;
   const [chatOpen, setChatOpen] = useState(false);
   const [pulseDone, setPulseDone] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
@@ -109,31 +108,8 @@ export function CrowleyPreview() {
             </span>
             <span className="crw-agent-label">Wine Agent</span>
           </button>
-          <button
-            type="button"
-            className="crw-menu-btn"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-          >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
-          </button>
         </div>
       </header>
-
-      {/* Mobile drawer */}
-      <div className={`crw-drawer ${menuOpen ? "is-open" : ""}`}>
-        {navItems.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="crw-drawer-link"
-            onClick={() => setMenuOpen(false)}
-          >
-            {item}
-          </a>
-        ))}
-      </div>
 
       {/* Hero */}
       <section className="crw-hero">
@@ -230,40 +206,6 @@ export function CrowleyPreview() {
           align-items: center;
           padding: 0.45rem 2rem;
         }
-        .crw-menu-btn {
-          display: none;
-          background: transparent;
-          border: none;
-          padding: 0.35rem;
-          color: var(--crw-ink);
-          cursor: pointer;
-        }
-        .crw-drawer {
-          display: none;
-          position: fixed;
-          top: 6.25rem;
-          left: 0;
-          right: 0;
-          background: var(--crw-sage);
-          z-index: 1099;
-          padding: 0.5rem 1.25rem 1.25rem;
-          border-bottom: 1px solid var(--crw-sage-dark);
-          transform: translateY(-120%);
-          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
-        }
-        .crw-drawer.is-open { transform: translateY(0); }
-        .crw-drawer-link {
-          display: block;
-          padding: 0.85rem 0.25rem;
-          color: var(--crw-ink);
-          text-decoration: none;
-          font-size: 0.88rem;
-          font-weight: 500;
-          letter-spacing: 0.16em;
-          border-bottom: 1px solid rgba(60, 46, 36, 0.15);
-        }
-        .crw-drawer-link:last-of-type { border-bottom: none; }
         .crw-top-cart {
           display: inline-flex;
           align-items: center;
@@ -571,8 +513,6 @@ export function CrowleyPreview() {
             grid-template-columns: auto 1fr auto;
             padding: 1.1rem 1.25rem;
           }
-          .crw-menu-btn { display: inline-flex; }
-          .crw-drawer { display: block; }
           .crw-brand-word { font-size: 1.5rem; letter-spacing: 0.2em; }
           .crw-monogram { display: none; }
           .crw-discover { grid-template-columns: 1fr; }
@@ -604,21 +544,6 @@ export function CrowleyPreview() {
   );
 }
 
-function MenuIcon() {
-  return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-    >
-      <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
 function CartIcon() {
   return (
     <svg
