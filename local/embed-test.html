@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crushpad.ai — Embed Test</title>
+    <style>
+      :root {
+        --bg: #f5efe6;
+        --ink: #2a1f1c;
+        --accent: #7a1f2b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Georgia, "Cormorant Garamond", serif;
+        background: var(--bg);
+        color: var(--ink);
+        min-height: 100vh;
+      }
+      header {
+        background: var(--accent);
+        color: #f5efe6;
+        padding: 1.25rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      header strong {
+        font-size: 1.4rem;
+        letter-spacing: 0.05em;
+      }
+      header nav a {
+        color: #f5efe6;
+        text-decoration: none;
+        margin-left: 2rem;
+        font-family: system-ui, sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+      }
+      h1 {
+        font-size: 2.6rem;
+        line-height: 1.2;
+        margin: 0 0 1rem;
+      }
+      p {
+        font-size: 1.1rem;
+        line-height: 1.65;
+      }
+      .test-bar {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 1rem 1.25rem;
+        margin: 2rem 0;
+        font-family: ui-monospace, "Space Mono", monospace;
+        font-size: 0.78rem;
+        color: #555;
+      }
+      .test-bar strong {
+        color: var(--accent);
+      }
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-family: system-ui, sans-serif;
+        font-size: 0.75rem;
+        color: #8a7a72;
+        border-top: 1px solid #e0d8cc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <strong>Fake Winery</strong>
+      <nav>
+        <a href="#">Visit</a>
+        <a href="#">Wines</a>
+        <a href="#">Club</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Welcome to Fake Winery.</h1>
+      <p>
+        This is a fake winery homepage that exists only to verify the Crushpad.ai concierge widget actually mounts and
+        chats. If everything is wired up correctly, you should see a small chat button appear in the bottom-right
+        corner of this page.
+      </p>
+      <p>
+        Click the button. Ask it &ldquo;What time do you open?&rdquo; or &ldquo;Do you allow dogs on the
+        patio?&rdquo;. The bot is pointed at the Rex Hill knowledge base, so its answers will be Rex Hill specific —
+        that&apos;s expected.
+      </p>
+
+      <div class="test-bar">
+        <strong>Embed source:</strong> https://www.crushpad.ai/crushpad-widget.js<br />
+        <strong>API key:</strong> wk_test_rexhill (allowlisted for localhost)<br />
+        <strong>Backend:</strong> https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1
+      </div>
+
+      <p>
+        If the widget does not appear, open your browser console — any error from
+        <code>[Crushpad.ai]</code> or a 401/403 from the Supabase function will tell you what went wrong.
+      </p>
+    </main>
+
+    <footer>Local embed test · not deployed</footer>
+
+    <!-- ============================================================
+         The actual embed snippet under test.
+         This is what a real winery would paste into their site.
+         ============================================================ -->
+    <script
+      src="https://www.crushpad.ai/crushpad-widget.js"
+      data-crushpad-key="wk_test_rexhill"
+      data-crushpad-winery="REX HILL"
+      data-crushpad-color="#7a1f2b"
+      data-crushpad-url="https://rexhill.com"
+      data-crushpad-phone="(503) 538-0666"
+    ></script>
+  </body>
+</html>

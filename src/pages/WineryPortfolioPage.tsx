@@ -12,6 +12,7 @@ type WineryEntry = {
   blurb: string;
   established?: number;
   features: {
+    preview: boolean;
     partner: boolean;
     chat: boolean;
     research: boolean;
@@ -32,6 +33,7 @@ const WINERIES: WineryEntry[] = [
     blurb: WINERY_CARD_OVERRIDES["rex-hill"]?.blurb ?? "",
     established: 1982,
     features: {
+      preview: true,
       partner: true,
       chat: true,
       research: true,
@@ -50,6 +52,7 @@ const WINERIES: WineryEntry[] = [
     blurb: WINERY_CARD_OVERRIDES.crowley?.blurb ?? "",
     established: 2005,
     features: {
+      preview: true,
       partner: true,
       chat: true,
       research: true,
@@ -68,6 +71,7 @@ const WINERIES: WineryEntry[] = [
     blurb: WINERY_CARD_OVERRIDES.ponzi?.blurb ?? "",
     established: 1970,
     features: {
+      preview: true,
       partner: true,
       chat: true,
       research: true,
@@ -86,6 +90,7 @@ const WINERIES: WineryEntry[] = [
     blurb: WINERY_CARD_OVERRIDES.chehalem?.blurb ?? "",
     established: 1990,
     features: {
+      preview: true,
       partner: true,
       chat: true,
       research: true,
@@ -104,6 +109,7 @@ const WINERIES: WineryEntry[] = [
     blurb: WINERY_CARD_OVERRIDES.soter?.blurb ?? "",
     established: 1997,
     features: {
+      preview: true,
       partner: true,
       chat: true,
       research: true,
@@ -118,6 +124,7 @@ const WINERIES: WineryEntry[] = [
 ];
 
 const FEATURE_LABELS: { key: keyof WineryEntry["features"]; label: string; path: (slug: string) => string }[] = [
+  { key: "preview", label: "Preview", path: (s) => `/${s}/preview` },
   { key: "partner", label: "Partner", path: (s) => `/${s}` },
   { key: "chat", label: "Chat", path: (s) => `/${s}/demo` },
   { key: "research", label: "Research", path: (s) => `/${s}/research` },

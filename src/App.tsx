@@ -12,6 +12,7 @@ import { WineryPage } from "./pages/WineryPage";
 import { AdminPage } from "./pages/AdminPage";
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { RexHillPartnerPage, RexHillResearchPage } from "./pages/rex-hill";
+import { WineryHomeMockPage } from "./pages/WineryHomeMockPage";
 import { ChehalemPartnerPage, ChehalemResearchPage } from "./pages/chehalem";
 import { WidgetDemoChehalemPage } from "./pages/WidgetDemoChehalemPage";
 import { ChehalemBlindTasting, ChehalemMatchMe } from "./pages/chehalem-games";
@@ -91,6 +92,22 @@ function AppRoutesInner() {
     { key: "analytics", label: "Analytics" },
     { key: "admin", label: "Admin" },
   ];
+
+  // Full-bleed sales mock pages — render as if they were the customer's own site,
+  // with no Crushpad sidebar / winery nav chrome around them. Matches /{slug}/preview
+  // for any winery in WINERY_MOCK_CONFIGS.
+  const isFullBleedMock = /^\/[^/]+\/preview$/.test(p);
+  if (isFullBleedMock) {
+    return (
+      <div className="app" style={{ minHeight: "100vh" }}>
+        <main className="main main--landing" style={{ padding: 0 }}>
+          <Routes>
+            <Route path="/:slug/preview" element={<WineryHomeMockPage />} />
+          </Routes>
+        </main>
+      </div>
+    );
+  }
 
   // When embedded in an iframe (?embed=1), hide sidebar and remove padding
   if (isEmbed) {
