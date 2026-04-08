@@ -11,8 +11,6 @@ type WineryEntry = {
   region: string;
   blurb: string;
   established?: number;
-  /** Public homepage of the real winery — used for the "Preview" link. */
-  homepage: string;
   features: {
     preview: boolean;
     partner: boolean;
@@ -34,7 +32,6 @@ const WINERIES: WineryEntry[] = [
     region: WINERY_CARD_OVERRIDES["rex-hill"]?.region ?? "",
     blurb: WINERY_CARD_OVERRIDES["rex-hill"]?.blurb ?? "",
     established: 1982,
-    homepage: "https://rexhill.com",
     features: {
       preview: true,
       partner: true,
@@ -54,7 +51,6 @@ const WINERIES: WineryEntry[] = [
     region: WINERY_CARD_OVERRIDES.crowley?.region ?? "",
     blurb: WINERY_CARD_OVERRIDES.crowley?.blurb ?? "",
     established: 2005,
-    homepage: "https://crowleywines.com",
     features: {
       preview: true,
       partner: true,
@@ -74,7 +70,6 @@ const WINERIES: WineryEntry[] = [
     region: WINERY_CARD_OVERRIDES.ponzi?.region ?? "",
     blurb: WINERY_CARD_OVERRIDES.ponzi?.blurb ?? "",
     established: 1970,
-    homepage: "https://www.ponzivineyards.com",
     features: {
       preview: true,
       partner: true,
@@ -94,7 +89,6 @@ const WINERIES: WineryEntry[] = [
     region: WINERY_CARD_OVERRIDES.chehalem?.region ?? "",
     blurb: WINERY_CARD_OVERRIDES.chehalem?.blurb ?? "",
     established: 1990,
-    homepage: "https://chehalemwines.com",
     features: {
       preview: true,
       partner: true,
@@ -114,7 +108,6 @@ const WINERIES: WineryEntry[] = [
     region: WINERY_CARD_OVERRIDES.soter?.region ?? "",
     blurb: WINERY_CARD_OVERRIDES.soter?.blurb ?? "",
     established: 1997,
-    homepage: "https://sotervineyards.com",
     features: {
       preview: true,
       partner: true,
@@ -457,30 +450,8 @@ export function WineryPortfolioPage() {
           {w.region && <p className="wp-card-region">{w.region}</p>}
           {w.blurb && <p className="wp-card-blurb">{w.blurb}</p>}
           <div className="wp-features">
-            {FEATURE_LABELS.map((f) => {
-              if (!w.features[f.key]) {
-                return (
-                  <span key={f.key} className="wp-feat wp-feat--off">
-                    {f.label}
-                  </span>
-                );
-              }
-              // Preview now opens the winery's real homepage in a new tab
-              // instead of the internal mock at /{slug}/preview.
-              if (f.key === "preview") {
-                return (
-                  <a
-                    key={f.key}
-                    className="wp-feat wp-feat--on"
-                    href={w.homepage}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {f.label}
-                  </a>
-                );
-              }
-              return (
+            {FEATURE_LABELS.map((f) =>
+              w.features[f.key] ? (
                 <Link
                   key={f.key}
                   className="wp-feat wp-feat--on"
@@ -488,8 +459,12 @@ export function WineryPortfolioPage() {
                 >
                   {f.label}
                 </Link>
-              );
-            })}
+              ) : (
+                <span key={f.key} className="wp-feat wp-feat--off">
+                  {f.label}
+                </span>
+              )
+            )}
           </div>
         </div>
       ))}
