@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   QUESTIONS,
@@ -168,12 +168,6 @@ function buildItinerary(answers: Required<Answers>): Itinerary {
 export function PlanVisitPage() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Plan My Visit \u2014 Crushpad.ai";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [questionIdx, setQuestionIdx] = useState(0);

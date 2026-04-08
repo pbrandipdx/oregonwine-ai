@@ -101,9 +101,11 @@ function AppRoutesInner() {
     return (
       <div className="app" style={{ minHeight: "100vh" }}>
         <main className="main main--landing" style={{ padding: 0 }}>
-          <Routes>
-            <Route path="/:slug/preview" element={<WineryPreviewDispatcher />} />
-          </Routes>
+          <div key={location.pathname} className="route-view-transition">
+            <Routes>
+              <Route path="/:slug/preview" element={<WineryPreviewDispatcher />} />
+            </Routes>
+          </div>
         </main>
       </div>
     );
@@ -114,25 +116,27 @@ function AppRoutesInner() {
     return (
       <div className="app" style={{ minHeight: "100vh" }}>
         <main className="main main--landing" style={{ paddingTop: 0 }}>
-          <Routes>
-            <Route path="/blind-tasting" element={<BlindTastingPage />} />
-            <Route path="/match-me" element={<MatchMePage />} />
-            <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
-            <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
-            <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
-            <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
-            <Route path="/ponzi/blind-tasting" element={<PonziBlindTasting />} />
-            <Route path="/ponzi/match-me" element={<PonziMatchMe />} />
-            <Route path="/chehalem/blind-tasting" element={<ChehalemBlindTasting />} />
-            <Route path="/chehalem/match-me" element={<ChehalemMatchMe />} />
-            <Route path="/soter/blind-tasting" element={<SoterBlindTasting />} />
-            <Route path="/soter/match-me" element={<SoterMatchMe />} />
-            <Route path="/plan-visit" element={<PlanVisitPage />} />
-            <Route path="/compare" element={<ComparePage />} />
-            <Route path="/featured-winery" element={<FeaturedWineryPage />} />
-            <Route path="/winery-info" element={<WineryInfoPage />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <div key={location.pathname} className="route-view-transition">
+            <Routes>
+              <Route path="/blind-tasting" element={<BlindTastingPage />} />
+              <Route path="/match-me" element={<MatchMePage />} />
+              <Route path="/rex-hill/blind-tasting" element={<RexHillBlindTasting />} />
+              <Route path="/rex-hill/match-me" element={<RexHillMatchMe />} />
+              <Route path="/crowley/blind-tasting" element={<CrowleyBlindTasting />} />
+              <Route path="/crowley/match-me" element={<CrowleyMatchMe />} />
+              <Route path="/ponzi/blind-tasting" element={<PonziBlindTasting />} />
+              <Route path="/ponzi/match-me" element={<PonziMatchMe />} />
+              <Route path="/chehalem/blind-tasting" element={<ChehalemBlindTasting />} />
+              <Route path="/chehalem/match-me" element={<ChehalemMatchMe />} />
+              <Route path="/soter/blind-tasting" element={<SoterBlindTasting />} />
+              <Route path="/soter/match-me" element={<SoterMatchMe />} />
+              <Route path="/plan-visit" element={<PlanVisitPage />} />
+              <Route path="/compare" element={<ComparePage />} />
+              <Route path="/featured-winery" element={<FeaturedWineryPage />} />
+              <Route path="/winery-info" element={<WineryInfoPage />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
         </main>
       </div>
     );
@@ -183,7 +187,8 @@ function AppRoutesInner() {
                 : "main main--sidebar-page"
           }
         >
-          <Routes>
+          <div key={location.pathname} className="route-view-transition">
+            <Routes>
             {/* ── Home: chat widget fills the page ────────────── */}
             <Route path="/" element={<WidgetDemoPage />} />
 
@@ -265,7 +270,8 @@ function AppRoutesInner() {
             <Route path="/analytics" element={<Navigate to="/" replace />} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+            </Routes>
+          </div>
         </main>
       </div>
     </div>

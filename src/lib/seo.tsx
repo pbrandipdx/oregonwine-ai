@@ -11,6 +11,8 @@ export interface SEOProps {
   schema?: Record<string, unknown>;
   /** Set to true for pages that shouldn't be indexed (admin, analytics) */
   noindex?: boolean;
+  /** If true, `title` is used as the full document/OG title (no automatic "| Crushpad.ai" suffix). */
+  absoluteTitle?: boolean;
 }
 
 const SITE_NAME = "Crushpad.ai";
@@ -23,9 +25,10 @@ const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
  * Sets document.title, meta description, OG/Twitter tags, canonical, and schema.
  * Cleans up injected tags on unmount.
  */
-export function SEOHead({ title, description, path, ogImage, schema, noindex }: SEOProps) {
+export function SEOHead({ title, description, path, ogImage, schema, noindex, absoluteTitle }: SEOProps) {
   useEffect(() => {
-    const fullTitle = path === "/" ? title : `${title} | ${SITE_NAME}`;
+    const fullTitle =
+      absoluteTitle || path === "/" ? title : `${title} | ${SITE_NAME}`;
     const url = `${SITE_URL}${path}`;
     const image = ogImage || DEFAULT_OG_IMAGE;
 
@@ -88,7 +91,7 @@ export function SEOHead({ title, description, path, ogImage, schema, noindex }: 
       metas.forEach((el) => el.remove());
       schemaEl?.remove();
     };
-  }, [title, description, path, ogImage, schema, noindex]);
+  }, [title, description, path, ogImage, schema, noindex, absoluteTitle]);
 
   return null;
 }

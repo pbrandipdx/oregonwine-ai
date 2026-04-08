@@ -151,6 +151,11 @@
          Shadow-DOM internals can't be reached from here, so the authoritative
          fix is Project Settings → Preview Feedback → Disabled. -->
     <style>
+      /* Must live in head: hide #seo-fallback before JS loads (index.css loads via main.tsx). */
+      #seo-fallback {
+        display: none !important;
+      }
+
       vercel-live-feedback,
       [data-vercel-live-feedback],
       #vercel-live-feedback,
@@ -167,44 +172,43 @@
     </style>
   </head>
   <body>
-    <div id="root">
-      <!-- SEO: Crawlable fallback content for search engines that don't execute JS -->
-      <div id="seo-fallback">
-        <h1>Crushpad.ai — AI-Powered Wine Concierge for Oregon Wineries</h1>
-        <p>
-          Crushpad.ai gives every Oregon winery an AI-powered chatbot trained on your wines, hours,
-          and tasting experiences — so visitors get instant answers and you get more bookings.
-        </p>
-        <h2>Oregon Winery Partners</h2>
-        <ul>
-          <li><a href="/rex-hill">REX HILL Winery &amp; Vineyards</a> — Laurelwood District, Willamette Valley</li>
-          <li><a href="/ponzi">Ponzi Vineyards</a> — Laurelwood District, Chehalem Mountains, Willamette Valley</li>
-          <li><a href="/crowley">Crowley Wines</a> — McMinnville / Dundee Hills / Eola-Amity Hills</li>
-          <li><a href="/chehalem">Chehalem Winery</a> — Chehalem Mountains AVA, Willamette Valley</li>
-          <li><a href="/soter">Soter Vineyards</a> — Mineral Springs Ranch, Yamhill-Carlton AVA</li>
-        </ul>
-        <h2>Features</h2>
-        <ul>
-          <li><a href="/how-it-works">How it works</a> — See how AI transforms winery websites</li>
-          <li><a href="/chatbot-demo">Chatbot demo</a> — Try the AI wine concierge live</li>
-          <li><a href="/agent-demo">Agent demo</a> — Experience the AI agent in action</li>
-          <li><a href="/blind-tasting">Blind tasting</a> — Test your palate with AI</li>
-          <li><a href="/match-me">Wine match</a> — Get AI-powered wine recommendations</li>
-          <li><a href="/plan-visit">Plan a visit</a> — AI-assisted wine country trip planning</li>
-          <li><a href="/compare">Compare wines</a> — Side-by-side wine comparison tool</li>
-          <li><a href="/book-demo">Book a demo</a> — Schedule a demo for your winery</li>
-        </ul>
-        <h2>Oregon Wine Regions</h2>
-        <p>
-          Crushpad.ai serves wineries across Oregon's premier wine regions including the Willamette Valley,
-          Dundee Hills, Chehalem Mountains, Yamhill-Carlton, Eola-Amity Hills, McMinnville, Ribbon Ridge,
-          Laurelwood District, and Southern Oregon AVAs. Oregon is the nation's third-largest wine-producing
-          state with over 700 wineries across 23 American Viticultural Areas.
-        </p>
-        <footer>
-          <p>&copy; 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for Oregon wineries</p>
-        </footer>
-      </div>
+    <div id="root"></div>
+    <!-- SEO: Crawlable fallback for engines that don't execute JS — sibling of #root so React mount never removes it -->
+    <div id="seo-fallback" aria-hidden="true">
+      <h1>Crushpad.ai — AI-Powered Wine Concierge for Oregon Wineries</h1>
+      <p>
+        Crushpad.ai gives every Oregon winery an AI-powered chatbot trained on your wines, hours,
+        and tasting experiences — so visitors get instant answers and you get more bookings.
+      </p>
+      <h2>Oregon Winery Partners</h2>
+      <ul>
+        <li><a href="/rex-hill">REX HILL Winery &amp; Vineyards</a> — Laurelwood District, Willamette Valley</li>
+        <li><a href="/ponzi">Ponzi Vineyards</a> — Laurelwood District, Chehalem Mountains, Willamette Valley</li>
+        <li><a href="/crowley">Crowley Wines</a> — McMinnville / Dundee Hills / Eola-Amity Hills</li>
+        <li><a href="/chehalem">Chehalem Winery</a> — Chehalem Mountains AVA, Willamette Valley</li>
+        <li><a href="/soter">Soter Vineyards</a> — Mineral Springs Ranch, Yamhill-Carlton AVA</li>
+      </ul>
+      <h2>Features</h2>
+      <ul>
+        <li><a href="/how-it-works">How it works</a> — See how AI transforms winery websites</li>
+        <li><a href="/chatbot-demo">Chatbot demo</a> — Try the AI wine concierge live</li>
+        <li><a href="/agent-demo">Agent demo</a> — Experience the AI agent in action</li>
+        <li><a href="/blind-tasting">Blind tasting</a> — Test your palate with AI</li>
+        <li><a href="/match-me">Wine match</a> — Get AI-powered wine recommendations</li>
+        <li><a href="/plan-visit">Plan a visit</a> — AI-assisted wine country trip planning</li>
+        <li><a href="/compare">Compare wines</a> — Side-by-side wine comparison tool</li>
+        <li><a href="/book-demo">Book a demo</a> — Schedule a demo for your winery</li>
+      </ul>
+      <h2>Oregon Wine Regions</h2>
+      <p>
+        Crushpad.ai serves wineries across Oregon's premier wine regions including the Willamette Valley,
+        Dundee Hills, Chehalem Mountains, Yamhill-Carlton, Eola-Amity Hills, McMinnville, Ribbon Ridge,
+        Laurelwood District, and Southern Oregon AVAs. Oregon is the nation's third-largest wine-producing
+        state with over 700 wineries across 23 American Viticultural Areas.
+      </p>
+      <footer>
+        <p>&copy; 2026 <a href="https://crushpad.ai">Crushpad.ai</a> — AI-powered wine concierge for Oregon wineries</p>
+      </footer>
     </div>
     <noscript>
       <h1>Crushpad.ai — AI-Powered Wine Concierge for Oregon Wineries</h1>

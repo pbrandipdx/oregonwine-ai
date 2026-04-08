@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { IMPACT_STATS } from "../impactStats";
 import { QUICK_REPLY_LABELS, type QuickReplyLabel } from "../lib/quickReplyMessages";
@@ -27,17 +27,13 @@ export function AgentDemoPage() {
 
   const [intent, setIntent] = useState<Intent>("tasting");
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = rexHill ? "REX HILL — Concierge agent (demo)" : "Crushpad.ai — Concierge agent (demo)";
-    return () => {
-      document.title = prev;
-    };
-  }, [rexHill]);
-
   return (
     <div className="adp">
-      <SEOHead {...PAGE_SEO.agentDemo} />
+      <SEOHead
+        {...PAGE_SEO.agentDemo}
+        title={rexHill ? "REX HILL — Concierge agent (demo)" : "Crushpad.ai — Concierge agent (demo)"}
+        absoluteTitle
+      />
       <div className="adp-inner">
         <header className="adp-hero">
           <div className="adp-hero-meta">

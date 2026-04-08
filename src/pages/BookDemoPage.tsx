@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 import { SEOHead, PAGE_SEO } from "../lib/seo";
@@ -23,14 +23,6 @@ export function BookDemoPage() {
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Crushpad.ai — Book a demo";
-    return () => {
-      document.title = prev;
-    };
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

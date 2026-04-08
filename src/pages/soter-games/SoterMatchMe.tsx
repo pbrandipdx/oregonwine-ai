@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { SEOHead, winerySubPageSEO } from "../../lib/seo";
 import {
   ST_EXPERIENCES,
   getSTRandomQuestions,
@@ -13,12 +14,6 @@ type Phase = "home" | "quiz" | "result";
 export function SoterMatchMe() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Match Me \u2014 Soter Vineyards";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [questions, setQuestions] = useState<STQuizQuestion[]>([]);
@@ -79,6 +74,7 @@ export function SoterMatchMe() {
 
   return (
     <div className="st-mm">
+      <SEOHead {...winerySubPageSEO("Soter Vineyards", "soter", "match-me")} />
       {/* ── Home ── */}
       {phase === "home" && (
         <div className="st-mm-home">

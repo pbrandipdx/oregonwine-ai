@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import {
@@ -91,12 +91,6 @@ export function ComparePage() {
   const badge = config?.badge ?? "Crushpad.ai \u00b7 Wine Agent";
   const subtitle = config?.subtitle ?? "Pick a category. We\u2019ll handle the argument.";
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = config?.title ?? "Compare \u2014 Crushpad.ai";
-    return () => { document.title = prev; };
-  }, [config]);
-
   const [phase, setPhase] = useState<Phase>("category");
   const [category, setCategory] = useState<CompareCategory | null>(null);
   const [result, setResult] = useState<Comparison | null>(null);
@@ -151,7 +145,7 @@ export function ComparePage() {
 
   return (
     <div className="cmp">
-      <SEOHead {...PAGE_SEO.compare} />
+      <SEOHead {...PAGE_SEO.compare} title={config?.title ?? PAGE_SEO.compare.title} />
       {/* ── Back button ── */}
       {phase !== "category" && (
         <button className="cmp-back" onClick={goBack}>

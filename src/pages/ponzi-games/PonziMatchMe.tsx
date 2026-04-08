@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   PZ_EXPERIENCES,
@@ -14,12 +14,6 @@ type Phase = "home" | "quiz" | "result";
 export function PonziMatchMe() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Match Me \u2014 Ponzi Vineyards";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [questions, setQuestions] = useState<PZQuizQuestion[]>([]);

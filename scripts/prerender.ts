@@ -129,7 +129,7 @@ async function prerender() {
     const page = await browser.newPage();
     await page.goto(`http://localhost:4173${route}`, { waitUntil: "networkidle0", timeout: 15000 });
 
-    // Remove the SEO fallback div (React will have replaced it)
+    // Remove crawlable fallback (sibling of #root; stays in DOM after React mount)
     await page.evaluate(() => {
       const fallback = document.getElementById("seo-fallback");
       if (fallback) fallback.remove();

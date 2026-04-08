@@ -1214,3 +1214,24 @@ code {
   color: var(--cn-muted);
   margin-top: 0.35rem;
 }
+
+/* #seo-fallback visibility: critical rule is inline in index.html <head> (FOUC-safe). */
+
+.route-view-transition {
+  animation: route-view-fade-in 0.18s ease-out;
+}
+
+@keyframes route-view-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-view-transition {
+    animation: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { WINERIES, getRandomQuestions, type WineryMatch, type QuizQuestion } from "../../data/match-me-wineries";
 import { SEOHead, PAGE_SEO } from "../../lib/seo";
@@ -9,12 +9,6 @@ type Phase = "home" | "quiz" | "result";
 export function MatchMePage() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Match Me — Crushpad.ai";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);

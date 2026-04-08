@@ -1,16 +1,15 @@
-import { useEffect } from "react";
 import { WidgetDemoSoterEmbed } from "../widget/WidgetDemoEmbed";
+import { SEOHead, winerySubPageSEO } from "../lib/seo";
 
 /** Soter Vineyards branded demo — winery-specific knowledge + wine education. */
 export function WidgetDemoSoterPage() {
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "SOTER VINEYARDS — Wine Agent";
-    return () => { document.title = prev; };
-  }, []);
-
   return (
     <div className="widget-demo-page" data-demo-variant="chatbot">
+      <SEOHead
+        {...winerySubPageSEO("SOTER VINEYARDS", "soter", "demo")}
+        title="SOTER VINEYARDS — Wine Agent"
+        absoluteTitle
+      />
       <div className="widget-demo-frame">
         <WidgetDemoSoterEmbed />
       </div>

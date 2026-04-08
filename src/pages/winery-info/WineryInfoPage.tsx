@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { SEOHead, PAGE_SEO } from "../../lib/seo";
 import { REX_HILL_CONTENT } from "../../data/rex-hill-content";
@@ -263,19 +262,11 @@ export function WineryInfoPage() {
 
   const title = TOPIC_TITLES[topic] ?? "Winery Info";
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = `${title} — ${wineryDisplay}`;
-    return () => {
-      document.title = prev;
-    };
-  }, [title, wineryDisplay]);
-
   const content = WINERY_DATA[wineryParam] ?? REX_HILL_CONTENT;
 
   return (
     <div className="wi">
-      <SEOHead {...PAGE_SEO.wineryInfo} />
+      <SEOHead {...PAGE_SEO.wineryInfo} title={`${title} — ${wineryDisplay}`} absoluteTitle />
       {/* Hero / header */}
       <div className="wi-hero">
         <p className="wi-badge">

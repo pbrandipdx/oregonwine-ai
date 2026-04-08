@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CW_WINES,
@@ -56,12 +56,6 @@ type Phase = "home" | "playing" | "result";
 export function CrowleyBlindTasting() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Blind Tasting \u2014 Crowley Wines";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [mode, setMode] = useState<"free" | "daily">("free");

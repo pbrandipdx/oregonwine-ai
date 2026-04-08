@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   CH_EXPERIENCES,
@@ -14,12 +14,6 @@ type Phase = "home" | "quiz" | "result";
 export function ChehalemMatchMe() {
   const [searchParams] = useSearchParams();
   const isEmbed = searchParams.get("embed") === "1";
-
-  useEffect(() => {
-    const prev = document.title;
-    document.title = "Match Me \u2014 Chehalem Winery";
-    return () => { document.title = prev; };
-  }, []);
 
   const [phase, setPhase] = useState<Phase>("home");
   const [questions, setQuestions] = useState<CHQuizQuestion[]>([]);

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import {
   QUICK_REPLY_LABELS,
   messageForChatApi,
@@ -102,94 +102,157 @@ const QUICK_REPLY_ICONS: Record<string, JSX.Element> = {
   ),
 };
 
-function QuickReplyChips({
+/** Shared horizontal chip row with chevrons; wraps when scrolling past an end (“carousel” behavior). */
+function HorizontalExperienceChips({
+  labels,
+  iconFor,
   palette: p,
   onPick,
   marginTop,
 }: {
+  labels: readonly string[];
+  iconFor: (label: string) => JSX.Element;
   palette: QuickPalette;
-  onPick: (text: string) => void;
+  onPick: (label: string) => void;
   marginTop: number;
 }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [hasOverflow, setHasOverflow] = useState(false);
   const [chipWidth, setChipWidth] = useState<number | null>(null);
 
-  const checkScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
-  }, []);
-
-  const measureChips = useCallback(() => {
+  const measure = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
     const trackW = el.clientWidth;
-    // On narrow screens, force 2 chips: each chip = (trackWidth - gap) / 2
     if (trackW < 500) {
       setChipWidth(Math.floor((trackW - 8) / 2));
     } else {
-      setChipWidth(null); // natural sizing on desktop
+      setChipWidth(null);
     }
+    setHasOverflow(el.scrollWidth > el.clientWidth + 2);
   }, []);
 
+  useLayoutEffect(() => {
+    measure();
+  }, [measure, labels]);
+
   useEffect(() => {
-    checkScroll();
-    measureChips();
     const el = scrollRef.current;
-    if (el) el.addEventListener("scroll", checkScroll, { passive: true });
-    const onResize = () => { checkScroll(); measureChips(); };
+    if (!el) {
+      return;
+    }
+    const ro = new ResizeObserver(() => measure());
+    ro.observe(el);
+    el.addEventListener("scroll", measure, { passive: true });
+    const onResize = () => measure();
     window.addEventListener("resize", onResize);
     return () => {
-      el?.removeEventListener("scroll", checkScroll);
+      ro.disconnect();
+      el.removeEventListener("scroll", measure);
       window.removeEventListener("resize", onResize);
     };
-  }, [checkScroll, measureChips]);
+  }, [measure]);
 
-  const scroll = (dir: "left" | "right") => {
+  /** Visible ring ~¼ of the old 46px controls (~12px); outer button keeps min touch area. */
+  const arrowVisual = 16;
+  const arrowFont = 12;
+
+  const scrollByTwoChips = (dir: "left" | "right") => {
     const el = scrollRef.current;
-    if (!el) return;
-    // On mobile, scroll by exactly 2 chips worth
-    const amount = chipWidth ? (chipWidth * 2 + 8) : 160;
-    el.scrollBy({ left: dir === "left" ? -amount : amount, behavior: "smooth" });
+    if (!el || !hasOverflow) return;
+    const buttons = Array.from(el.children).filter(
+      (n): n is HTMLElement => n instanceof HTMLElement && n.tagName === "BUTTON",
+    );
+    if (buttons.length === 0) return;
+
+    const maxScroll = Math.max(0, el.scrollWidth - el.clientWidth);
+    const eps = 2;
+
+    let leadIdx = 0;
+    for (let i = 0; i < buttons.length; i++) {
+      if (buttons[i].offsetLeft >= el.scrollLeft - eps) {
+        leadIdx = i;
+        break;
+      }
+    }
+
+    if (dir === "right") {
+      const atEnd = el.scrollLeft >= maxScroll - eps;
+      if (atEnd) {
+        el.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+      }
+      const targetIdx = Math.min(leadIdx + 2, buttons.length - 1);
+      const nextLeft = Math.min(buttons[targetIdx].offsetLeft, maxScroll);
+      el.scrollTo({ left: nextLeft, behavior: "smooth" });
+      return;
+    }
+
+    const atStart = leadIdx === 0 && el.scrollLeft <= eps;
+    if (atStart) {
+      el.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
+    const targetIdx = Math.max(0, leadIdx - 2);
+    el.scrollTo({ left: buttons[targetIdx].offsetLeft, behavior: "smooth" });
   };
 
-  const arrowBtn = (_dir: "left" | "right", enabled: boolean): React.CSSProperties => ({
-    width: 28,
-    height: 28,
+  const arrowHitOuter: React.CSSProperties = {
+    width: 40,
+    height: 40,
+    padding: 0,
+    margin: 0,
+    border: "none",
+    background: "transparent",
+    cursor: "pointer",
+    display: hasOverflow ? "inline-flex" : "none",
+    alignItems: "center",
+    justifyContent: "center",
+    flexShrink: 0,
+    boxSizing: "border-box",
+  };
+
+  const arrowDisc: React.CSSProperties = {
+    width: arrowVisual,
+    height: arrowVisual,
     borderRadius: "50%",
-    background: enabled ? "rgba(17,17,17,0.9)" : "transparent",
-    border: `1px solid ${enabled ? "rgba(196,122,132,0.35)" : "rgba(255,255,255,0.06)"}`,
-    color: enabled ? "#c47a84" : "rgba(255,255,255,0.08)",
-    cursor: enabled ? "pointer" : "default",
+    background: "rgba(17,17,17,0.92)",
+    border: "1px solid rgba(196,122,132,0.4)",
+    color: "#c47a84",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: 15,
+    fontSize: arrowFont,
+    lineHeight: 1,
     fontWeight: 700,
     fontFamily: "'Space Mono', monospace",
-    padding: 0,
-    transition: "all 0.2s",
-    flexShrink: 0,
-  });
+    boxSizing: "border-box",
+    pointerEvents: "none",
+  };
 
   return (
-    <div style={{ marginTop, maxWidth: 720, marginLeft: "auto", marginRight: "auto", display: "flex", alignItems: "center", gap: 6 }}>
-      {/* Hide scrollbar */}
+    <div
+      style={{
+        marginTop,
+        width: "100%",
+        maxWidth: "min(720px, 100%)",
+        marginLeft: "auto",
+        marginRight: "auto",
+        display: "flex",
+        alignItems: "center",
+        gap: 8,
+        minWidth: 0,
+        boxSizing: "border-box",
+      }}
+    >
       <style>{`.qr-scroll-track::-webkit-scrollbar { display: none; }`}</style>
 
-      {/* Left arrow */}
-      <button
-        type="button"
-        onClick={() => scroll("left")}
-        disabled={!canScrollLeft}
-        aria-label="Scroll left"
-        style={arrowBtn("left", canScrollLeft)}
-      >&lsaquo;</button>
+      <button type="button" onClick={() => scrollByTwoChips("left")} aria-label="Previous experiences" style={arrowHitOuter}>
+        <span style={arrowDisc} aria-hidden>
+          &lsaquo;
+        </span>
+      </button>
 
-      {/* Scrollable chip track */}
       <div
         ref={scrollRef}
         style={{
@@ -207,7 +270,7 @@ function QuickReplyChips({
         }}
         className="qr-scroll-track"
       >
-        {QUICK_REPLY_LABELS.map((q) => (
+        {labels.map((q) => (
           <button
             key={q}
             type="button"
@@ -239,33 +302,50 @@ function QuickReplyChips({
               scrollSnapAlign: chipWidth ? "start" : undefined,
             }}
             onMouseEnter={(e) => {
-              const el = e.currentTarget;
-              el.style.background = p.border;
-              el.style.borderColor = p.borderHover;
-              el.style.color = p.text;
+              const t = e.currentTarget;
+              t.style.background = p.border;
+              t.style.borderColor = p.borderHover;
+              t.style.color = p.text;
             }}
             onMouseLeave={(e) => {
-              const el = e.currentTarget;
-              el.style.background = p.surface;
-              el.style.borderColor = p.border;
-              el.style.color = "#a09496";
+              const t = e.currentTarget;
+              t.style.background = p.surface;
+              t.style.borderColor = p.border;
+              t.style.color = "#a09496";
             }}
           >
-            {QUICK_REPLY_ICONS[q]}
+            {iconFor(q)}
             {q}
           </button>
         ))}
       </div>
 
-      {/* Right arrow */}
-      <button
-        type="button"
-        onClick={() => scroll("right")}
-        disabled={!canScrollRight}
-        aria-label="Scroll right"
-        style={arrowBtn("right", canScrollRight)}
-      >&rsaquo;</button>
+      <button type="button" onClick={() => scrollByTwoChips("right")} aria-label="More experiences" style={arrowHitOuter}>
+        <span style={arrowDisc} aria-hidden>
+          &rsaquo;
+        </span>
+      </button>
     </div>
+  );
+}
+
+function QuickReplyChips({
+  palette: p,
+  onPick,
+  marginTop,
+}: {
+  palette: QuickPalette;
+  onPick: (text: string) => void;
+  marginTop: number;
+}) {
+  return (
+    <HorizontalExperienceChips
+      labels={QUICK_REPLY_LABELS}
+      iconFor={(q) => QUICK_REPLY_ICONS[q]}
+      palette={p}
+      onPick={onPick}
+      marginTop={marginTop}
+    />
   );
 }
 
@@ -313,46 +393,13 @@ function EngagementBubbles({
   marginTop: number;
 }) {
   return (
-    <div style={{ display: "flex", flexWrap: "nowrap", gap: 8, marginTop, width: "100%", maxWidth: 720, marginLeft: "auto", marginRight: "auto", overflowX: "auto", padding: "2px 16px", boxSizing: "border-box", scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" as any, touchAction: "pan-x" }}>
-      {ENGAGEMENT_LABELS.map((label) => (
-        <button
-          key={label}
-          type="button"
-          onClick={() => onPick(label)}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 7,
-            padding: "9px 14px",
-            borderRadius: 12,
-            border: `1px solid ${p.border}`,
-            background: p.surface,
-            color: "#a09496",
-            fontSize: 13,
-            fontWeight: 500,
-            cursor: "pointer",
-            fontFamily: "inherit",
-            transition: "background 0.15s, border-color 0.15s, color 0.15s",
-            whiteSpace: "nowrap",
-          }}
-          onMouseEnter={(e) => {
-            const el = e.currentTarget;
-            el.style.background = p.border;
-            el.style.borderColor = p.borderHover;
-            el.style.color = p.text;
-          }}
-          onMouseLeave={(e) => {
-            const el = e.currentTarget;
-            el.style.background = p.surface;
-            el.style.borderColor = p.border;
-            el.style.color = "#a09496";
-          }}
-        >
-          {ENGAGEMENT_ICONS[label]}
-          {label}
-        </button>
-      ))}
-    </div>
+    <HorizontalExperienceChips
+      labels={ENGAGEMENT_LABELS}
+      iconFor={(label) => ENGAGEMENT_ICONS[label as EngagementLabel]}
+      palette={p}
+      onPick={(label) => onPick(label as EngagementLabel)}
+      marginTop={marginTop}
+    />
   );
 }
 

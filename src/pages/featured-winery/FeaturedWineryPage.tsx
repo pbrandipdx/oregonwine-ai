@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FEATURED_WINERIES, type FeaturedWinery } from "../../data/featured-wineries";
 import { SEOHead, PAGE_SEO } from "../../lib/seo";
@@ -17,12 +17,6 @@ export function FeaturedWineryPage() {
 
   const [winery, setWinery] = useState<FeaturedWinery>(() => pickRandom());
 
-  useEffect(() => {
-    const prev = document.title;
-    document.title = `${winery.name} — Crushpad.ai`;
-    return () => { document.title = prev; };
-  }, [winery.name]);
-
   const showAnother = useCallback(() => {
     setWinery(pickRandom(winery.id));
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -32,7 +26,7 @@ export function FeaturedWineryPage() {
 
   return (
     <div className="fw">
-      <SEOHead {...PAGE_SEO.featuredWinery} />
+      <SEOHead {...PAGE_SEO.featuredWinery} title={`${winery.name} — Crushpad.ai`} absoluteTitle />
       {/* ── Hero ── */}
       <div className="fw-hero" key={winery.id}>
         <p className="fw-badge">Crushpad.ai &middot; Featured Winery</p>
