@@ -17,8 +17,8 @@ export function WhatWeDoPage() {
             recommending wines, and booking tastings around the clock, in <em>your</em> voice.
           </p>
           <div className="hero-actions">
-            <Link to="/book-demo" className="hero-cta">See a Live Demo</Link>
-            <Link to="/how-it-works" className="hero-cta ghost">How It Works</Link>
+            <Link to="/chatbot-demo" className="hero-cta">See a Live Demo</Link>
+            <Link to="/book-demo" className="hero-cta ghost">Book a Demo</Link>
           </div>
         </div>
       </section>
