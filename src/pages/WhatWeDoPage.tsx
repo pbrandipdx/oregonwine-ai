@@ -18,7 +18,7 @@ export function WhatWeDoPage() {
           </p>
           <div className="hero-actions">
             <Link to="/chatbot-demo" className="hero-cta">Try It Now</Link>
-            <Link to="/book-demo" className="hero-cta ghost">Book a Demo</Link>
+            <Link to="/how-it-works" className="hero-cta ghost">How It Works</Link>
           </div>
         </div>
       </section>
