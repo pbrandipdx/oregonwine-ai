@@ -468,6 +468,28 @@ export function WineryPortfolioPage() {
           </div>
         </div>
       ))}
+
+      {/* ── Oregon Willamette Valley Chatbot ── */}
+      <div className="wp-card" style={{ borderColor: "var(--accent, #c47a84)", borderWidth: 2 }}>
+        <div className="wp-card-head">
+          <h2 className="wp-card-name">
+            <Link to="/chatbot-demo">Oregon Willamette Valley Chatbot</Link>
+          </h2>
+        </div>
+        <p className="wp-card-region">Willamette Valley · All AVAs</p>
+        <p className="wp-card-blurb">
+          General-purpose AI wine concierge covering the entire Oregon Willamette Valley — all wineries, all AVAs.
+          Ask about wines, plan visits, compare regions, and explore Oregon wine country.
+        </p>
+        <div className="wp-features">
+          <Link className="wp-feat wp-feat--on" to="/chatbot-demo">Chat</Link>
+          <Link className="wp-feat wp-feat--on" to="/blind-tasting">Blind Tasting</Link>
+          <Link className="wp-feat wp-feat--on" to="/match-me">Match Me</Link>
+          <Link className="wp-feat wp-feat--on" to="/plan-visit">Plan My Visit</Link>
+          <Link className="wp-feat wp-feat--on" to="/compare">Compare</Link>
+          <Link className="wp-feat wp-feat--on" to="/featured-winery">Featured Winery</Link>
+        </div>
+      </div>
     </article>
   );
 }
