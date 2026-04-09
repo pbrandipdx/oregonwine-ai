@@ -189,8 +189,8 @@ function AppRoutesInner() {
         >
           <div key={location.pathname} className="route-view-transition">
             <Routes>
-            {/* ── Home: chat widget fills the page ────────────── */}
-            <Route path="/" element={<WidgetDemoPage />} />
+            {/* ── Home: first-time visitors → What We Do; returning → chatbot ── */}
+            <Route path="/" element={<FirstVisitGate />} />
 
             {/* ── Public pages ─────────────────────────────────── */}
             <Route path="/home" element={<HomePage />} />
@@ -276,6 +276,21 @@ function AppRoutesInner() {
       </div>
     </div>
   );
+}
+
+/**
+ * First-time visitors land on /what-we-do so they learn what Crushpad.ai
+ * is before seeing the chatbot. Returning visitors go straight to the
+ * chatbot (WidgetDemoPage). A localStorage flag tracks whether the user
+ * has visited before.
+ */
+function FirstVisitGate() {
+  const hasVisited = localStorage.getItem("crushpad_visited");
+  if (!hasVisited) {
+    localStorage.setItem("crushpad_visited", "1");
+    return <Navigate to="/what-we-do" replace />;
+  }
+  return <WidgetDemoPage />;
 }
 
 function AppRoutes() {
