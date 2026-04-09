@@ -153,6 +153,14 @@ function HorizontalExperienceChips({
     };
   }, [measure]);
 
+  // Re-check scroll after chipWidth changes the chip layout — the DOM
+  // needs one animation frame to apply the new widths before scrollWidth
+  // is accurate.
+  useEffect(() => {
+    const id = requestAnimationFrame(measure);
+    return () => cancelAnimationFrame(id);
+  }, [chipWidth, measure]);
+
   /** Visible ring ~¼ of the old 46px controls (~12px); outer button keeps min touch area. */
   const arrowVisual = 16;
   const arrowFont = 12;
@@ -811,7 +819,7 @@ export function ChatWidget({
               send();
             }
           }}
-          placeholder="Ask about wines, tastings, hours..."
+          placeholder={wineryLabel === "Crushpad.ai" ? "Ask about wines in the Oregon Willamette Valley..." : "Ask about wines, tastings, hours..."}
           disabled={loading}
           style={{
             flex: 1,
