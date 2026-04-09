@@ -9,3 +9,5 @@ vite.config.ts.timestamp-*.mjs
 supabase/.branches
 supabase/.temp
 .vercel
+deploy.sh
+dashboard.patch

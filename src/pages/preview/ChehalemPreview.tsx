@@ -371,9 +371,8 @@ export function ChehalemPreview() {
           text-transform: uppercase;
           cursor: pointer;
           box-shadow: 0 6px 16px rgba(35, 58, 92, 0.3);
-          opacity: 0;
-          transform: scale(0.6);
-          animation: chp-agent-in 0.7s cubic-bezier(0.22, 1.2, 0.36, 1) 0.4s forwards;
+          opacity: 1;
+          transform: scale(1);
           transition: transform 0.18s, background 0.18s;
         }
         .chp-agent-trigger:hover { background: #152442; }

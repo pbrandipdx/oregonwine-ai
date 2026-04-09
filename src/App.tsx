@@ -190,8 +190,8 @@ function AppRoutesInner() {
         >
           <div key={location.pathname} className="route-view-transition">
             <Routes>
-            {/* ── Home: first-time visitors → What We Do; returning → chatbot ── */}
-            <Route path="/" element={<FirstVisitGate />} />
+            {/* ── Always land on What We Do ── */}
+            <Route path="/" element={<Navigate to="/what-we-do" replace />} />
 
             {/* ── Public pages ─────────────────────────────────── */}
             <Route path="/home" element={<HomePage />} />
