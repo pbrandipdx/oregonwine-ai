@@ -15,8 +15,8 @@ import { PREVIEW_API_BASE, PREVIEW_CHAT_CONFIGS } from "./previewChatConfigs";
  */
 export function ChehalemPreview() {
   const chat = PREVIEW_CHAT_CONFIGS.chehalem;
-  const [chatOpen, setChatOpen] = useState(false);
-  const [pulseDone, setPulseDone] = useState(false);
+  const [chatOpen, setChatOpen] = useState(true);
+  const [pulseDone, setPulseDone] = useState(true);
 
   useEffect(() => {
     const t = window.setTimeout(() => setPulseDone(true), 6500);
