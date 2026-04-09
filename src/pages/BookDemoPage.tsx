@@ -239,13 +239,6 @@ export function BookDemoPage() {
                   ← Back to overview
                 </Link>
               </div>
-
-              <p style={{ marginTop: "1rem", fontSize: "0.85rem", color: "var(--dim)" }}>
-                Prefer to write directly?{" "}
-                <a href={MAILTO_DEMO} style={{ color: "var(--accent)" }}>
-                  patrickbrandimore@gmail.com
-                </a>
-              </p>
             </form>
           )}
 
