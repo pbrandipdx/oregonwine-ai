@@ -458,6 +458,8 @@ export function WineryPortfolioPage() {
           <Link className="wp-feat wp-feat--on" to="/plan-visit">Plan My Visit</Link>
           <Link className="wp-feat wp-feat--on" to="/compare">Compare</Link>
           <Link className="wp-feat wp-feat--on" to="/featured-winery">Featured Winery</Link>
+          <Link className="wp-feat wp-feat--on" to="/chatbot-demo/analytics">Analytics</Link>
+          <Link className="wp-feat wp-feat--on" to="/chatbot-demo/admin">Admin</Link>
         </div>
       </div>
 
