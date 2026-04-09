@@ -148,6 +148,10 @@ export function Sidebar({
               <IconCalendar />
               {!collapsed && <span className="sb-link-text">Book a Demo</span>}
             </Link>
+            <Link className={linkClass("/dashboard")} to="/dashboard" title="Dashboard">
+              <IconGrid />
+              {!collapsed && <span className="sb-link-text">Dashboard</span>}
+            </Link>
           </div>
 
           {/* Tools */}

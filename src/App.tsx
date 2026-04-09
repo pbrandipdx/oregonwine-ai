@@ -24,6 +24,7 @@ import { PonziPartnerPage, PonziResearchPage } from "./pages/ponzi";
 import { WidgetDemoPonziPage } from "./pages/WidgetDemoPonziPage";
 import { PonziBlindTasting, PonziMatchMe } from "./pages/ponzi-games";
 import { WineryPortfolioPage } from "./pages/WineryPortfolioPage";
+import { DashboardPage } from "./pages/DashboardPage";
 import { BlindTastingPage } from "./pages/blind-tasting";
 import { MatchMePage } from "./pages/match-me";
 import { RexHillBlindTasting, RexHillMatchMe } from "./pages/rex-hill-games";
@@ -210,6 +211,7 @@ function AppRoutesInner() {
             <Route path="/featured-winery" element={<FeaturedWineryPage />} />
             <Route path="/winery-info" element={<WineryInfoPage />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
 
             {/* ── Rex Hill ─────────────────────────────────────── */}
             <Route path="/rex-hill" element={<RexHillPartnerPage />} />
