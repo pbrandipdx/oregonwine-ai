@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./App";
 import { ErrorBoundary } from "./ErrorBoundary";
-import "./index.css";
+// Marketing site uses streamlined CSS
+import "./marketing.css";
 
 const rootEl = document.getElementById("root");
 if (!rootEl) {

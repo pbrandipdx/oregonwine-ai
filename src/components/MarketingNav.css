@@ -1,0 +1,152 @@
+/* ── Marketing Navigation ── */
+.mn {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(13, 13, 13, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mn-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Brand */
+.mn-brand {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #f5f5f5;
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.mn-brand-dot {
+  color: #c47a84;
+}
+
+/* Links */
+.mn-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mn-link {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+.mn-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+.mn-link--active {
+  color: #f5f5f5;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Actions */
+.mn-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mn-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.mn-btn--ghost {
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+}
+.mn-btn--ghost:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+}
+.mn-btn--primary {
+  color: #fff;
+  background: #722F37;
+  border: 1px solid #722F37;
+}
+.mn-btn--primary:hover {
+  background: #8a3a43;
+  border-color: #8a3a43;
+}
+
+/* Hamburger — hidden on desktop */
+.mn-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .mn-links,
+  .mn-actions {
+    display: none;
+  }
+  .mn-hamburger {
+    display: flex;
+  }
+}
+
+/* Mobile overlay */
+.mn-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  top: 64px;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+}
+.mn-mobile-menu {
+  background: #141414;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.mn-mobile-link {
+  display: block;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+.mn-mobile-link:hover,
+.mn-mobile-link--active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+.mn-mobile-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 8px 0;
+}
