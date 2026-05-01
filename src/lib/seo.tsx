@@ -111,6 +111,12 @@ export const PAGE_SEO: Record<string, SEOProps> = {
       "See how Crushpad.ai transforms winery websites with AI chatbots. Crawl your site, train on your wines, and deploy a 24/7 concierge that drives visits and revenue.",
     path: "/how-it-works",
   },
+  whatWeDo: {
+    title: "What We Do — AI Wine Concierge for Oregon Wineries",
+    description:
+      "Crushpad.ai gives every Oregon winery an AI-powered chatbot that answers visitor questions, recommends wines, and books tastings 24/7.",
+    path: "/what-we-do",
+  },
   bookDemo: {
     title: "Book a Demo — Crushpad.ai for Your Winery",
     description:
