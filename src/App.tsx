@@ -264,6 +264,7 @@ function AppRoutesInner() {
             {/* ── Legacy redirects ─────────────────────────────── */}
             <Route path="/widget-demo" element={<Navigate to="/chatbot-demo" replace />} />
             <Route path="/chat-demo" element={<Navigate to="/chatbot-demo" replace />} />
+            <Route path="/book-a-demo" element={<Navigate to="/book-demo" replace />} />
             <Route path="/widget-demo-rexhill" element={<Navigate to="/rex-hill/demo" replace />} />
             <Route path="/analytics/:slug" element={<RedirectToSlugSub sub="analytics" />} />
             <Route path="/research/:slug" element={<RedirectToSlugSub sub="research" />} />
