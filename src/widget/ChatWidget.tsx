@@ -818,7 +818,7 @@ export function ChatWidget({
               send();
             }
           }}
-          placeholder={wineryLabel === "Crushpad.ai" ? "Ask about wines in the Oregon Willamette Valley..." : "Ask about wines, tastings, hours..."}
+          placeholder="ask about oregon wines?"
           disabled={loading}
           style={{
             flex: 1,
