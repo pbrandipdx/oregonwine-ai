@@ -1,7 +1,7 @@
 import { ChatWidget } from "./ChatWidget";
 
 const apiBase =
-  import.meta.env.VITE_SUPABASE_FUNCTIONS_URL || "http://127.0.0.1:54321/functions/v1";
+  import.meta.env.VITE_SUPABASE_FUNCTIONS_URL || "https://sdobipmpvcuxnjqwpggp.supabase.co/functions/v1";
 
 /** Generic Crushpad demo — answers general wine questions (no winery-specific data). */
 export function WidgetDemoEmbed() {
