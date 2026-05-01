@@ -818,7 +818,7 @@ export function ChatWidget({
               send();
             }
           }}
-          placeholder="ask about oregon wines?"
+          placeholder="Ask anything about Oregon wines!"
           disabled={loading}
           style={{
             flex: 1,
