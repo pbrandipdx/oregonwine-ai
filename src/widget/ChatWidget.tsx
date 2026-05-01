@@ -10,7 +10,6 @@ import {
   type EngagementLabel,
 } from "../lib/engagementBubbles";
 import { AssistantMarkdown } from "./AssistantMarkdown";
-
 type Props = {
   apiKey: string;
   themeColor: string;
@@ -836,6 +835,7 @@ export function ChatWidget({
             margin: 0,
             padding: "7px 4px 7px 0",
             boxSizing: "border-box",
+            overflow: "hidden",
           }}
         />
         <button
